@@ -49,4 +49,3 @@
  * @classdesc The OpenSeadragonImaging namespace.
  *
  */
-
