@@ -1,0 +1,3 @@
+# ESLint always ignores files in /node_modules/* and /bower_components/*
+# /node_modules/*
+builds/**
