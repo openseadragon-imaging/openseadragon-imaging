@@ -1,21 +1,21 @@
 {
-    "tags": {
-        "allowUnknownTags": true
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "plugins": [],
+  "templates": {
+    "cleverLinks": true,
+    "monospaceLinks": false,
+    "default": {
+      "outputSourceFiles": true
     },
-    "plugins" : [],
-    "templates" : {
-        "cleverLinks" : true,
-        "monospaceLinks" : false,
-        "default" : {
-            "outputSourceFiles" : true
-        },
-        "openseadragonimaging" : {
-            "logMode" : false,
-            "debugMode" : false,
-            "useHighlightJs" : true
-        }
-    },
-    "opts": {
-        "template": "./docs/templates/openseadragonimaging"
+    "openseadragonimaging": {
+      "logMode": false,
+      "debugMode": false,
+      "useHighlightJs": true
     }
+  },
+  "opts": {
+    "template": "./docs/templates/openseadragonimaging"
+  }
 }
