@@ -1,3 +1,10 @@
 # ESLint always ignores files in /node_modules/* and /bower_components/*
 # /node_modules/*
-builds/**
+# builds/**
+# demo/**
+# docs/**
+# site/**
+shared/docs/templates/**
+LICENSE
+*.md
+*.json

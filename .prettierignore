@@ -1,3 +1,16 @@
-LICENSE
 node_modules/**
-builds/**
+# builds/**
+# demo/**
+# docs/**
+# site/**
+shared/docs/templates/**
+LICENSE
+.editorconfig
+.eslintignore
+.gitattributes
+.gitattributes SAMPLE
+.gitignore
+.npmignore
+.prettierignore
+package-lock.json
+
