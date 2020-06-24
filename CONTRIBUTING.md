@@ -4,7 +4,7 @@ Contributions to the OpenSeadragonImaging suite of OpenSeadragon plugins are wel
 
 This document contains some (hopefully!) useful information on setting up development tools to make contributing as painless as possible. Also, there's a few guidelines for procedures and styles to help ensure a consistent development experience for all contributors.
 
-Note: Enhancing this document is a welcome contribution as well!
+> Note: Enhancing this document is a welcome contribution as well!
 
 ## On this page:
 
@@ -82,7 +82,7 @@ Hop on Gitter to say hi, ask questions, knock around ideas, or whatever! OpenSea
 
 [![Gitt1er](https://badges.gitter.im/Join_Chat.svg)](https://gitter.im/msalsbery/OpenSeadragonImaging?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Note: For specific plugin issues, requests, bug reports, etc., please use the "Issues" feature at the GitHub repository pages, linked to below.
+> Note: For specific plugin issues, requests, bug reports, etc., please use the "Issues" feature at the GitHub repository pages, linked to below.
 
 [Back to Top](#Contributing%20to%20the%20OpenSeadragonImaging%20Suite)
 
