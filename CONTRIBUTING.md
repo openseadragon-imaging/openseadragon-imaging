@@ -9,6 +9,7 @@ This document contains some (hopefully!) useful information on setting up develo
 ## On this page:
 
 - [Prerequisites](#Prerequisites)
+- [Repository Scripts](#Repository%20Scripts)
 - [IDEs/Editors](#IDEs/Editors)
 - [Visual Studio Code](#Visual%20Studio%20Code)
 - [Linting and Formatting](#Linting%20and%20Formatting)
@@ -32,6 +33,36 @@ If working with the openseadragon-imaging-tester repository, it may be necessary
 All other required tools are installed locally in each repository.
 
 [Back to Top](#Contributing%20to%20the%20OpenSeadragonImaging%20Suite)
+
+## Repository Scripts
+
+The following commands are available to run from a terminal command line at the repository root:
+
+```
+  # Build for development (outputs to ./dist)
+    npm run dev
+
+  # Build for production (outputs to ./dist)
+    npm run build
+
+  # Build for development (outputs to ./dist) and automatically rebuilds when code changes
+    npm run watch
+
+  # Build for development (outputs to ./dist) then builds docs (outputs to ./docs)
+    npm run doc
+
+  # Run Prettier to check for formatting issues
+    npm run prettier
+
+  # Run Prettier to fix auto-fixable formatting issues
+    npm run prettier-fix
+
+  # Run ESLint to check for code issues
+    npm run lint
+
+  # Run ESLint to fix auto-fixable code issues
+    npm run lint-fix
+```
 
 ## IDEs/Editors
 
@@ -61,16 +92,16 @@ To help weed out potential bugs in code, and to keep code formatted in a consist
 Most popular editors/IDEs provide ESLint and Prettier integration (may require a plugin or extension). If your favorite editor doesn't support these, the following commands are available to run from a terminal command line at the repository root:
 
 ```
-  // Run Prettier to check for formatting issues
+  # Run Prettier to check for formatting issues
     npm run prettier
 
-  // Run Prettier to fix auto-fixable formatting issues
+  # Run Prettier to fix auto-fixable formatting issues
     npm run prettier-fix
 
-  // Run ESLint to check for code issues
+  # Run ESLint to check for code issues
     npm run lint
 
-  // Run ESLint to fix auto-fixable code issues
+  # Run ESLint to fix auto-fixable code issues
     npm run lint-fix
 ```
 
