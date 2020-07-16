@@ -4,11 +4,43 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-    {
-      "type": "node",
-      "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/server/app.js"
-    }
-  ]
+	{
+		"name": "Launch Site - Microsoft Edge",
+		"type": "edge",
+		"request": "launch",
+		"url": "http://localhost:3000",
+		"webRoot": "${workspaceFolder}/site.github.io/src"
+	},
+	{
+		"name": "Launch Site - Chrome",
+		"type": "chrome",
+		"request": "launch",
+		"url": "http://localhost:3000",
+		"webRoot": "${workspaceFolder}/site.github.io/src"
+	},
+	{
+		"name": "Launch Site - Firefox",
+		"type": "firefox",
+		"request": "launch",
+		"reAttach": true,
+		"url": "http://localhost:3000",
+		"webRoot": "${workspaceFolder}/site.github.io/src",
+		"pathMappings": [
+			// {
+			// 	"url": "file:///D:/repos/openseadragon/build/openseadragon/openseadragon.js",
+			// 	"path": "d:\\repos\\openseadragon\\build\\openseadragon\\openseadragon.js"
+			// },
+			{
+				"url": "http://localhost:3000",
+				"path": "${webRoot}/"
+			}
+		]//,
+		// "log": {
+		// 	"fileName": "${workspaceFolder}/site.github.io/firefox-debug-log.txt",
+		// 	"fileLevel": {
+		// 		"default": "Debug"
+		// 	}
+		// }
+	}
+]
 }

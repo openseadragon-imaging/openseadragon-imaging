@@ -1,0 +1,36 @@
+/***************************/
+/* Main Layout             */
+
+// .imaginghelper-page {
+// }
+
+.imaginghelper-page .viewer-pane {
+  height: calc(100vh - 80px);
+  margin: 15px 0;
+}
+
+.imaginghelper-page .prop-pane {
+  height: calc(100vh - 80px);
+  margin: 15px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/***************************/
+/* Views                   */
+
+.imaginghelper-page .viewer-container {
+  height: calc(100vh - 90px);
+  margin-top: 5px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.imaginghelper-page .prop-list-container {
+  height: calc(100vh - 90px);
+  margin-top: 5px;
+  margin-right: 5px;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

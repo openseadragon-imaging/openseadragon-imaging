@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>OpenSeadragonImaging Source: openseadragon-imaginghelper/dist/openseadragon-imaginghelper.js</title>
+    
+    <link type="text/css" rel="stylesheet" href="styles/highlight.js/default.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-openseadragonimaging.css">
+
+    <!--[if lt IE 9]>
+      <script src="scripts/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div id="container">
+<div id="main">
+    
+    <h1 class="page-title">Source: openseadragon-imaginghelper/dist/openseadragon-imaginghelper.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="source-code"><code><span id="line1" class="line"></span>(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">webpackUniversalModuleDefinition</span><span class="hljs-params">(root, factory)</span> {</span>
+<span id="line2" class="line"></span>	<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> exports === <span class="hljs-string">'object'</span> &amp;&amp; <span class="hljs-keyword">typeof</span> module === <span class="hljs-string">'object'</span>)
+<span id="line3" class="line"></span>		module.exports = factory(<span class="hljs-built_in">require</span>(<span class="hljs-string">"openseadragon"</span>));
+<span id="line4" class="line"></span>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> define === <span class="hljs-string">'function'</span> &amp;&amp; define.amd)
+<span id="line5" class="line"></span>		define([<span class="hljs-string">"openseadragon"</span>], factory);
+<span id="line6" class="line"></span>	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> exports === <span class="hljs-string">'object'</span>)
+<span id="line7" class="line"></span>		exports[<span class="hljs-string">"openseadragon-imaginghelper"</span>] = factory(<span class="hljs-built_in">require</span>(<span class="hljs-string">"openseadragon"</span>));
+<span id="line8" class="line"></span>	<span class="hljs-keyword">else</span>
+<span id="line9" class="line"></span>		root[<span class="hljs-string">"openseadragon-imaginghelper"</span>] = factory(root[<span class="hljs-string">"openseadragon"</span>]);
+<span id="line10" class="line"></span>})(window, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(__WEBPACK_EXTERNAL_MODULE_openseadragon__)</span> {</span>
+<span id="line11" class="line"></span><span class="hljs-keyword">return</span> <span class="hljs-comment">/******/</span> (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(modules)</span> {</span> <span class="hljs-comment">// webpackBootstrap</span>
+<span id="line12" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// The module cache</span>
+<span id="line13" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-keyword">var</span> installedModules = {};
+<span id="line14" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line15" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// The require function</span>
+<span id="line16" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__webpack_require__</span><span class="hljs-params">(moduleId)</span> {</span>
+<span id="line17" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line18" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-comment">// Check if module is in cache</span>
+<span id="line19" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">if</span>(installedModules[moduleId]) {
+<span id="line20" class="line"></span><span class="hljs-comment">/******/</span> 			<span class="hljs-keyword">return</span> installedModules[moduleId].exports;
+<span id="line21" class="line"></span><span class="hljs-comment">/******/</span> 		}
+<span id="line22" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-comment">// Create a new module (and put it into the cache)</span>
+<span id="line23" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">var</span> module = installedModules[moduleId] = {
+<span id="line24" class="line"></span><span class="hljs-comment">/******/</span> 			i: moduleId,
+<span id="line25" class="line"></span><span class="hljs-comment">/******/</span> 			l: <span class="hljs-literal">false</span>,
+<span id="line26" class="line"></span><span class="hljs-comment">/******/</span> 			exports: {}
+<span id="line27" class="line"></span><span class="hljs-comment">/******/</span> 		};
+<span id="line28" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line29" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-comment">// Execute the module function</span>
+<span id="line30" class="line"></span><span class="hljs-comment">/******/</span> 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+<span id="line31" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line32" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-comment">// Flag the module as loaded</span>
+<span id="line33" class="line"></span><span class="hljs-comment">/******/</span> 		module.l = <span class="hljs-literal">true</span>;
+<span id="line34" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line35" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-comment">// Return the exports of the module</span>
+<span id="line36" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">return</span> module.exports;
+<span id="line37" class="line"></span><span class="hljs-comment">/******/</span> 	}
+<span id="line38" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line39" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line40" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// expose the modules object (__webpack_modules__)</span>
+<span id="line41" class="line"></span><span class="hljs-comment">/******/</span> 	__webpack_require__.m = modules;
+<span id="line42" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line43" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// expose the module cache</span>
+<span id="line44" class="line"></span><span class="hljs-comment">/******/</span> 	__webpack_require__.c = installedModules;
+<span id="line45" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line46" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// define getter function for harmony exports</span>
+<span id="line47" class="line"></span><span class="hljs-comment">/******/</span> 	__webpack_require__.d = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(exports, name, getter)</span> {</span>
+<span id="line48" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">if</span>(!__webpack_require__.o(exports, name)) {
+<span id="line49" class="line"></span><span class="hljs-comment">/******/</span> 			Object.defineProperty(exports, name, { enumerable: <span class="hljs-literal">true</span>, get: getter });
+<span id="line50" class="line"></span><span class="hljs-comment">/******/</span> 		}
+<span id="line51" class="line"></span><span class="hljs-comment">/******/</span> 	};
+<span id="line52" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line53" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// define __esModule on exports</span>
+<span id="line54" class="line"></span><span class="hljs-comment">/******/</span> 	__webpack_require__.r = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(exports)</span> {</span>
+<span id="line55" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">if</span>(<span class="hljs-keyword">typeof</span> Symbol !== <span class="hljs-string">'undefined'</span> &amp;&amp; Symbol.toStringTag) {
+<span id="line56" class="line"></span><span class="hljs-comment">/******/</span> 			Object.defineProperty(exports, Symbol.toStringTag, { value: <span class="hljs-string">'Module'</span> });
+<span id="line57" class="line"></span><span class="hljs-comment">/******/</span> 		}
+<span id="line58" class="line"></span><span class="hljs-comment">/******/</span> 		Object.defineProperty(exports, <span class="hljs-string">'__esModule'</span>, { value: <span class="hljs-literal">true</span> });
+<span id="line59" class="line"></span><span class="hljs-comment">/******/</span> 	};
+<span id="line60" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line61" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// create a fake namespace object</span>
+<span id="line62" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// mode &amp; 1: value is a module id, require it</span>
+<span id="line63" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// mode &amp; 2: merge all properties of value into the ns</span>
+<span id="line64" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// mode &amp; 4: return value when already ns object</span>
+<span id="line65" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// mode &amp; 8|1: behave like require</span>
+<span id="line66" class="line"></span><span class="hljs-comment">/******/</span> 	__webpack_require__.t = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(value, mode)</span> {</span>
+<span id="line67" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">if</span>(mode &amp; <span class="hljs-number">1</span>) value = __webpack_require__(value);
+<span id="line68" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">if</span>(mode &amp; <span class="hljs-number">8</span>) <span class="hljs-keyword">return</span> value;
+<span id="line69" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">if</span>((mode &amp; <span class="hljs-number">4</span>) &amp;&amp; <span class="hljs-keyword">typeof</span> value === <span class="hljs-string">'object'</span> &amp;&amp; value &amp;&amp; value.__esModule) <span class="hljs-keyword">return</span> value;
+<span id="line70" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">var</span> ns = Object.create(<span class="hljs-literal">null</span>);
+<span id="line71" class="line"></span><span class="hljs-comment">/******/</span> 		__webpack_require__.r(ns);
+<span id="line72" class="line"></span><span class="hljs-comment">/******/</span> 		Object.defineProperty(ns, <span class="hljs-string">'default'</span>, { enumerable: <span class="hljs-literal">true</span>, value: value });
+<span id="line73" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">if</span>(mode &amp; <span class="hljs-number">2</span> &amp;&amp; <span class="hljs-keyword">typeof</span> value != <span class="hljs-string">'string'</span>) <span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> key <span class="hljs-keyword">in</span> value) __webpack_require__.d(ns, key, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(key)</span> {</span> <span class="hljs-keyword">return</span> value[key]; }.bind(<span class="hljs-literal">null</span>, key));
+<span id="line74" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">return</span> ns;
+<span id="line75" class="line"></span><span class="hljs-comment">/******/</span> 	};
+<span id="line76" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line77" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// getDefaultExport function for compatibility with non-harmony modules</span>
+<span id="line78" class="line"></span><span class="hljs-comment">/******/</span> 	__webpack_require__.n = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(module)</span> {</span>
+<span id="line79" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">var</span> getter = module &amp;&amp; module.__esModule ?
+<span id="line80" class="line"></span><span class="hljs-comment">/******/</span> 			<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getDefault</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">return</span> module[<span class="hljs-string">'default'</span>]; } :
+<span id="line81" class="line"></span><span class="hljs-comment">/******/</span> 			<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getModuleExports</span><span class="hljs-params">()</span> {</span> <span class="hljs-keyword">return</span> module; };
+<span id="line82" class="line"></span><span class="hljs-comment">/******/</span> 		__webpack_require__.d(getter, <span class="hljs-string">'a'</span>, getter);
+<span id="line83" class="line"></span><span class="hljs-comment">/******/</span> 		<span class="hljs-keyword">return</span> getter;
+<span id="line84" class="line"></span><span class="hljs-comment">/******/</span> 	};
+<span id="line85" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line86" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// Object.prototype.hasOwnProperty.call</span>
+<span id="line87" class="line"></span><span class="hljs-comment">/******/</span> 	__webpack_require__.o = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(object, property)</span> {</span> <span class="hljs-keyword">return</span> Object.prototype.hasOwnProperty.call(object, property); };
+<span id="line88" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line89" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// __webpack_public_path__</span>
+<span id="line90" class="line"></span><span class="hljs-comment">/******/</span> 	__webpack_require__.p = <span class="hljs-string">""</span>;
+<span id="line91" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line92" class="line"></span><span class="hljs-comment">/******/</span>
+<span id="line93" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-comment">// Load entry module and return exports</span>
+<span id="line94" class="line"></span><span class="hljs-comment">/******/</span> 	<span class="hljs-keyword">return</span> __webpack_require__(__webpack_require__.s = <span class="hljs-string">"./src/imaginghelper.js"</span>);
+<span id="line95" class="line"></span><span class="hljs-comment">/******/</span> })
+<span id="line96" class="line"></span><span class="hljs-comment">/************************************************************************/</span>
+<span id="line97" class="line"></span><span class="hljs-comment">/******/</span> ({
+<span id="line98" class="line"></span>
+<span id="line99" class="line"></span><span class="hljs-comment">/***/</span> <span class="hljs-string">"./src/imaginghelper.js"</span>:
+<span id="line100" class="line"></span><span class="hljs-comment">/*!******************************!*\
+<span id="line101" class="line"></span>  !*** ./src/imaginghelper.js ***!
+<span id="line102" class="line"></span>  \******************************/</span>
+<span id="line103" class="line"></span><span class="hljs-comment">/*! exports provided: default */</span>
+<span id="line104" class="line"></span><span class="hljs-comment">/***/</span> (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(module, __webpack_exports__, __webpack_require__)</span> {</span>
+<span id="line105" class="line"></span>
+<span id="line106" class="line"></span><span class="hljs-pi">"use strict"</span>;
+<span id="line107" class="line"></span>__webpack_require__.r(__webpack_exports__);
+<span id="line108" class="line"></span><span class="hljs-comment">/* harmony import */</span> <span class="hljs-keyword">var</span> openseadragon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(<span class="hljs-comment">/*! openseadragon */</span> <span class="hljs-string">"openseadragon"</span>);
+<span id="line109" class="line"></span><span class="hljs-comment">/* harmony import */</span> <span class="hljs-keyword">var</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default = <span class="hljs-comment">/*#__PURE__*/</span>__webpack_require__.n(openseadragon__WEBPACK_IMPORTED_MODULE_0__);
+<span id="line110" class="line"></span>
+<span id="line111" class="line"></span><span class="hljs-comment">/**
+<span id="line112" class="line"></span> * @file openseadragon-imaginghelper.js
+<span id="line113" class="line"></span> * @version 2.2.0
+<span id="line114" class="line"></span> * @author Mark Salsbery &lt;msalsbery@hotmail.com&gt;
+<span id="line115" class="line"></span> *
+<span id="line116" class="line"></span> */</span>
+<span id="line117" class="line"></span>
+<span id="line118" class="line"></span><span class="hljs-comment">/**
+<span id="line119" class="line"></span> * @module openseadragon-imaginghelper
+<span id="line120" class="line"></span> * @version 2.2.0
+<span id="line121" class="line"></span> * @requires module:openseadragon
+<span id="line122" class="line"></span> */</span>
+<span id="line123" class="line"></span>
+<span id="line124" class="line"></span><span class="hljs-comment">/* harmony default export */</span> __webpack_exports__[<span class="hljs-string">"default"</span>] = ((<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(OSD, $)</span> {</span>
+<span id="line125" class="line"></span>  <span class="hljs-keyword">if</span> (!OSD.version || OSD.version.major &lt; <span class="hljs-number">2</span>) {
+<span id="line126" class="line"></span>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'OpenSeadragonImagingHelper requires OpenSeadragon version 2.0.0+'</span>);
+<span id="line127" class="line"></span>  }
+<span id="line128" class="line"></span>  <span class="hljs-comment">/**
+<span id="line129" class="line"></span>   * Creates a new ImagingHelper attached to the viewer.
+<span id="line130" class="line"></span>   *
+<span id="line131" class="line"></span>   * @method activateImagingHelper
+<span id="line132" class="line"></span>   * @memberof external:"OpenSeadragon.Viewer"#
+<span id="line133" class="line"></span>   * @param {Object} options
+<span id="line134" class="line"></span>   * @param {external:"OpenSeadragon.EventHandler"} [options.onImageViewChanged] - {@link OpenSeadragonImaging.ImagingHelper.event:image-view-changed} handler method.
+<span id="line135" class="line"></span>   * @param {Integer} [options.worldIndex] - The index of the image for world.getItemAt
+<span id="line136" class="line"></span>   * @returns {OpenSeadragonImaging.ImagingHelper}
+<span id="line137" class="line"></span>   *
+<span id="line138" class="line"></span>   **/</span>
+<span id="line139" class="line"></span>
+<span id="line140" class="line"></span>
+<span id="line141" class="line"></span>  OSD.Viewer.prototype.activateImagingHelper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
+<span id="line142" class="line"></span>    <span class="hljs-keyword">if</span> (!this.imagingHelper) {
+<span id="line143" class="line"></span>      options = options || {};
+<span id="line144" class="line"></span>      options.viewer = <span class="hljs-keyword">this</span>;
+<span id="line145" class="line"></span>      this.imagingHelper = <span class="hljs-keyword">new</span> $.ImagingHelper(options);
+<span id="line146" class="line"></span>    }
+<span id="line147" class="line"></span>
+<span id="line148" class="line"></span>    <span class="hljs-keyword">return</span> this.imagingHelper;
+<span id="line149" class="line"></span>  };
+<span id="line150" class="line"></span>  <span class="hljs-comment">/**
+<span id="line151" class="line"></span>   * Creates a new ImagingHelper attached to the viewer instance passed in the options parameter.
+<span id="line152" class="line"></span>   *
+<span id="line153" class="line"></span>   * @class ImagingHelper
+<span id="line154" class="line"></span>   * @classdesc Provides imaging helper methods and properties for the OpenSeadragon viewer.
+<span id="line155" class="line"></span>   * @memberof OpenSeadragonImaging
+<span id="line156" class="line"></span>   * @extends external:"OpenSeadragon.EventSource"
+<span id="line157" class="line"></span>   * @param {Object} options
+<span id="line158" class="line"></span>   * @param {external:"OpenSeadragon.Viewer"} options.viewer - Required! Reference to OpenSeadragon viewer to attach to.
+<span id="line159" class="line"></span>   * @param {external:"OpenSeadragon.EventHandler"} [options.onImageViewChanged] - {@link OpenSeadragonImaging.ImagingHelper.event:image-view-changed} handler method.
+<span id="line160" class="line"></span>   * @param {Integer} [options.worldIndex] - The index of the image for world.getItemAt
+<span id="line161" class="line"></span>   *
+<span id="line162" class="line"></span>   **/</span>
+<span id="line163" class="line"></span>
+<span id="line164" class="line"></span>
+<span id="line165" class="line"></span>  $.ImagingHelper = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(options)</span> {</span>
+<span id="line166" class="line"></span>    OSD.EventSource.call(<span class="hljs-keyword">this</span>);
+<span id="line167" class="line"></span>    options = options || {};
+<span id="line168" class="line"></span>
+<span id="line169" class="line"></span>    <span class="hljs-keyword">if</span> (!options.viewer) {
+<span id="line170" class="line"></span>      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'A viewer must be specified.'</span>);
+<span id="line171" class="line"></span>    }
+<span id="line172" class="line"></span>
+<span id="line173" class="line"></span>    <span class="hljs-keyword">if</span> (options.viewer.imagingHelper) {
+<span id="line174" class="line"></span>      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Viewer already has an ImagingHelper.'</span>);
+<span id="line175" class="line"></span>    }
+<span id="line176" class="line"></span>
+<span id="line177" class="line"></span>    this._viewer = options.viewer;
+<span id="line178" class="line"></span>
+<span id="line179" class="line"></span>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> options.worldIndex === <span class="hljs-string">'number'</span>) {
+<span id="line180" class="line"></span>      this._worldIndex = options.worldIndex;
+<span id="line181" class="line"></span>    } <span class="hljs-keyword">else</span> {
+<span id="line182" class="line"></span>      this._worldIndex = <span class="hljs-number">0</span>;
+<span id="line183" class="line"></span>    } <span class="hljs-comment">// Add this object to the Viewer</span>
+<span id="line184" class="line"></span>
+<span id="line185" class="line"></span>
+<span id="line186" class="line"></span>    this._viewer.imagingHelper = <span class="hljs-keyword">this</span>;
+<span id="line187" class="line"></span>    <span class="hljs-comment">/**
+<span id="line188" class="line"></span>     * A reference to the options passed at creation.
+<span id="line189" class="line"></span>     * @member {object} options
+<span id="line190" class="line"></span>     * @memberof OpenSeadragonImaging.ImagingHelper#
+<span id="line191" class="line"></span>     * @property {external:"OpenSeadragon.Viewer"} viewer - Reference to OpenSeadragon viewer this ImagingHelper is attached to.
+<span id="line192" class="line"></span>     * @property {external:"OpenSeadragon.EventHandler"} [onImageViewChanged] - {@link OpenSeadragonImaging.ImagingHelper.event:image-view-changed} handler method.
+<span id="line193" class="line"></span>     */</span>
+<span id="line194" class="line"></span>
+<span id="line195" class="line"></span>    this.options = options;
+<span id="line196" class="line"></span>    <span class="hljs-comment">/**
+<span id="line197" class="line"></span>     * The image's native width in pixels.
+<span id="line198" class="line"></span>     * @member {number} imgWidth
+<span id="line199" class="line"></span>     * @memberof OpenSeadragonImaging.ImagingHelper#
+<span id="line200" class="line"></span>     */</span>
+<span id="line201" class="line"></span>
+<span id="line202" class="line"></span>    this.imgWidth = <span class="hljs-number">0.0</span>;
+<span id="line203" class="line"></span>    <span class="hljs-comment">/**
+<span id="line204" class="line"></span>     * The image's native height in pixels.
+<span id="line205" class="line"></span>     * @member {number} imgHeight
+<span id="line206" class="line"></span>     * @memberof OpenSeadragonImaging.ImagingHelper#
+<span id="line207" class="line"></span>     */</span>
+<span id="line208" class="line"></span>
+<span id="line209" class="line"></span>    this.imgHeight = <span class="hljs-number">0.0</span>;
+<span id="line210" class="line"></span>    <span class="hljs-comment">/**
+<span id="line211" class="line"></span>     * The image's aspect ratio (width / height).
+<span id="line212" class="line"></span>     * @member {number} imgAspectRatio
+<span id="line213" class="line"></span>     * @memberof OpenSeadragonImaging.ImagingHelper#
+<span id="line214" class="line"></span>     */</span>
+<span id="line215" class="line"></span>
+<span id="line216" class="line"></span>    this.imgAspectRatio = <span class="hljs-number">0.0</span>; <span class="hljs-comment">// Private</span>
+<span id="line217" class="line"></span>
+<span id="line218" class="line"></span>    this._zoomFactor = <span class="hljs-number">1.0</span>;
+<span id="line219" class="line"></span>    this._minZoom = <span class="hljs-number">0.001</span>;
+<span id="line220" class="line"></span>    this._maxZoom = <span class="hljs-number">10</span>;
+<span id="line221" class="line"></span>    this._zoomStepPercent = <span class="hljs-number">30</span>;
+<span id="line222" class="line"></span>    this._haveImage = <span class="hljs-literal">false</span>;
+<span id="line223" class="line"></span>    this._viewerSize = <span class="hljs-literal">null</span>; <span class="hljs-comment">// Unadjusted viewport settings (aspect ratio not applied)</span>
+<span id="line224" class="line"></span>    <span class="hljs-comment">// All coordinates are logical (0 to 1) relative to the image</span>
+<span id="line225" class="line"></span>
+<span id="line226" class="line"></span>    this._viewportWidth = <span class="hljs-number">0.0</span>;
+<span id="line227" class="line"></span>    this._viewportHeight = <span class="hljs-number">0.0</span>;
+<span id="line228" class="line"></span>    this._viewportOrigin = <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+<span id="line229" class="line"></span>    this._viewportCenter = <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// Wire up event handlers</span>
+<span id="line230" class="line"></span>
+<span id="line231" class="line"></span>    this._onOpen = OSD.delegate(<span class="hljs-keyword">this</span>, this.onOpen);
+<span id="line232" class="line"></span>    this._onClose = OSD.delegate(<span class="hljs-keyword">this</span>, this.onClose);
+<span id="line233" class="line"></span>    this._onAnimation = OSD.delegate(<span class="hljs-keyword">this</span>, this.onAnimation);
+<span id="line234" class="line"></span>    this._onAnimationFinish = OSD.delegate(<span class="hljs-keyword">this</span>, this.onAnimationFinish);
+<span id="line235" class="line"></span>    this._onResize = OSD.delegate(<span class="hljs-keyword">this</span>, this.onResize);
+<span id="line236" class="line"></span>    this._onFullPage = OSD.delegate(<span class="hljs-keyword">this</span>, this.onFullPage);
+<span id="line237" class="line"></span>    this._onFullScreen = OSD.delegate(<span class="hljs-keyword">this</span>, this.onFullScreen);
+<span id="line238" class="line"></span>    this._onWorldAddItem = OSD.delegate(<span class="hljs-keyword">this</span>, this.onWorldAddItem);
+<span id="line239" class="line"></span>    this._onWorldRemoveItem = OSD.delegate(<span class="hljs-keyword">this</span>, this.onWorldRemoveItem);
+<span id="line240" class="line"></span>    this._onWorldItemIndexChange = OSD.delegate(<span class="hljs-keyword">this</span>, this.onWorldItemIndexChange);
+<span id="line241" class="line"></span>    this._onWorldMetricsChange = OSD.delegate(<span class="hljs-keyword">this</span>, this.onWorldMetricsChange);
+<span id="line242" class="line"></span>
+<span id="line243" class="line"></span>    <span class="hljs-keyword">if</span> (options.onImageViewChanged) {
+<span id="line244" class="line"></span>      this.addHandler(<span class="hljs-string">'image-view-changed'</span>, options.onImageViewChanged);
+<span id="line245" class="line"></span>    }
+<span id="line246" class="line"></span>
+<span id="line247" class="line"></span>    this._viewer.addHandler(<span class="hljs-string">'open'</span>, this._onOpen);
+<span id="line248" class="line"></span>
+<span id="line249" class="line"></span>    this._viewer.addHandler(<span class="hljs-string">'close'</span>, this._onClose);
+<span id="line250" class="line"></span>
+<span id="line251" class="line"></span>    this._viewer.addHandler(<span class="hljs-string">'animation'</span>, this._onAnimation);
+<span id="line252" class="line"></span>
+<span id="line253" class="line"></span>    this._viewer.addHandler(<span class="hljs-string">'animation-finish'</span>, this._onAnimationFinish);
+<span id="line254" class="line"></span>
+<span id="line255" class="line"></span>    this._viewer.addHandler(<span class="hljs-string">'resize'</span>, this._onResize);
+<span id="line256" class="line"></span>
+<span id="line257" class="line"></span>    this._viewer.addHandler(<span class="hljs-string">'full-page'</span>, this._onFullPage);
+<span id="line258" class="line"></span>
+<span id="line259" class="line"></span>    this._viewer.addHandler(<span class="hljs-string">'full-screen'</span>, this._onFullScreen); <span class="hljs-comment">// this._viewer.world.addHandler('add-item', this._onWorldAddItem);</span>
+<span id="line260" class="line"></span>    <span class="hljs-comment">// this._viewer.world.addHandler('remove-item', this._onWorldRemoveItem);</span>
+<span id="line261" class="line"></span>    <span class="hljs-comment">// this._viewer.world.addHandler(</span>
+<span id="line262" class="line"></span>    <span class="hljs-comment">// 	'item-index-change',</span>
+<span id="line263" class="line"></span>    <span class="hljs-comment">// 	this._onWorldItemIndexChange</span>
+<span id="line264" class="line"></span>    <span class="hljs-comment">// );</span>
+<span id="line265" class="line"></span>    <span class="hljs-comment">// this._viewer.world.addHandler(</span>
+<span id="line266" class="line"></span>    <span class="hljs-comment">// 	'metrics-change',</span>
+<span id="line267" class="line"></span>    <span class="hljs-comment">// 	this._onWorldMetricsChange</span>
+<span id="line268" class="line"></span>    <span class="hljs-comment">// );</span>
+<span id="line269" class="line"></span>
+<span id="line270" class="line"></span>  }; <span class="hljs-comment">// Inherit OpenSeadragon.EventSource</span>
+<span id="line271" class="line"></span>
+<span id="line272" class="line"></span>
+<span id="line273" class="line"></span>  $.ImagingHelper.prototype = Object.create(OSD.EventSource.prototype);
+<span id="line274" class="line"></span>  <span class="hljs-comment">/**
+<span id="line275" class="line"></span>   * ImagingHelper version.
+<span id="line276" class="line"></span>   * @member {Object} OpenSeadragonImaging.ImagingHelper.version
+<span id="line277" class="line"></span>   * @static
+<span id="line278" class="line"></span>   * @property {String} versionStr - The version number as a string ('major.minor.revision').
+<span id="line279" class="line"></span>   * @property {Number} major - The major version number.
+<span id="line280" class="line"></span>   * @property {Number} minor - The minor version number.
+<span id="line281" class="line"></span>   * @property {Number} revision - The revision number.
+<span id="line282" class="line"></span>   */</span>
+<span id="line283" class="line"></span>
+<span id="line284" class="line"></span>  $.ImagingHelper.version = {
+<span id="line285" class="line"></span>    <span class="hljs-string">"versionStr"</span>: <span class="hljs-string">"2.2.0"</span>,
+<span id="line286" class="line"></span>    <span class="hljs-string">"major"</span>: <span class="hljs-number">2</span>,
+<span id="line287" class="line"></span>    <span class="hljs-string">"minor"</span>: <span class="hljs-number">2</span>,
+<span id="line288" class="line"></span>    <span class="hljs-string">"revision"</span>: <span class="hljs-number">0</span>
+<span id="line289" class="line"></span>  };
+<span id="line290" class="line"></span>  Object.defineProperty($.ImagingHelper.prototype, <span class="hljs-string">'constructor'</span>, {
+<span id="line291" class="line"></span>    enumerable: <span class="hljs-literal">false</span>,
+<span id="line292" class="line"></span>    value: $.ImagingHelper
+<span id="line293" class="line"></span>  });
+<span id="line294" class="line"></span>  <span class="hljs-comment">/**
+<span id="line295" class="line"></span>   * Remove hooks, event handlers, and OpenSeadragon references. Call before
+<span id="line296" class="line"></span>   * OpenSeadragon.Viewer.destroy().
+<span id="line297" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#destroy
+<span id="line298" class="line"></span>   * @since 2.2.0
+<span id="line299" class="line"></span>   */</span>
+<span id="line300" class="line"></span>
+<span id="line301" class="line"></span>  $.ImagingHelper.prototype.destroy = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line302" class="line"></span>    <span class="hljs-keyword">if</span> (this.options.onImageViewChanged) {
+<span id="line303" class="line"></span>      this.removeHandler(<span class="hljs-string">'image-view-changed'</span>, this.options.onImageViewChanged);
+<span id="line304" class="line"></span>    }
+<span id="line305" class="line"></span>
+<span id="line306" class="line"></span>    this._viewer.removeHandler(<span class="hljs-string">'open'</span>, this._onOpen);
+<span id="line307" class="line"></span>
+<span id="line308" class="line"></span>    this._viewer.removeHandler(<span class="hljs-string">'close'</span>, this._onClose);
+<span id="line309" class="line"></span>
+<span id="line310" class="line"></span>    this._viewer.removeHandler(<span class="hljs-string">'animation'</span>, this._onAnimation);
+<span id="line311" class="line"></span>
+<span id="line312" class="line"></span>    this._viewer.removeHandler(<span class="hljs-string">'animation-finish'</span>, this._onAnimationFinish);
+<span id="line313" class="line"></span>
+<span id="line314" class="line"></span>    this._viewer.removeHandler(<span class="hljs-string">'resize'</span>, this._onResize);
+<span id="line315" class="line"></span>
+<span id="line316" class="line"></span>    this._viewer.removeHandler(<span class="hljs-string">'full-page'</span>, this._onFullPage);
+<span id="line317" class="line"></span>
+<span id="line318" class="line"></span>    this._viewer.removeHandler(<span class="hljs-string">'full-screen'</span>, this._onFullScreen); <span class="hljs-comment">// this._viewer.world.removeHandler('add-item', this._onWorldAddItem);</span>
+<span id="line319" class="line"></span>    <span class="hljs-comment">// this._viewer.world.removeHandler(</span>
+<span id="line320" class="line"></span>    <span class="hljs-comment">// 	'remove-item',</span>
+<span id="line321" class="line"></span>    <span class="hljs-comment">// 	this._onWorldRemoveItem</span>
+<span id="line322" class="line"></span>    <span class="hljs-comment">// );</span>
+<span id="line323" class="line"></span>    <span class="hljs-comment">// this._viewer.world.removeHandler(</span>
+<span id="line324" class="line"></span>    <span class="hljs-comment">// 	'item-index-change',</span>
+<span id="line325" class="line"></span>    <span class="hljs-comment">// 	this._onWorldItemIndexChange</span>
+<span id="line326" class="line"></span>    <span class="hljs-comment">// );</span>
+<span id="line327" class="line"></span>    <span class="hljs-comment">// this._viewer.world.removeHandler(</span>
+<span id="line328" class="line"></span>    <span class="hljs-comment">// 	'metrics-change',</span>
+<span id="line329" class="line"></span>    <span class="hljs-comment">// 	this._onWorldMetricsChange</span>
+<span id="line330" class="line"></span>    <span class="hljs-comment">// );</span>
+<span id="line331" class="line"></span>
+<span id="line332" class="line"></span>
+<span id="line333" class="line"></span>    this._viewer.imagingHelper = <span class="hljs-literal">null</span>;
+<span id="line334" class="line"></span>
+<span id="line335" class="line"></span>    this._viewer.destroy();
+<span id="line336" class="line"></span>
+<span id="line337" class="line"></span>    this._viewer = <span class="hljs-literal">null</span>;
+<span id="line338" class="line"></span>    this.options.viewer = <span class="hljs-literal">null</span>;
+<span id="line339" class="line"></span>  };
+<span id="line340" class="line"></span>  <span class="hljs-comment">/*
+<span id="line341" class="line"></span>   *
+<span id="line342" class="line"></span>   * Raises the {@link OpenSeadragonImaging.ImagingHelper.image-view-changed} event
+<span id="line343" class="line"></span>   *
+<span id="line344" class="line"></span>   * @private
+<span id="line345" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#_raiseImageViewChanged
+<span id="line346" class="line"></span>   *
+<span id="line347" class="line"></span>   **/</span>
+<span id="line348" class="line"></span>
+<span id="line349" class="line"></span>
+<span id="line350" class="line"></span>  $.ImagingHelper.prototype._raiseImageViewChanged = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line351" class="line"></span>    <span class="hljs-comment">/**
+<span id="line352" class="line"></span>     * Raised whenever the viewer's zoom or pan changes and the ImagingHelper's properties have been updated.
+<span id="line353" class="line"></span>     * @event image-view-changed
+<span id="line354" class="line"></span>     * @memberof OpenSeadragonImaging.ImagingHelper
+<span id="line355" class="line"></span>     * @type {Object}
+<span id="line356" class="line"></span>     * @property {OpenSeadragonImaging.ImagingHelper} eventSource - A reference to the ImagingHelper which raised the event.
+<span id="line357" class="line"></span>     * @property {number} viewportWidth - Width of viewport in logical coordinates.
+<span id="line358" class="line"></span>     * @property {number} viewportHeight - Height of viewport in logical coordinates.
+<span id="line359" class="line"></span>     * @property {external:"OpenSeadragon.Point"} viewportOrigin - Center of viewport in logical coordinates.
+<span id="line360" class="line"></span>     * @property {external:"OpenSeadragon.Point"} viewportCenter - Center of viewport in logical coordinates.
+<span id="line361" class="line"></span>     * @property {number} zoomFactor - Zoom factor.
+<span id="line362" class="line"></span>     * @property {Object} [userData=null] - Arbitrary subscriber-defined object.
+<span id="line363" class="line"></span>     */</span>
+<span id="line364" class="line"></span>    this.raiseEvent(<span class="hljs-string">'image-view-changed'</span>, {
+<span id="line365" class="line"></span>      viewportWidth: this._viewportWidth,
+<span id="line366" class="line"></span>      viewportHeight: this._viewportHeight,
+<span id="line367" class="line"></span>      viewportOrigin: this._viewportOrigin,
+<span id="line368" class="line"></span>      viewportCenter: this._viewportCenter,
+<span id="line369" class="line"></span>      zoomFactor: this._zoomFactor
+<span id="line370" class="line"></span>    });
+<span id="line371" class="line"></span>  };
+<span id="line372" class="line"></span>  <span class="hljs-comment">/*
+<span id="line373" class="line"></span>   *
+<span id="line374" class="line"></span>   * Called whenever the OpenSeadragon viewer zoom/pan changes
+<span id="line375" class="line"></span>   *
+<span id="line376" class="line"></span>   * @private
+<span id="line377" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#_trackZoomPan
+<span id="line378" class="line"></span>   * @fires OpenSeadragonImaging.ImagingHelper.image-view-changed
+<span id="line379" class="line"></span>   *
+<span id="line380" class="line"></span>   **/</span>
+<span id="line381" class="line"></span>
+<span id="line382" class="line"></span>
+<span id="line383" class="line"></span>  $.ImagingHelper.prototype._trackZoomPan = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line384" class="line"></span>    <span class="hljs-keyword">var</span> boundsRect = this._viewer.viewport.getBounds(<span class="hljs-literal">true</span>);
+<span id="line385" class="line"></span>
+<span id="line386" class="line"></span>    this._viewportOrigin.x = boundsRect.x;
+<span id="line387" class="line"></span>    this._viewportOrigin.y = boundsRect.y * this.imgAspectRatio;
+<span id="line388" class="line"></span>    this._viewportWidth = boundsRect.width;
+<span id="line389" class="line"></span>    this._viewportHeight = boundsRect.height * this.imgAspectRatio;
+<span id="line390" class="line"></span>    this._viewportCenter.x = this._viewportOrigin.x + this._viewportWidth / <span class="hljs-number">2.0</span>;
+<span id="line391" class="line"></span>    this._viewportCenter.y = this._viewportOrigin.y + this._viewportHeight / <span class="hljs-number">2.0</span>;
+<span id="line392" class="line"></span>    this._zoomFactor = this.getViewerContainerSize().x / (this._viewportWidth * this.imgWidth);
+<span id="line393" class="line"></span>
+<span id="line394" class="line"></span>    this._raiseImageViewChanged();
+<span id="line395" class="line"></span>  };
+<span id="line396" class="line"></span>  <span class="hljs-comment">/**
+<span id="line397" class="line"></span>   * Gets the size of the viewer's container element.
+<span id="line398" class="line"></span>   *
+<span id="line399" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#getViewerContainerSize
+<span id="line400" class="line"></span>   * @returns {external:"OpenSeadragon.Point"}
+<span id="line401" class="line"></span>   *
+<span id="line402" class="line"></span>   **/</span>
+<span id="line403" class="line"></span>
+<span id="line404" class="line"></span>
+<span id="line405" class="line"></span>  $.ImagingHelper.prototype.getViewerContainerSize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line406" class="line"></span>    <span class="hljs-comment">//return this._viewer.viewport.getContainerSize();</span>
+<span id="line407" class="line"></span>    <span class="hljs-keyword">var</span> element = this._viewer.container; <span class="hljs-comment">//return new OSD.Point(</span>
+<span id="line408" class="line"></span>    <span class="hljs-comment">//    (element.clientWidth === 0 ? 1 : element.clientWidth),</span>
+<span id="line409" class="line"></span>    <span class="hljs-comment">//    (element.clientHeight === 0 ? 1 : element.clientHeight)</span>
+<span id="line410" class="line"></span>    <span class="hljs-comment">//);</span>
+<span id="line411" class="line"></span>
+<span id="line412" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OSD.Point(element.clientWidth, element.clientHeight);
+<span id="line413" class="line"></span>  };
+<span id="line414" class="line"></span>  <span class="hljs-comment">/**
+<span id="line415" class="line"></span>   * Helper method for users of the OpenSeadragon.Viewer's autoResize = false option.
+<span id="line416" class="line"></span>   * Call this whenever the viewer is resized, and the image will stay displayed at
+<span id="line417" class="line"></span>   * the same zoom factor and same center point.
+<span id="line418" class="line"></span>   *
+<span id="line419" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#notifyResize
+<span id="line420" class="line"></span>   * @fires OpenSeadragonImaging.ImagingHelper.image-view-changed
+<span id="line421" class="line"></span>   *
+<span id="line422" class="line"></span>   **/</span>
+<span id="line423" class="line"></span>
+<span id="line424" class="line"></span>
+<span id="line425" class="line"></span>  $.ImagingHelper.prototype.notifyResize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line426" class="line"></span>    <span class="hljs-keyword">var</span> newViewerSize, center, zoom;
+<span id="line427" class="line"></span>
+<span id="line428" class="line"></span>    <span class="hljs-keyword">if</span> (this._haveImage) {
+<span id="line429" class="line"></span>      newViewerSize = this.getViewerContainerSize();
+<span id="line430" class="line"></span>
+<span id="line431" class="line"></span>      <span class="hljs-keyword">if</span> (!newViewerSize.equals(this._viewerSize)) {
+<span id="line432" class="line"></span>        this._viewerSize = newViewerSize;
+<span id="line433" class="line"></span>        center = <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this._viewportCenter.x, this._viewportCenter.y / this.imgAspectRatio);
+<span id="line434" class="line"></span>        zoom = this._zoomFactor;
+<span id="line435" class="line"></span>
+<span id="line436" class="line"></span>        this._viewer.viewport.resize(newViewerSize, <span class="hljs-literal">false</span>);
+<span id="line437" class="line"></span>
+<span id="line438" class="line"></span>        this._viewer.viewport.zoomTo(zoom * this.imgWidth / newViewerSize.x, <span class="hljs-literal">null</span>, <span class="hljs-literal">true</span>);
+<span id="line439" class="line"></span>
+<span id="line440" class="line"></span>        this._viewer.viewport.panTo(center, <span class="hljs-literal">true</span>);
+<span id="line441" class="line"></span>
+<span id="line442" class="line"></span>        this._raiseImageViewChanged();
+<span id="line443" class="line"></span>      }
+<span id="line444" class="line"></span>    }
+<span id="line445" class="line"></span>  };
+<span id="line446" class="line"></span>  <span class="hljs-comment">/**
+<span id="line447" class="line"></span>   * Gets the minimum zoom factor allowed.
+<span id="line448" class="line"></span>   *
+<span id="line449" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#getMinZoom
+<span id="line450" class="line"></span>   * @returns {number}
+<span id="line451" class="line"></span>   *
+<span id="line452" class="line"></span>   **/</span>
+<span id="line453" class="line"></span>
+<span id="line454" class="line"></span>
+<span id="line455" class="line"></span>  $.ImagingHelper.prototype.getMinZoom = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line456" class="line"></span>    <span class="hljs-keyword">return</span> this._minZoom;
+<span id="line457" class="line"></span>  };
+<span id="line458" class="line"></span>  <span class="hljs-comment">/**
+<span id="line459" class="line"></span>   * Sets the minimum zoom factor allowed.
+<span id="line460" class="line"></span>   *
+<span id="line461" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#setMinZoom
+<span id="line462" class="line"></span>   * @param {number} value - The desired minimum zoom factor.
+<span id="line463" class="line"></span>   *
+<span id="line464" class="line"></span>   **/</span>
+<span id="line465" class="line"></span>
+<span id="line466" class="line"></span>
+<span id="line467" class="line"></span>  $.ImagingHelper.prototype.setMinZoom = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
+<span id="line468" class="line"></span>    this._minZoom = value;
+<span id="line469" class="line"></span>    this._viewer.minZoomLevel = value * this.imgWidth / this.getViewerContainerSize().x;
+<span id="line470" class="line"></span>  };
+<span id="line471" class="line"></span>  <span class="hljs-comment">/**
+<span id="line472" class="line"></span>   * Gets the maximum zoom factor allowed.
+<span id="line473" class="line"></span>   *
+<span id="line474" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#getMaxZoom
+<span id="line475" class="line"></span>   * @returns {number}
+<span id="line476" class="line"></span>   *
+<span id="line477" class="line"></span>   **/</span>
+<span id="line478" class="line"></span>
+<span id="line479" class="line"></span>
+<span id="line480" class="line"></span>  $.ImagingHelper.prototype.getMaxZoom = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line481" class="line"></span>    <span class="hljs-keyword">return</span> this._maxZoom;
+<span id="line482" class="line"></span>  };
+<span id="line483" class="line"></span>  <span class="hljs-comment">/**
+<span id="line484" class="line"></span>   * Sets the maximum zoom factor allowed.
+<span id="line485" class="line"></span>   *
+<span id="line486" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#setMaxZoom
+<span id="line487" class="line"></span>   * @param {number} value - The desired maximum zoom factor.
+<span id="line488" class="line"></span>   *
+<span id="line489" class="line"></span>   **/</span>
+<span id="line490" class="line"></span>
+<span id="line491" class="line"></span>
+<span id="line492" class="line"></span>  $.ImagingHelper.prototype.setMaxZoom = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
+<span id="line493" class="line"></span>    this._maxZoom = value;
+<span id="line494" class="line"></span>    this._viewer.maxZoomLevel = value * this.imgWidth / this.getViewerContainerSize().x;
+<span id="line495" class="line"></span>  };
+<span id="line496" class="line"></span>  <span class="hljs-comment">/**
+<span id="line497" class="line"></span>   * Gets the percentage of the current zoom factor to increase/decrease when using the zoomIn/zoomOut methods.
+<span id="line498" class="line"></span>   *
+<span id="line499" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#getZoomStepPercent
+<span id="line500" class="line"></span>   * @returns {number}
+<span id="line501" class="line"></span>   *
+<span id="line502" class="line"></span>   **/</span>
+<span id="line503" class="line"></span>
+<span id="line504" class="line"></span>
+<span id="line505" class="line"></span>  $.ImagingHelper.prototype.getZoomStepPercent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line506" class="line"></span>    <span class="hljs-keyword">return</span> this._zoomStepPercent;
+<span id="line507" class="line"></span>  };
+<span id="line508" class="line"></span>  <span class="hljs-comment">/**
+<span id="line509" class="line"></span>   * Sets the percentage of the current zoom factor to increase/decrease when using the zoomIn/zoomOut methods.
+<span id="line510" class="line"></span>   *
+<span id="line511" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#setZoomStepPercent
+<span id="line512" class="line"></span>   * @param {number} value - The desired percentage.
+<span id="line513" class="line"></span>   *
+<span id="line514" class="line"></span>   **/</span>
+<span id="line515" class="line"></span>
+<span id="line516" class="line"></span>
+<span id="line517" class="line"></span>  $.ImagingHelper.prototype.setZoomStepPercent = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value)</span> {</span>
+<span id="line518" class="line"></span>    this._zoomStepPercent = value;
+<span id="line519" class="line"></span>  };
+<span id="line520" class="line"></span>  <span class="hljs-comment">/**
+<span id="line521" class="line"></span>   * Zooms and/or pans the viewport based on a viewport width and center point.
+<span id="line522" class="line"></span>   *
+<span id="line523" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#setView
+<span id="line524" class="line"></span>   * @param {number} width - The desired viewport width in logical units.
+<span id="line525" class="line"></span>   * @param {number} height - The desired viewport width in logical units (currently not used, native image aspect ratio is preserved).
+<span id="line526" class="line"></span>   * @param {external:"OpenSeadragon.Point"} centerpoint - The desired viewport center point in logical units.
+<span id="line527" class="line"></span>   * @param {boolean} [immediately] - If true, the view is set immediately with no spring animation.
+<span id="line528" class="line"></span>   *
+<span id="line529" class="line"></span>   **/</span>
+<span id="line530" class="line"></span>
+<span id="line531" class="line"></span>
+<span id="line532" class="line"></span>  $.ImagingHelper.prototype.setView = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(width, height, centerpoint, immediately)</span> {</span>
+<span id="line533" class="line"></span>    <span class="hljs-keyword">if</span> (this._haveImage) {
+<span id="line534" class="line"></span>      <span class="hljs-keyword">if</span> (this._viewportWidth !== width || this._viewportHeight !== height) {
+<span id="line535" class="line"></span>        this._viewer.viewport.zoomTo(<span class="hljs-number">1.0</span> / width, <span class="hljs-literal">null</span>, immediately);
+<span id="line536" class="line"></span>      }
+<span id="line537" class="line"></span>
+<span id="line538" class="line"></span>      <span class="hljs-keyword">if</span> (this._viewportCenter.x !== centerpoint.x || this._viewportCenter.y !== centerpoint.y) {
+<span id="line539" class="line"></span>        this._viewer.viewport.panTo(<span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(centerpoint.x, centerpoint.y / this.imgAspectRatio), immediately);
+<span id="line540" class="line"></span>      }
+<span id="line541" class="line"></span>    }
+<span id="line542" class="line"></span>  };
+<span id="line543" class="line"></span>  <span class="hljs-comment">/**
+<span id="line544" class="line"></span>   * Gets the current zoom factor, the ratio of the displayed size to the image's native size.
+<span id="line545" class="line"></span>   *
+<span id="line546" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#getZoomFactor
+<span id="line547" class="line"></span>   * @returns {number}
+<span id="line548" class="line"></span>   *
+<span id="line549" class="line"></span>   **/</span>
+<span id="line550" class="line"></span>
+<span id="line551" class="line"></span>
+<span id="line552" class="line"></span>  $.ImagingHelper.prototype.getZoomFactor = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line553" class="line"></span>    <span class="hljs-keyword">return</span> this._zoomFactor;
+<span id="line554" class="line"></span>  };
+<span id="line555" class="line"></span>  <span class="hljs-comment">/**
+<span id="line556" class="line"></span>   * Sets the zoom factor, the ratio of the displayed size to the image's native size.
+<span id="line557" class="line"></span>   *
+<span id="line558" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#setZoomFactor
+<span id="line559" class="line"></span>   * @param {number} value - The desired zoom factor.
+<span id="line560" class="line"></span>   * @param {boolean} [immediately] - If true, the view is set immediately with no spring animation.
+<span id="line561" class="line"></span>   *
+<span id="line562" class="line"></span>   **/</span>
+<span id="line563" class="line"></span>
+<span id="line564" class="line"></span>
+<span id="line565" class="line"></span>  $.ImagingHelper.prototype.setZoomFactor = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value, immediately)</span> {</span>
+<span id="line566" class="line"></span>    <span class="hljs-keyword">if</span> (this._haveImage &amp;&amp; value !== this._zoomFactor &amp;&amp; value &gt; <span class="hljs-number">0.0</span>) {
+<span id="line567" class="line"></span>      this._viewer.viewport.zoomTo(value * this.imgWidth / this.getViewerContainerSize().x, <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this._viewportCenter.x, this._viewportCenter.y / this.imgAspectRatio), immediately);
+<span id="line568" class="line"></span>    }
+<span id="line569" class="line"></span>  };
+<span id="line570" class="line"></span>  <span class="hljs-comment">/**
+<span id="line571" class="line"></span>   * Zooms in by a factor of getZoomStepPercent().
+<span id="line572" class="line"></span>   *
+<span id="line573" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#zoomIn
+<span id="line574" class="line"></span>   * @param {boolean} [immediately] - If true, the view is set immediately with no spring animation.
+<span id="line575" class="line"></span>   *
+<span id="line576" class="line"></span>   **/</span>
+<span id="line577" class="line"></span>
+<span id="line578" class="line"></span>
+<span id="line579" class="line"></span>  $.ImagingHelper.prototype.zoomIn = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(immediately)</span> {</span>
+<span id="line580" class="line"></span>    <span class="hljs-keyword">var</span> newzoom = this._zoomFactor;
+<span id="line581" class="line"></span>    newzoom *= <span class="hljs-number">1.0</span> + this._zoomStepPercent / <span class="hljs-number">100.0</span>;
+<span id="line582" class="line"></span>
+<span id="line583" class="line"></span>    <span class="hljs-keyword">if</span> (newzoom &gt; this._maxZoom) {
+<span id="line584" class="line"></span>      newzoom = this._maxZoom;
+<span id="line585" class="line"></span>    }
+<span id="line586" class="line"></span>
+<span id="line587" class="line"></span>    this.setZoomFactor(newzoom, immediately);
+<span id="line588" class="line"></span>  };
+<span id="line589" class="line"></span>  <span class="hljs-comment">/**
+<span id="line590" class="line"></span>   * Zooms out by a factor of getZoomStepPercent().
+<span id="line591" class="line"></span>   *
+<span id="line592" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#zoomOut
+<span id="line593" class="line"></span>   * @param {boolean} [immediately] - If true, the view is set immediately with no spring animation.
+<span id="line594" class="line"></span>   *
+<span id="line595" class="line"></span>   **/</span>
+<span id="line596" class="line"></span>
+<span id="line597" class="line"></span>
+<span id="line598" class="line"></span>  $.ImagingHelper.prototype.zoomOut = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(immediately)</span> {</span>
+<span id="line599" class="line"></span>    <span class="hljs-keyword">var</span> newzoom = this._zoomFactor;
+<span id="line600" class="line"></span>    newzoom /= <span class="hljs-number">1.0</span> + this._zoomStepPercent / <span class="hljs-number">100.0</span>;
+<span id="line601" class="line"></span>
+<span id="line602" class="line"></span>    <span class="hljs-keyword">if</span> (newzoom &lt; this._minZoom) {
+<span id="line603" class="line"></span>      newzoom = this._minZoom;
+<span id="line604" class="line"></span>    }
+<span id="line605" class="line"></span>
+<span id="line606" class="line"></span>    this.setZoomFactor(newzoom, immediately);
+<span id="line607" class="line"></span>  };
+<span id="line608" class="line"></span>  <span class="hljs-comment">/**
+<span id="line609" class="line"></span>   * Sets the zoom factor, the ratio of the displayed size to the image's native size, leaving the logical point in the same viewer position.
+<span id="line610" class="line"></span>   *
+<span id="line611" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#zoomAboutLogicalPoint
+<span id="line612" class="line"></span>   * @param {number} newzoomfactor - The desired zoom factor.
+<span id="line613" class="line"></span>   * @param {external:"OpenSeadragon.Point"} logpoint - The logical point to remain in current displayed position.
+<span id="line614" class="line"></span>   * @param {boolean} [immediately] - If true, the view is set immediately with no spring animation.
+<span id="line615" class="line"></span>   *
+<span id="line616" class="line"></span>   **/</span>
+<span id="line617" class="line"></span>
+<span id="line618" class="line"></span>
+<span id="line619" class="line"></span>  $.ImagingHelper.prototype.zoomAboutLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(newzoomfactor, logpoint, immediately)</span> {</span>
+<span id="line620" class="line"></span>    <span class="hljs-keyword">if</span> (this._haveImage &amp;&amp; newzoomfactor !== this._zoomFactor &amp;&amp; newzoomfactor &gt; <span class="hljs-number">0.0</span>) {
+<span id="line621" class="line"></span>      this._viewer.viewport.zoomTo(newzoomfactor * this.imgWidth / this.getViewerContainerSize().x, <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(logpoint.x, logpoint.y / this.imgAspectRatio), immediately);
+<span id="line622" class="line"></span>    }
+<span id="line623" class="line"></span>  };
+<span id="line624" class="line"></span>  <span class="hljs-comment">/**
+<span id="line625" class="line"></span>   * Zooms in by a factor of getZoomStepPercent(), leaving the logical point in the same viewer position.
+<span id="line626" class="line"></span>   *
+<span id="line627" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#zoomInAboutLogicalPoint
+<span id="line628" class="line"></span>   * @param {external:"OpenSeadragon.Point"} logpoint - The logical point to remain in current displayed position.
+<span id="line629" class="line"></span>   * @param {boolean} [immediately] - If true, the view is set immediately with no spring animation.
+<span id="line630" class="line"></span>   *
+<span id="line631" class="line"></span>   **/</span>
+<span id="line632" class="line"></span>
+<span id="line633" class="line"></span>
+<span id="line634" class="line"></span>  $.ImagingHelper.prototype.zoomInAboutLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(logpoint, immediately)</span> {</span>
+<span id="line635" class="line"></span>    <span class="hljs-keyword">var</span> newzoom = this._zoomFactor;
+<span id="line636" class="line"></span>    newzoom *= <span class="hljs-number">1.0</span> + this._zoomStepPercent / <span class="hljs-number">100.0</span>;
+<span id="line637" class="line"></span>
+<span id="line638" class="line"></span>    <span class="hljs-keyword">if</span> (newzoom &gt; this._maxZoom) {
+<span id="line639" class="line"></span>      newzoom = this._maxZoom;
+<span id="line640" class="line"></span>    }
+<span id="line641" class="line"></span>
+<span id="line642" class="line"></span>    this.zoomAboutLogicalPoint(newzoom, logpoint, immediately);
+<span id="line643" class="line"></span>  };
+<span id="line644" class="line"></span>  <span class="hljs-comment">/**
+<span id="line645" class="line"></span>   * Zooms out by a factor of getZoomStepPercent(), leaving the logical point in the same viewer position.
+<span id="line646" class="line"></span>   *
+<span id="line647" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#zoomOutAboutLogicalPoint
+<span id="line648" class="line"></span>   * @param {external:"OpenSeadragon.Point"} logpoint - The logical point to remain in current displayed position.
+<span id="line649" class="line"></span>   * @param {boolean} [immediately] - If true, the view is set immediately with no spring animation.
+<span id="line650" class="line"></span>   *
+<span id="line651" class="line"></span>   **/</span>
+<span id="line652" class="line"></span>
+<span id="line653" class="line"></span>
+<span id="line654" class="line"></span>  $.ImagingHelper.prototype.zoomOutAboutLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(logpoint, immediately)</span> {</span>
+<span id="line655" class="line"></span>    <span class="hljs-keyword">var</span> newzoom = this._zoomFactor;
+<span id="line656" class="line"></span>    newzoom /= <span class="hljs-number">1.0</span> + this._zoomStepPercent / <span class="hljs-number">100.0</span>;
+<span id="line657" class="line"></span>
+<span id="line658" class="line"></span>    <span class="hljs-keyword">if</span> (newzoom &lt; this._minZoom) {
+<span id="line659" class="line"></span>      newzoom = this._minZoom;
+<span id="line660" class="line"></span>    }
+<span id="line661" class="line"></span>
+<span id="line662" class="line"></span>    this.zoomAboutLogicalPoint(newzoom, logpoint, immediately);
+<span id="line663" class="line"></span>  };
+<span id="line664" class="line"></span>  <span class="hljs-comment">/**
+<span id="line665" class="line"></span>   * Pans the view so the logical point is centered in the viewport.
+<span id="line666" class="line"></span>   *
+<span id="line667" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#centerAboutLogicalPoint
+<span id="line668" class="line"></span>   * @param {external:"OpenSeadragon.Point"} logpoint - The desired center point.
+<span id="line669" class="line"></span>   * @param {boolean} [immediately] - If true, the view is set immediately with no spring animation.
+<span id="line670" class="line"></span>   *
+<span id="line671" class="line"></span>   **/</span>
+<span id="line672" class="line"></span>
+<span id="line673" class="line"></span>
+<span id="line674" class="line"></span>  $.ImagingHelper.prototype.centerAboutLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(logpoint, immediately)</span> {</span>
+<span id="line675" class="line"></span>    <span class="hljs-keyword">if</span> (this._haveImage &amp;&amp; (this._viewportCenter.x !== logpoint.x || this._viewportCenter.y !== logpoint.y)) {
+<span id="line676" class="line"></span>      this._viewer.viewport.panTo(<span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(logpoint.x, logpoint.y / this.imgAspectRatio), immediately);
+<span id="line677" class="line"></span>    }
+<span id="line678" class="line"></span>  };
+<span id="line679" class="line"></span>  <span class="hljs-comment">/**
+<span id="line680" class="line"></span>   *
+<span id="line681" class="line"></span>   *
+<span id="line682" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#physicalToLogicalPoint
+<span id="line683" class="line"></span>   *
+<span id="line684" class="line"></span>   **/</span>
+<span id="line685" class="line"></span>
+<span id="line686" class="line"></span>
+<span id="line687" class="line"></span>  $.ImagingHelper.prototype.physicalToLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
+<span id="line688" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.physicalToLogicalX(point.x), this.physicalToLogicalY(point.y));
+<span id="line689" class="line"></span>  };
+<span id="line690" class="line"></span>  <span class="hljs-comment">/**
+<span id="line691" class="line"></span>   *
+<span id="line692" class="line"></span>   *
+<span id="line693" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#logicalToPhysicalPoint
+<span id="line694" class="line"></span>   *
+<span id="line695" class="line"></span>   **/</span>
+<span id="line696" class="line"></span>
+<span id="line697" class="line"></span>
+<span id="line698" class="line"></span>  $.ImagingHelper.prototype.logicalToPhysicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
+<span id="line699" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.logicalToPhysicalX(point.x), this.logicalToPhysicalY(point.y));
+<span id="line700" class="line"></span>  };
+<span id="line701" class="line"></span>  <span class="hljs-comment">/**
+<span id="line702" class="line"></span>   *
+<span id="line703" class="line"></span>   *
+<span id="line704" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#physicalToLogicalX
+<span id="line705" class="line"></span>   *
+<span id="line706" class="line"></span>   **/</span>
+<span id="line707" class="line"></span>
+<span id="line708" class="line"></span>
+<span id="line709" class="line"></span>  $.ImagingHelper.prototype.physicalToLogicalX = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x)</span> {</span>
+<span id="line710" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage ? this._viewportOrigin.x + x / this.getViewerContainerSize().x * this._viewportWidth : <span class="hljs-number">0</span>;
+<span id="line711" class="line"></span>  };
+<span id="line712" class="line"></span>  <span class="hljs-comment">/**
+<span id="line713" class="line"></span>   *
+<span id="line714" class="line"></span>   *
+<span id="line715" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#physicalToLogicalY
+<span id="line716" class="line"></span>   *
+<span id="line717" class="line"></span>   **/</span>
+<span id="line718" class="line"></span>
+<span id="line719" class="line"></span>
+<span id="line720" class="line"></span>  $.ImagingHelper.prototype.physicalToLogicalY = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(y)</span> {</span>
+<span id="line721" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage ? this._viewportOrigin.y + y / this.getViewerContainerSize().y * this._viewportHeight : <span class="hljs-number">0</span>;
+<span id="line722" class="line"></span>  };
+<span id="line723" class="line"></span>  <span class="hljs-comment">/**
+<span id="line724" class="line"></span>   *
+<span id="line725" class="line"></span>   *
+<span id="line726" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#logicalToPhysicalX
+<span id="line727" class="line"></span>   *
+<span id="line728" class="line"></span>   **/</span>
+<span id="line729" class="line"></span>
+<span id="line730" class="line"></span>
+<span id="line731" class="line"></span>  $.ImagingHelper.prototype.logicalToPhysicalX = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x)</span> {</span>
+<span id="line732" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage ? (x - this._viewportOrigin.x) / this._viewportWidth * this.getViewerContainerSize().x : <span class="hljs-number">0</span>;
+<span id="line733" class="line"></span>  };
+<span id="line734" class="line"></span>  <span class="hljs-comment">/**
+<span id="line735" class="line"></span>   *
+<span id="line736" class="line"></span>   *
+<span id="line737" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#logicalToPhysicalY
+<span id="line738" class="line"></span>   *
+<span id="line739" class="line"></span>   **/</span>
+<span id="line740" class="line"></span>
+<span id="line741" class="line"></span>
+<span id="line742" class="line"></span>  $.ImagingHelper.prototype.logicalToPhysicalY = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(y)</span> {</span>
+<span id="line743" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage ? (y - this._viewportOrigin.y) / this._viewportHeight * this.getViewerContainerSize().y : <span class="hljs-number">0</span>;
+<span id="line744" class="line"></span>  };
+<span id="line745" class="line"></span>  <span class="hljs-comment">/**
+<span id="line746" class="line"></span>   *
+<span id="line747" class="line"></span>   *
+<span id="line748" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#physicalToLogicalDistance
+<span id="line749" class="line"></span>   *
+<span id="line750" class="line"></span>   **/</span>
+<span id="line751" class="line"></span>
+<span id="line752" class="line"></span>
+<span id="line753" class="line"></span>  $.ImagingHelper.prototype.physicalToLogicalDistance = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(distance)</span> {</span>
+<span id="line754" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage ? distance / this.getViewerContainerSize().x * this._viewportWidth : <span class="hljs-number">0</span>;
+<span id="line755" class="line"></span>  };
+<span id="line756" class="line"></span>  <span class="hljs-comment">/**
+<span id="line757" class="line"></span>   *
+<span id="line758" class="line"></span>   *
+<span id="line759" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#logicalToPhysicalDistance
+<span id="line760" class="line"></span>   *
+<span id="line761" class="line"></span>   **/</span>
+<span id="line762" class="line"></span>
+<span id="line763" class="line"></span>
+<span id="line764" class="line"></span>  $.ImagingHelper.prototype.logicalToPhysicalDistance = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(distance)</span> {</span>
+<span id="line765" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage ? distance / this._viewportWidth * this.getViewerContainerSize().x : <span class="hljs-number">0</span>;
+<span id="line766" class="line"></span>  };
+<span id="line767" class="line"></span>  <span class="hljs-comment">/**
+<span id="line768" class="line"></span>   *
+<span id="line769" class="line"></span>   *
+<span id="line770" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#logicalToDataPoint
+<span id="line771" class="line"></span>   *
+<span id="line772" class="line"></span>   **/</span>
+<span id="line773" class="line"></span>
+<span id="line774" class="line"></span>
+<span id="line775" class="line"></span>  $.ImagingHelper.prototype.logicalToDataPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
+<span id="line776" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.logicalToDataX(point.x), this.logicalToDataY(point.y));
+<span id="line777" class="line"></span>  };
+<span id="line778" class="line"></span>  <span class="hljs-comment">/**
+<span id="line779" class="line"></span>   *
+<span id="line780" class="line"></span>   *
+<span id="line781" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#dataToLogicalPoint
+<span id="line782" class="line"></span>   *
+<span id="line783" class="line"></span>   **/</span>
+<span id="line784" class="line"></span>
+<span id="line785" class="line"></span>
+<span id="line786" class="line"></span>  $.ImagingHelper.prototype.dataToLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
+<span id="line787" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.dataToLogicalX(point.x), this.dataToLogicalY(point.y));
+<span id="line788" class="line"></span>  };
+<span id="line789" class="line"></span>  <span class="hljs-comment">/**
+<span id="line790" class="line"></span>   *
+<span id="line791" class="line"></span>   *
+<span id="line792" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#physicalToDataPoint
+<span id="line793" class="line"></span>   *
+<span id="line794" class="line"></span>   **/</span>
+<span id="line795" class="line"></span>
+<span id="line796" class="line"></span>
+<span id="line797" class="line"></span>  $.ImagingHelper.prototype.physicalToDataPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
+<span id="line798" class="line"></span>    <span class="hljs-keyword">if</span> (this._viewer.world.getItemCount() === <span class="hljs-number">1</span>) {
+<span id="line799" class="line"></span>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.physicalToDataX(point.x), this.physicalToDataY(point.y));
+<span id="line800" class="line"></span>    } <span class="hljs-keyword">else</span> {
+<span id="line801" class="line"></span>      <span class="hljs-keyword">var</span> tiledImage = this._viewer.world.getItemAt(this._worldIndex);
+<span id="line802" class="line"></span>
+<span id="line803" class="line"></span>      <span class="hljs-keyword">return</span> tiledImage.viewerElementToImageCoordinates(point);
+<span id="line804" class="line"></span>    }
+<span id="line805" class="line"></span>  };
+<span id="line806" class="line"></span>  <span class="hljs-comment">/**
+<span id="line807" class="line"></span>   *
+<span id="line808" class="line"></span>   *
+<span id="line809" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#dataToPhysicalPoint
+<span id="line810" class="line"></span>   *
+<span id="line811" class="line"></span>   **/</span>
+<span id="line812" class="line"></span>
+<span id="line813" class="line"></span>
+<span id="line814" class="line"></span>  $.ImagingHelper.prototype.dataToPhysicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
+<span id="line815" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.dataToPhysicalX(point.x), this.dataToPhysicalY(point.y));
+<span id="line816" class="line"></span>  };
+<span id="line817" class="line"></span>  <span class="hljs-comment">/**
+<span id="line818" class="line"></span>   *
+<span id="line819" class="line"></span>   *
+<span id="line820" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#logicalToDataX
+<span id="line821" class="line"></span>   *
+<span id="line822" class="line"></span>   **/</span>
+<span id="line823" class="line"></span>
+<span id="line824" class="line"></span>
+<span id="line825" class="line"></span>  $.ImagingHelper.prototype.logicalToDataX = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x)</span> {</span>
+<span id="line826" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage ? x * this.imgWidth : <span class="hljs-number">0</span>;
+<span id="line827" class="line"></span>  };
+<span id="line828" class="line"></span>  <span class="hljs-comment">/**
+<span id="line829" class="line"></span>   *
+<span id="line830" class="line"></span>   *
+<span id="line831" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#logicalToDataY
+<span id="line832" class="line"></span>   *
+<span id="line833" class="line"></span>   **/</span>
+<span id="line834" class="line"></span>
+<span id="line835" class="line"></span>
+<span id="line836" class="line"></span>  $.ImagingHelper.prototype.logicalToDataY = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(y)</span> {</span>
+<span id="line837" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage ? y * this.imgHeight : <span class="hljs-number">0</span>;
+<span id="line838" class="line"></span>  };
+<span id="line839" class="line"></span>  <span class="hljs-comment">/**
+<span id="line840" class="line"></span>   *
+<span id="line841" class="line"></span>   *
+<span id="line842" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#dataToLogicalX
+<span id="line843" class="line"></span>   *
+<span id="line844" class="line"></span>   **/</span>
+<span id="line845" class="line"></span>
+<span id="line846" class="line"></span>
+<span id="line847" class="line"></span>  $.ImagingHelper.prototype.dataToLogicalX = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x)</span> {</span>
+<span id="line848" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage &amp;&amp; this.imgWidth &gt; <span class="hljs-number">0</span> ? x / this.imgWidth : <span class="hljs-number">0</span>;
+<span id="line849" class="line"></span>  };
+<span id="line850" class="line"></span>  <span class="hljs-comment">/**
+<span id="line851" class="line"></span>   *
+<span id="line852" class="line"></span>   *
+<span id="line853" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#dataToLogicalY
+<span id="line854" class="line"></span>   *
+<span id="line855" class="line"></span>   **/</span>
+<span id="line856" class="line"></span>
+<span id="line857" class="line"></span>
+<span id="line858" class="line"></span>  $.ImagingHelper.prototype.dataToLogicalY = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(y)</span> {</span>
+<span id="line859" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage &amp;&amp; this.imgHeight &gt; <span class="hljs-number">0</span> ? y / this.imgHeight : <span class="hljs-number">0</span>;
+<span id="line860" class="line"></span>  };
+<span id="line861" class="line"></span>  <span class="hljs-comment">/**
+<span id="line862" class="line"></span>   *
+<span id="line863" class="line"></span>   *
+<span id="line864" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#physicalToDataX
+<span id="line865" class="line"></span>   *
+<span id="line866" class="line"></span>   **/</span>
+<span id="line867" class="line"></span>
+<span id="line868" class="line"></span>
+<span id="line869" class="line"></span>  $.ImagingHelper.prototype.physicalToDataX = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x)</span> {</span>
+<span id="line870" class="line"></span>    <span class="hljs-keyword">if</span> (this._viewer.world.getItemCount() === <span class="hljs-number">1</span>) {
+<span id="line871" class="line"></span>      <span class="hljs-keyword">return</span> this._haveImage &amp;&amp; this.getViewerContainerSize().x &gt; <span class="hljs-number">0</span> ? (this._viewportOrigin.x + x / this.getViewerContainerSize().x * this._viewportWidth) * this.imgWidth : <span class="hljs-number">0</span>;
+<span id="line872" class="line"></span>    } <span class="hljs-keyword">else</span> {
+<span id="line873" class="line"></span>      <span class="hljs-keyword">var</span> tiledImage = this._viewer.world.getItemAt(this._worldIndex);
+<span id="line874" class="line"></span>
+<span id="line875" class="line"></span>      <span class="hljs-keyword">var</span> pt = tiledImage.viewerElementToImageCoordinates(<span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(x, <span class="hljs-number">0</span>)); <span class="hljs-comment">//viewportToImageCoordinates x,y,cur or point,cur</span>
+<span id="line876" class="line"></span>
+<span id="line877" class="line"></span>      <span class="hljs-keyword">return</span> pt.x;
+<span id="line878" class="line"></span>    }
+<span id="line879" class="line"></span>  };
+<span id="line880" class="line"></span>  <span class="hljs-comment">/**
+<span id="line881" class="line"></span>   *
+<span id="line882" class="line"></span>   *
+<span id="line883" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#physicalToDataY
+<span id="line884" class="line"></span>   *
+<span id="line885" class="line"></span>   **/</span>
+<span id="line886" class="line"></span>
+<span id="line887" class="line"></span>
+<span id="line888" class="line"></span>  $.ImagingHelper.prototype.physicalToDataY = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(y)</span> {</span>
+<span id="line889" class="line"></span>    <span class="hljs-keyword">if</span> (this._viewer.world.getItemCount() === <span class="hljs-number">1</span>) {
+<span id="line890" class="line"></span>      <span class="hljs-keyword">return</span> this._haveImage &amp;&amp; this.getViewerContainerSize().y &gt; <span class="hljs-number">0</span> ? (this._viewportOrigin.y + y / this.getViewerContainerSize().y * this._viewportHeight) * this.imgHeight : <span class="hljs-number">0</span>;
+<span id="line891" class="line"></span>    } <span class="hljs-keyword">else</span> {
+<span id="line892" class="line"></span>      <span class="hljs-keyword">var</span> tiledImage = this._viewer.world.getItemAt(this._worldIndex);
+<span id="line893" class="line"></span>
+<span id="line894" class="line"></span>      <span class="hljs-keyword">var</span> pt = tiledImage.viewerElementToImageCoordinates(<span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(<span class="hljs-number">0</span>, y)); <span class="hljs-comment">//viewportToImageCoordinates x,y,cur or point,cur</span>
+<span id="line895" class="line"></span>
+<span id="line896" class="line"></span>      <span class="hljs-keyword">return</span> pt.y;
+<span id="line897" class="line"></span>    }
+<span id="line898" class="line"></span>  };
+<span id="line899" class="line"></span>  <span class="hljs-comment">/**
+<span id="line900" class="line"></span>   *
+<span id="line901" class="line"></span>   *
+<span id="line902" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#dataToPhysicalX
+<span id="line903" class="line"></span>   *
+<span id="line904" class="line"></span>   **/</span>
+<span id="line905" class="line"></span>
+<span id="line906" class="line"></span>
+<span id="line907" class="line"></span>  $.ImagingHelper.prototype.dataToPhysicalX = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x)</span> {</span>
+<span id="line908" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage &amp;&amp; this.imgWidth &gt; <span class="hljs-number">0</span> ? (x / this.imgWidth - this._viewportOrigin.x) / this._viewportWidth * this.getViewerContainerSize().x : <span class="hljs-number">0</span>;
+<span id="line909" class="line"></span>  };
+<span id="line910" class="line"></span>  <span class="hljs-comment">/**
+<span id="line911" class="line"></span>   *
+<span id="line912" class="line"></span>   *
+<span id="line913" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#dataToPhysicalY
+<span id="line914" class="line"></span>   *
+<span id="line915" class="line"></span>   **/</span>
+<span id="line916" class="line"></span>
+<span id="line917" class="line"></span>
+<span id="line918" class="line"></span>  $.ImagingHelper.prototype.dataToPhysicalY = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(y)</span> {</span>
+<span id="line919" class="line"></span>    <span class="hljs-keyword">return</span> this._haveImage &amp;&amp; this.imgHeight &gt; <span class="hljs-number">0</span> ? (y / this.imgHeight - this._viewportOrigin.y) / this._viewportHeight * this.getViewerContainerSize().y : <span class="hljs-number">0</span>;
+<span id="line920" class="line"></span>  };
+<span id="line921" class="line"></span>  <span class="hljs-comment">/*
+<span id="line922" class="line"></span>   * @private
+<span id="line923" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#onOpen
+<span id="line924" class="line"></span>   *
+<span id="line925" class="line"></span>   **/</span>
+<span id="line926" class="line"></span>
+<span id="line927" class="line"></span>
+<span id="line928" class="line"></span>  $.ImagingHelper.prototype.onOpen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span>
+<span id="line929" class="line"></span>  /*<span class="hljs-title">event</span>*/
+<span id="line930" class="line"></span>  {</span>
+<span id="line931" class="line"></span>    <span class="hljs-comment">//OSD.console.log('!!! [onOpen]');</span>
+<span id="line932" class="line"></span>    <span class="hljs-keyword">var</span> tiledImage = this._viewer.world.getItemAt(this._worldIndex);
+<span id="line933" class="line"></span>
+<span id="line934" class="line"></span>    this._haveImage = <span class="hljs-literal">true</span>;
+<span id="line935" class="line"></span>    this.imgWidth = tiledImage.source.dimensions.x;
+<span id="line936" class="line"></span>    this.imgHeight = tiledImage.source.dimensions.y;
+<span id="line937" class="line"></span>    this.imgAspectRatio = this.imgWidth / this.imgHeight;
+<span id="line938" class="line"></span>
+<span id="line939" class="line"></span>    this._trackZoomPan();
+<span id="line940" class="line"></span>  };
+<span id="line941" class="line"></span>  <span class="hljs-comment">/*
+<span id="line942" class="line"></span>   * @private
+<span id="line943" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#onClose
+<span id="line944" class="line"></span>   *
+<span id="line945" class="line"></span>   **/</span>
+<span id="line946" class="line"></span>
+<span id="line947" class="line"></span>
+<span id="line948" class="line"></span>  $.ImagingHelper.prototype.onClose = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line949" class="line"></span>    <span class="hljs-comment">//OSD.console.log('!!! [onClose]');</span>
+<span id="line950" class="line"></span>    this._haveImage = <span class="hljs-literal">false</span>;
+<span id="line951" class="line"></span>    this.imgWidth = <span class="hljs-number">0.0</span>;
+<span id="line952" class="line"></span>    this.imgHeight = <span class="hljs-number">0.0</span>;
+<span id="line953" class="line"></span>    this.imgAspectRatio = <span class="hljs-number">0.0</span>;
+<span id="line954" class="line"></span>  };
+<span id="line955" class="line"></span>  <span class="hljs-comment">/*
+<span id="line956" class="line"></span>   * @private
+<span id="line957" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#onAnimation
+<span id="line958" class="line"></span>   *
+<span id="line959" class="line"></span>   **/</span>
+<span id="line960" class="line"></span>
+<span id="line961" class="line"></span>
+<span id="line962" class="line"></span>  $.ImagingHelper.prototype.onAnimation = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line963" class="line"></span>    this._trackZoomPan();
+<span id="line964" class="line"></span>  };
+<span id="line965" class="line"></span>  <span class="hljs-comment">/*
+<span id="line966" class="line"></span>   * @private
+<span id="line967" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#onAnimationFinish
+<span id="line968" class="line"></span>   *
+<span id="line969" class="line"></span>   **/</span>
+<span id="line970" class="line"></span>
+<span id="line971" class="line"></span>
+<span id="line972" class="line"></span>  $.ImagingHelper.prototype.onAnimationFinish = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line973" class="line"></span>    this._trackZoomPan();
+<span id="line974" class="line"></span>  };
+<span id="line975" class="line"></span>  <span class="hljs-comment">/*
+<span id="line976" class="line"></span>   * @private
+<span id="line977" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#onResize
+<span id="line978" class="line"></span>   *
+<span id="line979" class="line"></span>   **/</span>
+<span id="line980" class="line"></span>
+<span id="line981" class="line"></span>
+<span id="line982" class="line"></span>  $.ImagingHelper.prototype.onResize = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line983" class="line"></span>    <span class="hljs-keyword">if</span> (this._viewer.autoResize) {
+<span id="line984" class="line"></span>      this._trackZoomPan();
+<span id="line985" class="line"></span>    }
+<span id="line986" class="line"></span>  };
+<span id="line987" class="line"></span>  <span class="hljs-comment">/*
+<span id="line988" class="line"></span>   * @private
+<span id="line989" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#onFullPage
+<span id="line990" class="line"></span>   *
+<span id="line991" class="line"></span>   **/</span>
+<span id="line992" class="line"></span>
+<span id="line993" class="line"></span>
+<span id="line994" class="line"></span>  $.ImagingHelper.prototype.onFullPage = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line995" class="line"></span>    this._trackZoomPan();
+<span id="line996" class="line"></span>  };
+<span id="line997" class="line"></span>  <span class="hljs-comment">/*
+<span id="line998" class="line"></span>   * @private
+<span id="line999" class="line"></span>   * @method OpenSeadragonImaging.ImagingHelper.prototype#onFullScreen
+<span id="line1000" class="line"></span>   *
+<span id="line1001" class="line"></span>   **/</span>
+<span id="line1002" class="line"></span>
+<span id="line1003" class="line"></span>
+<span id="line1004" class="line"></span>  $.ImagingHelper.prototype.onFullScreen = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+<span id="line1005" class="line"></span>    this._trackZoomPan();
+<span id="line1006" class="line"></span>  }; <span class="hljs-comment">// /*</span>
+<span id="line1007" class="line"></span>  <span class="hljs-comment">//  * @private</span>
+<span id="line1008" class="line"></span>  <span class="hljs-comment">//  * @method OpenSeadragonImaging.ImagingHelper.prototype#onWorldAddItem</span>
+<span id="line1009" class="line"></span>  <span class="hljs-comment">//  *</span>
+<span id="line1010" class="line"></span>  <span class="hljs-comment">//  **/</span>
+<span id="line1011" class="line"></span>  <span class="hljs-comment">// $.ImagingHelper.prototype.onWorldAddItem = function (/*event*/) {</span>
+<span id="line1012" class="line"></span>  <span class="hljs-comment">// 	//OSD.console.log( '!!! onWorldAddItem', request.status, url );</span>
+<span id="line1013" class="line"></span>  <span class="hljs-comment">// 	//OSD.console.log('!!! [onWorldAddItem]');</span>
+<span id="line1014" class="line"></span>  <span class="hljs-comment">// 	// this._trackZoomPan();</span>
+<span id="line1015" class="line"></span>  <span class="hljs-comment">// };</span>
+<span id="line1016" class="line"></span>  <span class="hljs-comment">// /*</span>
+<span id="line1017" class="line"></span>  <span class="hljs-comment">//  * @private</span>
+<span id="line1018" class="line"></span>  <span class="hljs-comment">//  * @method OpenSeadragonImaging.ImagingHelper.prototype#onWorldRemoveItem</span>
+<span id="line1019" class="line"></span>  <span class="hljs-comment">//  *</span>
+<span id="line1020" class="line"></span>  <span class="hljs-comment">//  **/</span>
+<span id="line1021" class="line"></span>  <span class="hljs-comment">// $.ImagingHelper.prototype.onWorldRemoveItem = function (/*event*/) {</span>
+<span id="line1022" class="line"></span>  <span class="hljs-comment">// 	//OSD.console.log('!!! [onWorldRemoveItem]');</span>
+<span id="line1023" class="line"></span>  <span class="hljs-comment">// 	// this._trackZoomPan();</span>
+<span id="line1024" class="line"></span>  <span class="hljs-comment">// };</span>
+<span id="line1025" class="line"></span>  <span class="hljs-comment">// /*</span>
+<span id="line1026" class="line"></span>  <span class="hljs-comment">//  * @private</span>
+<span id="line1027" class="line"></span>  <span class="hljs-comment">//  * @method OpenSeadragonImaging.ImagingHelper.prototype#onWorldItemIndexChange</span>
+<span id="line1028" class="line"></span>  <span class="hljs-comment">//  *</span>
+<span id="line1029" class="line"></span>  <span class="hljs-comment">//  **/</span>
+<span id="line1030" class="line"></span>  <span class="hljs-comment">// $.ImagingHelper.prototype.onWorldItemIndexChange = function (/*event*/) {</span>
+<span id="line1031" class="line"></span>  <span class="hljs-comment">// 	//OSD.console.log('!!! [onWorldItemIndexChange]');</span>
+<span id="line1032" class="line"></span>  <span class="hljs-comment">// 	// this._trackZoomPan();</span>
+<span id="line1033" class="line"></span>  <span class="hljs-comment">// };</span>
+<span id="line1034" class="line"></span>  <span class="hljs-comment">// /*</span>
+<span id="line1035" class="line"></span>  <span class="hljs-comment">//  * @private</span>
+<span id="line1036" class="line"></span>  <span class="hljs-comment">//  * @method OpenSeadragonImaging.ImagingHelper.prototype#onWorldMetricsChange</span>
+<span id="line1037" class="line"></span>  <span class="hljs-comment">//  *</span>
+<span id="line1038" class="line"></span>  <span class="hljs-comment">//  **/</span>
+<span id="line1039" class="line"></span>  <span class="hljs-comment">// $.ImagingHelper.prototype.onWorldMetricsChange = function (/*event*/) {</span>
+<span id="line1040" class="line"></span>  <span class="hljs-comment">// 	//OSD.console.log('!!! [onWorldMetricsChange]');</span>
+<span id="line1041" class="line"></span>  <span class="hljs-comment">// 	// this._trackZoomPan();</span>
+<span id="line1042" class="line"></span>  <span class="hljs-comment">// };</span>
+<span id="line1043" class="line"></span>
+<span id="line1044" class="line"></span>
+<span id="line1045" class="line"></span>  <span class="hljs-keyword">return</span> $.ImagingHelper;
+<span id="line1046" class="line"></span>})(openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a || window.OpenSeadragon, window.OpenSeadragonImaging = window.OpenSeadragonImaging || {}));
+<span id="line1047" class="line"></span>
+<span id="line1048" class="line"></span><span class="hljs-comment">/***/</span> }),
+<span id="line1049" class="line"></span>
+<span id="line1050" class="line"></span><span class="hljs-comment">/***/</span> <span class="hljs-string">"openseadragon"</span>:
+<span id="line1051" class="line"></span><span class="hljs-comment">/*!********************************!*\
+<span id="line1052" class="line"></span>  !*** external "openseadragon" ***!
+<span id="line1053" class="line"></span>  \********************************/</span>
+<span id="line1054" class="line"></span><span class="hljs-comment">/*! no static exports found */</span>
+<span id="line1055" class="line"></span><span class="hljs-comment">/***/</span> (<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(module, exports)</span> {</span>
+<span id="line1056" class="line"></span>
+<span id="line1057" class="line"></span>module.exports = __WEBPACK_EXTERNAL_MODULE_openseadragon__;
+<span id="line1058" class="line"></span>
+<span id="line1059" class="line"></span><span class="hljs-comment">/***/</span> })
+<span id="line1060" class="line"></span>
+<span id="line1061" class="line"></span><span class="hljs-comment">/******/</span> })[<span class="hljs-string">"default"</span>];
+<span id="line1062" class="line"></span>});
+<span id="line1063" class="line"></span><span class="hljs-comment">//# sourceMappingURL=openseadragon-imaginghelper.js.map</span></code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Externals</h3><ul><li><a href="external-_OpenSeadragon.EventHandler_.html">OpenSeadragon.EventHandler</a></li><li><a href="external-_OpenSeadragon.EventSource_.html">OpenSeadragon.EventSource</a></li><li><a href="external-_OpenSeadragon.Point_.html">OpenSeadragon.Point</a></li><li><a href="external-_OpenSeadragon.Rect_.html">OpenSeadragon.Rect</a></li><li><a href="external-_OpenSeadragon.Viewer_.html">OpenSeadragon.Viewer</a></li><li><a href="external-OpenSeadragon.html">OpenSeadragon</a></li></ul><h3>Modules</h3><ul><li><a href="module-openseadragon-imaginghelper.html">openseadragon-imaginghelper</a></li></ul><h3>Namespaces</h3><ul><li><a href="OpenSeadragonImaging.html">OpenSeadragonImaging</a></li></ul><h3>Classes</h3><ul><li><a href="OpenSeadragonImaging.ImagingHelper.html">ImagingHelper</a></li></ul><h3>Events</h3><h4>OpenSeadragonImaging.ImagingHelper</h4><ul><li><a href="OpenSeadragonImaging.ImagingHelper.html#.event:image-view-changed">image-view-changed</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    OpenSeadragonImaging documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Sun Jul 12 2020 15:36:35 GMT-0700 (Pacific Daylight Time)
+</footer>
+</div>
+
+</body>
+</html>

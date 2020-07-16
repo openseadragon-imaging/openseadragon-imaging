@@ -1,0 +1,78 @@
+{
+  "homepage": ".",
+  "name": "openseadragon-imaging-githubio-site",
+  "version": "0.1.0",
+  "description": "openseadragon-imaging.github.io Site.",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "name": "Mark Salsbery",
+    "email": "msalsbery@hotmail.com",
+    "url": "https://github.com/msalsbery"
+  },
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/openseadragon-imaging/openseadragon-imaging.git"
+  },
+  "bugs": "https://github.com/openseadragon-imaging/openseadragon-imaging/issues",
+  "keywords": [
+    "openseadragon",
+    "openseadragonimaging"
+  ],
+  "engines": {
+    "node": ">= 12.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.29",
+    "@fortawesome/free-solid-svg-icons": "^5.13.1",
+    "@fortawesome/react-fontawesome": "^0.1.11",
+    "@openseadragon-imaging/openseadragon-consolehook": "^2.2.0",
+    "@openseadragon-imaging/openseadragon-imaginghelper": "^2.2.0",
+    "@openseadragon-imaging/openseadragon-viewerinputhook": "^2.2.0",
+    "bootstrap": "4.5.0",
+    "bootswatch": "4.5.0",
+    "openseadragon": "^2.4.2",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.2.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "5.2.0",
+    "react-scripts": "3.4.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.3.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-compat": "^3.8.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.5",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
+    "source-map-explorer": "^2.4.2",
+    "typescript": "^3.9.6"
+  },
+  "scripts": {
+    "analyze": "source-map-explorer build/static/js/*.js",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint **/*",
+    "lint-fix": "eslint --fix **/*",
+    "prettier": "prettier --check \"**/*\"",
+    "prettier-fix": "prettier --write \"**/*\""
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

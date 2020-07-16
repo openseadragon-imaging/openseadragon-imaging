@@ -1,0 +1,54 @@
+/***************************/
+/* Main Layout             */
+
+//.console-hook-page {}
+
+.console-hook-page .viewer-pane {
+  height: calc(100vh - 80px);
+  margin: 15px 0;
+}
+
+.console-hook-page .console-pane {
+  height: calc(100vh - 80px);
+  margin: 15px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/***************************/
+/* Views                   */
+
+.console-hook-page .viewer-tools-container {
+  padding: 0;
+}
+
+/*
+.viewer-toolbar
+{
+}
+*/
+
+.console-hook-page .viewer-container {
+  height: calc(100vh - 90px);
+  margin-top: 5px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.console-hook-page .console-tools-container {
+  padding: 0;
+}
+
+/*
+.console-toolbar
+{
+}
+*/
+
+.console-hook-page .console-list-container {
+  height: calc(100vh - 120px);
+  margin-top: 5px;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

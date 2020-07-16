@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>OpenSeadragonImaging External: OpenSeadragon.Viewer</title>
+    
+    <link type="text/css" rel="stylesheet" href="styles/highlight.js/default.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-openseadragonimaging.css">
+
+    <!--[if lt IE 9]>
+      <script src="scripts/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div id="container">
+<div id="main">
+    
+    <h1 class="page-title">External: OpenSeadragon.Viewer</h1>
+    
+    
+
+
+
+<section>
+    
+<header>
+    <h2>
+    OpenSeadragon.Viewer
+    </h2>
+    
+</header>  
+
+<article>
+    
+
+    <div class="container-overview">
+    
+    
+    
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="openseadragon-imaging_shared_docs_docs-globals.js.html">openseadragon-imaging/shared/docs/docs-globals.js</a>, <a href="openseadragon-imaging_shared_docs_docs-globals.js.html#line10">line 10</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="http://openseadragon.github.io/docs/OpenSeadragon.Viewer.html">OpenSeadragon.Viewer Documentation</a></li>
+        </ul>
+    </dd>
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <h4 class="name" id="addConsoleHook"><span class="type-signature"></span>addConsoleHook<span class="signature">(options)</span><span class="type-signature"> &rarr; {<a href="OpenSeadragonImaging.ConsoleHook.html">OpenSeadragonImaging.ConsoleHook</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Creates a new ConsoleHook.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>options</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>log</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">console.log function. Function can return true to prevent original function call.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>debug</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">console.debug function. Function can return true to prevent original function call.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>info</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">console.info function. Function can return true to prevent original function call.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>warn</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">console.warn function. Function can return true to prevent original function call.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>error</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">console.error function. Function can return true to prevent original function call.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+            </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="openseadragon-consolehook_dist_openseadragon-consolehook.js.html">openseadragon-consolehook/dist/openseadragon-consolehook.js</a>, <a href="openseadragon-consolehook_dist_openseadragon-consolehook.js.html#line132">line 132</a>
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="OpenSeadragonImaging.ConsoleHook.html">OpenSeadragonImaging.ConsoleHook</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Externals</h3><ul><li><a href="external-_OpenSeadragon.EventHandler_.html">OpenSeadragon.EventHandler</a></li><li><a href="external-_OpenSeadragon.EventSource_.html">OpenSeadragon.EventSource</a></li><li><a href="external-_OpenSeadragon.Point_.html">OpenSeadragon.Point</a></li><li><a href="external-_OpenSeadragon.Rect_.html">OpenSeadragon.Rect</a></li><li><a href="external-_OpenSeadragon.Viewer_.html">OpenSeadragon.Viewer</a></li><li><a href="external-OpenSeadragon.html">OpenSeadragon</a></li></ul><h3>Modules</h3><ul><li><a href="module-openseadragon-consolehook.html">openseadragon-consolehook</a></li></ul><h3>Namespaces</h3><ul><li><a href="OpenSeadragonImaging.html">OpenSeadragonImaging</a></li></ul><h3>Classes</h3><ul><li><a href="OpenSeadragonImaging.ConsoleHook.html">ConsoleHook</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    OpenSeadragonImaging documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Fri Jul 10 2020 21:23:53 GMT-0700 (Pacific Daylight Time)
+</footer>
+</div>
+
+</body>
+</html>

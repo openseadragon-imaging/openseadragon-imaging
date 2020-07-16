@@ -1,0 +1,19 @@
+# ESLint always ignores files in /node_modules/* and /bower_components/*
+# /node_modules/*
+src/serviceWorker.js
+public/builds/**
+public/docs/**
+public/dzimages/**
+public/old-demo/lib/**
+build/**
+LICENSE
+*.md
+*.json
+*.ico
+*.gif
+*.png
+*.txt
+*.css
+*.scss
+*.html
+*.config

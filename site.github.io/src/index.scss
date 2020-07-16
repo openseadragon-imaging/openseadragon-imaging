@@ -1,0 +1,25 @@
+// See https://bootswatch.com/help/
+// darkly flatly slate solar
+//@import "~bootswatch/dist/darkly/variables";
+
+// Override default Bootstrap variables before importing bootstrap.scss
+//   (see https://getbootstrap.com/docs/4.1/getting-started/theming/#css-variables)
+//$body-bg: #000;
+
+// Import Bootstrap and its default variables
+@import '~bootstrap/scss/bootstrap.scss';
+// // Preferred method - only import what's used
+// // Required
+// @import '~bootstrap/scss/functions';
+// @import '~bootstrap/scss/variables';
+// @import '~bootstrap/scss/mixins';
+// // Optional
+// @import '~bootstrap/scss/reboot';
+// @import '~bootstrap/scss/type';
+// @import '~bootstrap/scss/images';
+// @import '~bootstrap/scss/code';
+// @import '~bootstrap/scss/grid';
+
+// See https://bootswatch.com/help/
+// darkly flatly slate solar
+//@import "~bootswatch/dist/darkly/bootswatch";

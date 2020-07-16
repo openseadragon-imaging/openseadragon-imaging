@@ -1,0 +1,24 @@
+.console-hook-page .console-list {
+  font-size: 0.6rem;
+  list-style-type: none;
+}
+
+.console-hook-page .console-item {
+  color: rgba(0, 0, 0, 0.7);
+}
+.console-hook-page .console-item-log {
+  color: rgba(0, 0, 0, 0.7);
+}
+.console-hook-page .console-item-debug {
+  color: black;
+}
+.console-hook-page .console-item-info {
+  color: darkolivegreen;
+}
+.console-hook-page .console-item-warn {
+  color: darkgoldenrod;
+}
+.console-hook-page .console-item-error {
+  color: darkred;
+  font-weight: bold;
+}

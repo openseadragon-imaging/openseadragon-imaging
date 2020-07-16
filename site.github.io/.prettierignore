@@ -1,0 +1,18 @@
+node_modules/**
+public/builds/**
+public/docs/**
+public/dzimages/**
+public/old-demo/lib/**
+build/**
+LICENSE
+.browserslistrc SAMPLE
+.editorconfig
+.env
+.eslintignore
+.prettierignore
+package-lock.json
+*.ico
+*.gif
+*.png
+*.txt
+*.config

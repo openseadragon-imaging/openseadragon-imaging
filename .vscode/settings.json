@@ -1,10 +1,10 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-  //"eslint.workingDirectories": ["./server", "./client"],
+  "eslint.workingDirectories": ["./site.github.io"],
   //"tslint.enable": false,
   "eslint.enable": true,
   "eslint.trace.server": "off",
-  "eslint.debug": false,
+  "eslint.debug": true,
   "eslint.lintTask.enable": false,
   "eslint.format.enable": false,
 
@@ -92,5 +92,6 @@
   "files.eol": "\n",
 
   // When enabled, insert a final new line at the end of the file when saving it.
-  "files.insertFinalNewline": true
+"files.insertFinalNewline": true,
+"git.ignoreLimitWarning": true
 }
