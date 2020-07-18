@@ -10,7 +10,7 @@ import '@openseadragon-imaging/openseadragon-viewerinputhook';
 
 import osdNavImages from '../common/OsdNavImages';
 
-const tileSourcesPrefix = './dzimages/';
+const tileSourcesPrefix = '/dzimages/';
 const tileSources = [
 	tileSourcesPrefix + 'testpattern.dzi',
 	tileSourcesPrefix + 'tall.dzi',

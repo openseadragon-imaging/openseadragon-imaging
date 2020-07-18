@@ -1,10 +1,16 @@
-import React from 'react';
+import React from 'react'; //, { useState }
+import PropTypes from 'prop-types';
 import {
-	HashRouter as Router,
+	BrowserRouter as Router,
 	Switch,
 	Route,
 	Redirect
 } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import Container from 'react-bootstrap/Container';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './App.scss';
 import HomePage from '../page-home/HomePage';
@@ -12,40 +18,66 @@ import ConsoleHookPage from '../page-consolehook/ConsoleHookPage';
 import ImagingHelperPage from '../page-imaginghelper/ImagingHelperPage';
 
 const appTitle = 'OpenSeadragon Imaging';
-const appDesc = ''; //'Viewer'
+
+NavBar.propTypes = {
+	match: PropTypes.object.isRequired,
+	location: PropTypes.object.isRequired,
+	history: PropTypes.object.isRequired
+};
+
+function NavBar(props) {
+	//const { match, location, history } = props;
+	const { location } = props;
+	return (
+		<Navbar fluid fixed="top" bg="dark" variant="dark" expand="md">
+			<LinkContainer exact to="/">
+				<Navbar.Brand href="/">{appTitle}</Navbar.Brand>
+			</LinkContainer>
+			<Navbar.Toggle aria-controls="basic-navbar-nav" />
+			<Navbar.Collapse id="basic-navbar-nav">
+				<Nav activeKey={location.pathname} className="mr-auto">
+					<LinkContainer exact to="/">
+						<Nav.Link>Home</Nav.Link>
+					</LinkContainer>
+					<LinkContainer to="/imaginghelper">
+						<Nav.Link>ImagingHelper</Nav.Link>
+					</LinkContainer>
+					<LinkContainer to="/consolehook">
+						<Nav.Link>ConsoleHook</Nav.Link>
+					</LinkContainer>
+				</Nav>
+			</Navbar.Collapse>
+		</Navbar>
+	);
+}
+
+const NavBarWithRouter = withRouter(NavBar);
 
 function App(props) {
 	return (
 		<Router basename={process.env.PUBLIC_URL}>
-			<div>
-				<header>
-					<nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-						<a className="navbar-brand" href="/">
-							{appTitle}
-						</a>
-						<span className="navbar-text">{appDesc}</span>
-					</nav>
-				</header>
+			<header>
+				<NavBarWithRouter></NavBarWithRouter>
+			</header>
 
-				<main role="main" className="flex-shrink-0">
-					<div className="container-fluid">
-						<Switch>
-							<Route path="/home">
-								<HomePage />
-							</Route>
-							<Route path="/imaginghelper">
-								<ImagingHelperPage />
-							</Route>
-							<Route path="/consolehook">
-								<ConsoleHookPage />
-							</Route>
-							<Route path="/">
-								<Redirect to="/home" />
-							</Route>
-						</Switch>
-					</div>
-				</main>
-			</div>
+			<main role="main" className="flex-shrink-0">
+				<Container fluid>
+					<Switch>
+						<Route exact path="/">
+							<HomePage />
+						</Route>
+						<Route path="/imaginghelper">
+							<ImagingHelperPage />
+						</Route>
+						<Route path="/consolehook">
+							<ConsoleHookPage />
+						</Route>
+						<Route path="/">
+							<Redirect to="/" />
+						</Route>
+					</Switch>
+				</Container>
+			</main>
 		</Router>
 	);
 }
