@@ -1,7 +1,7 @@
 import React from 'react'; //, { useState }
 import PropTypes from 'prop-types';
 import {
-	BrowserRouter as Router,
+	HashRouter as Router,
 	Switch,
 	Route,
 	Redirect
@@ -29,7 +29,13 @@ function NavBar(props) {
 	//const { match, location, history } = props;
 	const { location } = props;
 	return (
-		<Navbar fluid fixed="top" bg="dark" variant="dark" expand="md">
+		<Navbar
+			collapseOnSelect
+			fixed="top"
+			bg="dark"
+			variant="dark"
+			expand="md"
+		>
 			<LinkContainer exact to="/">
 				<Navbar.Brand href="/">{appTitle}</Navbar.Brand>
 			</LinkContainer>
