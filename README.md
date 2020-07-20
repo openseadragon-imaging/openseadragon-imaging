@@ -2,7 +2,7 @@
 
 [![Gitter](https://badges.gitter.im/openseadragon-imaging/community.svg)](https://gitter.im/openseadragon-imaging/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Home of the [OpenSeadragon Imaging](http://msalsbery.github.io/openseadragon-imaging/site/index.html) suite:
+Home of the [OpenSeadragon Imaging](https://openseadragon-imaging.github.io/#/) suite:
 
 ### Repositories
 
@@ -13,7 +13,7 @@ Home of the [OpenSeadragon Imaging](http://msalsbery.github.io/openseadragon-ima
 1. [openseadragon-annohost](https://github.com/openseadragon-imaging/openseadragon-annohost)
 1. [openseadragon-annohost-canvas](https://github.com/openseadragon-imaging/openseadragon-annohost-canvas)
 
-[See the OpenSeadragon Imaging Demo/Test Site Live](http://msalsbery.github.io/openseadragon-imaging/demo/index.html)
+[Demo/Test Site](https://openseadragon-imaging.github.io/#/imaginghelper)
 
 Note: Shared link to gitter community
 https://gitter.im/openseadragon-imaging/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link
