@@ -1,10 +1,10 @@
-## openseadragon-imaging
+# openseadragon-imaging
 
 [![Gitter](https://badges.gitter.im/openseadragon-imaging/community.svg)](https://gitter.im/openseadragon-imaging/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Home of the [OpenSeadragon Imaging](https://openseadragon-imaging.github.io/#/) suite:
 
-### Repositories
+## Repositories
 
 1. [openseadragon-imaging](https://github.com/openseadragon-imaging/openseadragon-imaging)
 1. [openseadragon-consolehook](https://github.com/openseadragon-imaging/openseadragon-consolehook)
