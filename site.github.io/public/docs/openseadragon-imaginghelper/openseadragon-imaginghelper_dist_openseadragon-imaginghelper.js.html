@@ -137,14 +137,14 @@
 <span id="line110" class="line"></span>
 <span id="line111" class="line"></span><span class="hljs-comment">/**
 <span id="line112" class="line"></span> * @file openseadragon-imaginghelper.js
-<span id="line113" class="line"></span> * @version 2.2.1
+<span id="line113" class="line"></span> * @version 2.2.2
 <span id="line114" class="line"></span> * @author Mark Salsbery &lt;msalsbery@hotmail.com&gt;
 <span id="line115" class="line"></span> *
 <span id="line116" class="line"></span> */</span>
 <span id="line117" class="line"></span>
 <span id="line118" class="line"></span><span class="hljs-comment">/**
 <span id="line119" class="line"></span> * @module openseadragon-imaginghelper
-<span id="line120" class="line"></span> * @version 2.2.1
+<span id="line120" class="line"></span> * @version 2.2.2
 <span id="line121" class="line"></span> * @requires module:openseadragon
 <span id="line122" class="line"></span> */</span>
 <span id="line123" class="line"></span>
@@ -252,8 +252,8 @@
 <span id="line225" class="line"></span>
 <span id="line226" class="line"></span>    this._viewportWidth = <span class="hljs-number">0.0</span>;
 <span id="line227" class="line"></span>    this._viewportHeight = <span class="hljs-number">0.0</span>;
-<span id="line228" class="line"></span>    this._viewportOrigin = <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
-<span id="line229" class="line"></span>    this._viewportCenter = <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// Wire up event handlers</span>
+<span id="line228" class="line"></span>    this._viewportOrigin = <span class="hljs-keyword">new</span> OSD.Point(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+<span id="line229" class="line"></span>    this._viewportCenter = <span class="hljs-keyword">new</span> OSD.Point(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>); <span class="hljs-comment">// Wire up event handlers</span>
 <span id="line230" class="line"></span>
 <span id="line231" class="line"></span>    this._onOpen = OSD.delegate(<span class="hljs-keyword">this</span>, this.onOpen);
 <span id="line232" class="line"></span>    this._onClose = OSD.delegate(<span class="hljs-keyword">this</span>, this.onClose);
@@ -309,10 +309,10 @@
 <span id="line282" class="line"></span>   */</span>
 <span id="line283" class="line"></span>
 <span id="line284" class="line"></span>  $.ImagingHelper.version = {
-<span id="line285" class="line"></span>    <span class="hljs-string">"versionStr"</span>: <span class="hljs-string">"2.2.1"</span>,
+<span id="line285" class="line"></span>    <span class="hljs-string">"versionStr"</span>: <span class="hljs-string">"2.2.2"</span>,
 <span id="line286" class="line"></span>    <span class="hljs-string">"major"</span>: <span class="hljs-number">2</span>,
 <span id="line287" class="line"></span>    <span class="hljs-string">"minor"</span>: <span class="hljs-number">2</span>,
-<span id="line288" class="line"></span>    <span class="hljs-string">"revision"</span>: <span class="hljs-number">1</span>
+<span id="line288" class="line"></span>    <span class="hljs-string">"revision"</span>: <span class="hljs-number">2</span>
 <span id="line289" class="line"></span>  };
 <span id="line290" class="line"></span>  Object.defineProperty($.ImagingHelper.prototype, <span class="hljs-string">'constructor'</span>, {
 <span id="line291" class="line"></span>    enumerable: <span class="hljs-literal">false</span>,
@@ -457,7 +457,7 @@
 <span id="line430" class="line"></span>
 <span id="line431" class="line"></span>      <span class="hljs-keyword">if</span> (!newViewerSize.equals(this._viewerSize)) {
 <span id="line432" class="line"></span>        this._viewerSize = newViewerSize;
-<span id="line433" class="line"></span>        center = <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this._viewportCenter.x, this._viewportCenter.y / this.imgAspectRatio);
+<span id="line433" class="line"></span>        center = <span class="hljs-keyword">new</span> OSD.Point(this._viewportCenter.x, this._viewportCenter.y / this.imgAspectRatio);
 <span id="line434" class="line"></span>        zoom = this._zoomFactor;
 <span id="line435" class="line"></span>
 <span id="line436" class="line"></span>        this._viewer.viewport.resize(newViewerSize, <span class="hljs-literal">false</span>);
@@ -563,7 +563,7 @@
 <span id="line536" class="line"></span>      }
 <span id="line537" class="line"></span>
 <span id="line538" class="line"></span>      <span class="hljs-keyword">if</span> (this._viewportCenter.x !== centerpoint.x || this._viewportCenter.y !== centerpoint.y) {
-<span id="line539" class="line"></span>        this._viewer.viewport.panTo(<span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(centerpoint.x, centerpoint.y / this.imgAspectRatio), immediately);
+<span id="line539" class="line"></span>        this._viewer.viewport.panTo(<span class="hljs-keyword">new</span> OSD.Point(centerpoint.x, centerpoint.y / this.imgAspectRatio), immediately);
 <span id="line540" class="line"></span>      }
 <span id="line541" class="line"></span>    }
 <span id="line542" class="line"></span>  };
@@ -591,7 +591,7 @@
 <span id="line564" class="line"></span>
 <span id="line565" class="line"></span>  $.ImagingHelper.prototype.setZoomFactor = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(value, immediately)</span> {</span>
 <span id="line566" class="line"></span>    <span class="hljs-keyword">if</span> (this._haveImage &amp;&amp; value !== this._zoomFactor &amp;&amp; value &gt; <span class="hljs-number">0.0</span>) {
-<span id="line567" class="line"></span>      this._viewer.viewport.zoomTo(value * this.imgWidth / this.getViewerContainerSize().x, <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this._viewportCenter.x, this._viewportCenter.y / this.imgAspectRatio), immediately);
+<span id="line567" class="line"></span>      this._viewer.viewport.zoomTo(value * this.imgWidth / this.getViewerContainerSize().x, <span class="hljs-keyword">new</span> OSD.Point(this._viewportCenter.x, this._viewportCenter.y / this.imgAspectRatio), immediately);
 <span id="line568" class="line"></span>    }
 <span id="line569" class="line"></span>  };
 <span id="line570" class="line"></span>  <span class="hljs-comment">/**
@@ -645,7 +645,7 @@
 <span id="line618" class="line"></span>
 <span id="line619" class="line"></span>  $.ImagingHelper.prototype.zoomAboutLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(newzoomfactor, logpoint, immediately)</span> {</span>
 <span id="line620" class="line"></span>    <span class="hljs-keyword">if</span> (this._haveImage &amp;&amp; newzoomfactor !== this._zoomFactor &amp;&amp; newzoomfactor &gt; <span class="hljs-number">0.0</span>) {
-<span id="line621" class="line"></span>      this._viewer.viewport.zoomTo(newzoomfactor * this.imgWidth / this.getViewerContainerSize().x, <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(logpoint.x, logpoint.y / this.imgAspectRatio), immediately);
+<span id="line621" class="line"></span>      this._viewer.viewport.zoomTo(newzoomfactor * this.imgWidth / this.getViewerContainerSize().x, <span class="hljs-keyword">new</span> OSD.Point(logpoint.x, logpoint.y / this.imgAspectRatio), immediately);
 <span id="line622" class="line"></span>    }
 <span id="line623" class="line"></span>  };
 <span id="line624" class="line"></span>  <span class="hljs-comment">/**
@@ -700,7 +700,7 @@
 <span id="line673" class="line"></span>
 <span id="line674" class="line"></span>  $.ImagingHelper.prototype.centerAboutLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(logpoint, immediately)</span> {</span>
 <span id="line675" class="line"></span>    <span class="hljs-keyword">if</span> (this._haveImage &amp;&amp; (this._viewportCenter.x !== logpoint.x || this._viewportCenter.y !== logpoint.y)) {
-<span id="line676" class="line"></span>      this._viewer.viewport.panTo(<span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(logpoint.x, logpoint.y / this.imgAspectRatio), immediately);
+<span id="line676" class="line"></span>      this._viewer.viewport.panTo(<span class="hljs-keyword">new</span> OSD.Point(logpoint.x, logpoint.y / this.imgAspectRatio), immediately);
 <span id="line677" class="line"></span>    }
 <span id="line678" class="line"></span>  };
 <span id="line679" class="line"></span>  <span class="hljs-comment">/**
@@ -712,7 +712,7 @@
 <span id="line685" class="line"></span>
 <span id="line686" class="line"></span>
 <span id="line687" class="line"></span>  $.ImagingHelper.prototype.physicalToLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
-<span id="line688" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.physicalToLogicalX(point.x), this.physicalToLogicalY(point.y));
+<span id="line688" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OSD.Point(this.physicalToLogicalX(point.x), this.physicalToLogicalY(point.y));
 <span id="line689" class="line"></span>  };
 <span id="line690" class="line"></span>  <span class="hljs-comment">/**
 <span id="line691" class="line"></span>   *
@@ -723,7 +723,7 @@
 <span id="line696" class="line"></span>
 <span id="line697" class="line"></span>
 <span id="line698" class="line"></span>  $.ImagingHelper.prototype.logicalToPhysicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
-<span id="line699" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.logicalToPhysicalX(point.x), this.logicalToPhysicalY(point.y));
+<span id="line699" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OSD.Point(this.logicalToPhysicalX(point.x), this.logicalToPhysicalY(point.y));
 <span id="line700" class="line"></span>  };
 <span id="line701" class="line"></span>  <span class="hljs-comment">/**
 <span id="line702" class="line"></span>   *
@@ -800,7 +800,7 @@
 <span id="line773" class="line"></span>
 <span id="line774" class="line"></span>
 <span id="line775" class="line"></span>  $.ImagingHelper.prototype.logicalToDataPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
-<span id="line776" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.logicalToDataX(point.x), this.logicalToDataY(point.y));
+<span id="line776" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OSD.Point(this.logicalToDataX(point.x), this.logicalToDataY(point.y));
 <span id="line777" class="line"></span>  };
 <span id="line778" class="line"></span>  <span class="hljs-comment">/**
 <span id="line779" class="line"></span>   *
@@ -811,7 +811,7 @@
 <span id="line784" class="line"></span>
 <span id="line785" class="line"></span>
 <span id="line786" class="line"></span>  $.ImagingHelper.prototype.dataToLogicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
-<span id="line787" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.dataToLogicalX(point.x), this.dataToLogicalY(point.y));
+<span id="line787" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OSD.Point(this.dataToLogicalX(point.x), this.dataToLogicalY(point.y));
 <span id="line788" class="line"></span>  };
 <span id="line789" class="line"></span>  <span class="hljs-comment">/**
 <span id="line790" class="line"></span>   *
@@ -823,7 +823,7 @@
 <span id="line796" class="line"></span>
 <span id="line797" class="line"></span>  $.ImagingHelper.prototype.physicalToDataPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
 <span id="line798" class="line"></span>    <span class="hljs-keyword">if</span> (this._viewer.world.getItemCount() === <span class="hljs-number">1</span>) {
-<span id="line799" class="line"></span>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.physicalToDataX(point.x), this.physicalToDataY(point.y));
+<span id="line799" class="line"></span>      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OSD.Point(this.physicalToDataX(point.x), this.physicalToDataY(point.y));
 <span id="line800" class="line"></span>    } <span class="hljs-keyword">else</span> {
 <span id="line801" class="line"></span>      <span class="hljs-keyword">var</span> tiledImage = this._viewer.world.getItemAt(this._worldIndex);
 <span id="line802" class="line"></span>
@@ -839,7 +839,7 @@
 <span id="line812" class="line"></span>
 <span id="line813" class="line"></span>
 <span id="line814" class="line"></span>  $.ImagingHelper.prototype.dataToPhysicalPoint = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(point)</span> {</span>
-<span id="line815" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(this.dataToPhysicalX(point.x), this.dataToPhysicalY(point.y));
+<span id="line815" class="line"></span>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> OSD.Point(this.dataToPhysicalX(point.x), this.dataToPhysicalY(point.y));
 <span id="line816" class="line"></span>  };
 <span id="line817" class="line"></span>  <span class="hljs-comment">/**
 <span id="line818" class="line"></span>   *
@@ -899,7 +899,7 @@
 <span id="line872" class="line"></span>    } <span class="hljs-keyword">else</span> {
 <span id="line873" class="line"></span>      <span class="hljs-keyword">var</span> tiledImage = this._viewer.world.getItemAt(this._worldIndex);
 <span id="line874" class="line"></span>
-<span id="line875" class="line"></span>      <span class="hljs-keyword">var</span> pt = tiledImage.viewerElementToImageCoordinates(<span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(x, <span class="hljs-number">0</span>)); <span class="hljs-comment">//viewportToImageCoordinates x,y,cur or point,cur</span>
+<span id="line875" class="line"></span>      <span class="hljs-keyword">var</span> pt = tiledImage.viewerElementToImageCoordinates(<span class="hljs-keyword">new</span> OSD.Point(x, <span class="hljs-number">0</span>)); <span class="hljs-comment">//viewportToImageCoordinates x,y,cur or point,cur</span>
 <span id="line876" class="line"></span>
 <span id="line877" class="line"></span>      <span class="hljs-keyword">return</span> pt.x;
 <span id="line878" class="line"></span>    }
@@ -918,7 +918,7 @@
 <span id="line891" class="line"></span>    } <span class="hljs-keyword">else</span> {
 <span id="line892" class="line"></span>      <span class="hljs-keyword">var</span> tiledImage = this._viewer.world.getItemAt(this._worldIndex);
 <span id="line893" class="line"></span>
-<span id="line894" class="line"></span>      <span class="hljs-keyword">var</span> pt = tiledImage.viewerElementToImageCoordinates(<span class="hljs-keyword">new</span> openseadragon__WEBPACK_IMPORTED_MODULE_0___default.a.Point(<span class="hljs-number">0</span>, y)); <span class="hljs-comment">//viewportToImageCoordinates x,y,cur or point,cur</span>
+<span id="line894" class="line"></span>      <span class="hljs-keyword">var</span> pt = tiledImage.viewerElementToImageCoordinates(<span class="hljs-keyword">new</span> OSD.Point(<span class="hljs-number">0</span>, y)); <span class="hljs-comment">//viewportToImageCoordinates x,y,cur or point,cur</span>
 <span id="line895" class="line"></span>
 <span id="line896" class="line"></span>      <span class="hljs-keyword">return</span> pt.y;
 <span id="line897" class="line"></span>    }
@@ -1103,7 +1103,7 @@
 <br clear="both">
 
 <footer>
-    OpenSeadragonImaging documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Mon Jul 20 2020 21:55:36 GMT-0700 (Pacific Daylight Time)
+    OpenSeadragonImaging documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Tue Jul 21 2020 15:20:26 GMT-0700 (Pacific Daylight Time)
 </footer>
 </div>
 
