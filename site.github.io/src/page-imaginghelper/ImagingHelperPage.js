@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import './ImagingHelperPage.scss';
 import OsdViewer from './OsdViewer';
 import PropList from './PropList';
 
 function ImagingHelperPage(props) {
+	const [browserProps, setBrowserProps] = useState({
+		vendor: '',
+		version: 0,
+		alpha: false,
+		opacity: false
+	});
+	const [trackerProps, setTrackerProps] = useState({
+		wheelEventName: '',
+		havePointerCapture: false,
+		havePointerEvents: false,
+		unprefixedPointerEvents: false,
+		havePointerOverOut: false
+	});
 	const [haveImage, setHaveImage] = useState(false);
 	const [haveMouse, setHaveMouse] = useState(false);
 	const [imageProps, setImageProps] = useState({
@@ -73,12 +89,14 @@ function ImagingHelperPage(props) {
 	useEffect(() => {}, []);
 
 	return (
-		<div className="imaginghelper-page row no-gutters">
-			<div className="col-md-3 order-2 order-md-1">
-				<div className="container prop-pane">
-					<div className="row">
-						<div className="col prop-list-container">
+		<Row noGutters className="imaginghelper-page">
+			<Col md={{ order: 1, span: 3 }} xs={{ order: 2, span: 12 }}>
+				<Container fluid className="prop-pane">
+					<Row>
+						<Col className="prop-list-container">
 							<PropList
+								browserProps={browserProps}
+								trackerProps={trackerProps}
 								haveImage={haveImage}
 								haveMouse={haveMouse}
 								imageProps={imageProps}
@@ -88,15 +106,17 @@ function ImagingHelperPage(props) {
 								screenCoordinateProps={screenCoordinateProps}
 								dataCoordinateProps={dataCoordinateProps}
 							/>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="col-md-9 order-1 order-md-2">
-				<div className="container viewer-pane">
-					<div className="row">
-						<div className="col viewer-container">
+						</Col>
+					</Row>
+				</Container>
+			</Col>
+			<Col md={{ order: 2, span: 9 }} xs={{ order: 1, span: 12 }}>
+				<Container fluid className="viewer-pane">
+					<Row>
+						<Col className="viewer-container">
 							<OsdViewer
+								setBrowserProps={setBrowserProps}
+								setTrackerProps={setTrackerProps}
 								setHaveImage={setHaveImage}
 								setHaveMouse={setHaveMouse}
 								setImageProps={setImageProps}
@@ -110,11 +130,11 @@ function ImagingHelperPage(props) {
 								}
 								setDataCoordinateProps={setDataCoordinateProps}
 							/>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+						</Col>
+					</Row>
+				</Container>
+			</Col>
+		</Row>
 	);
 }
 

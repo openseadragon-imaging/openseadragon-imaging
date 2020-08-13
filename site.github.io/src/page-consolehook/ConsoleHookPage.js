@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './ConsoleHookPage.scss';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
@@ -38,11 +41,11 @@ function ConsoleHookPage(props) {
 	}, [consoleRows]);
 
 	return (
-		<div className="console-hook-page row">
-			<div className="col-md-9">
-				<div className="container viewer-pane">
-					{/* <div className="row">
-						<div className="col viewer-tools-container">
+		<Row className="console-hook-page">
+			<Col md={9} xs={12}>
+				<Container fluid className="viewer-pane">
+					{/* <Row>
+						<Col className="viewer-tools-container">
 							<ButtonToolbar
 								className="viewer-toolbar"
 								aria-label="Toolbar for viewer"
@@ -80,19 +83,19 @@ function ConsoleHookPage(props) {
 									</ToggleButton>
 								</ToggleButtonGroup>
 							</ButtonToolbar>
-						</div>
-					</div> */}
-					<div className="row">
-						<div className="col viewer-container">
+						</Col>
+					</Row> */}
+					<Row>
+						<Col className="viewer-container">
 							<OsdViewer addConsoleRow={handleAddConsoleRow} />
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="col-md-3">
-				<div className="container console-pane">
-					<div className="row">
-						<div className="col console-tools-container">
+						</Col>
+					</Row>
+				</Container>
+			</Col>
+			<Col md={3} xs={12}>
+				<Container fluid className="console-pane">
+					<Row>
+						<Col className="console-tools-container">
 							<ButtonToolbar
 								className="console-toolbar"
 								aria-label="Toolbar for console output"
@@ -115,19 +118,19 @@ function ConsoleHookPage(props) {
 									</Button>
 								</ButtonGroup>
 							</ButtonToolbar>
-						</div>
-					</div>
-					<div className="row">
-						<div
-							className="col console-list-container"
+						</Col>
+					</Row>
+					<Row>
+						<Col
+							className="console-list-container"
 							ref={consoleListContainerRef}
 						>
 							<ConsoleList consoleRows={consoleRows} />
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+						</Col>
+					</Row>
+				</Container>
+			</Col>
+		</Row>
 	);
 }
 

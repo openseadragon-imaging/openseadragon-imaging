@@ -1,7 +1,25 @@
-.imaginghelper-page .openseadragon {
+.imaginghelper-page .osdContainer {
   height: 100%;
   width: 100%;
   color: #cccccc;
   background-color: black;
   // cursor: grab; /*default grab pointer*/
+}
+
+// OpenSeadragon viewer element class
+.imaginghelper-page .openseadragon-canvas {
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// OpenSeadragon viewer element class
+.imaginghelper-page .openseadragon-container {
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

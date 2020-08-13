@@ -48,6 +48,7 @@ function OsdViewer(props) {
 			// minZoomLevel: 0.001,
 			// maxZoomLevel: 10,
 			// zoomPerClick: 1.4,
+			// zoomPerSecond: 1.2,
 			minZoomImageRatio: 0,
 			maxZoomPixelRatio: Infinity,
 			smoothTileEdgesMinZoom: Infinity,
@@ -59,28 +60,30 @@ function OsdViewer(props) {
 			// 	pinchRotate: true
 			// },
 			//------------------
-			showNavigationControl: true,
+			//showNavigationControl: true,
 			navigationControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
 			// showRotationControl: true,
 			// showFlipControl: true,
 			//------------------
 			showNavigator: false,
-			// navigatorSizeRatio: 0.25,
-			navigatorId: 'navigatorDiv1',
-			navigatorAutoResize: false,
+			navigatorPosition: 'BOTTOM_RIGHT',
+			navigatorSizeRatio: 0.3,
+			//navigatorId: 'navigatorDiv1',
+			//navigatorAutoResize: false,
+			navigatorAutoFade: false,
 			//------------------
 			sequenceMode: true,
 			// initialPage: 3,
 			// preserveViewport: true,
 			// preserveOverlays: false,
-			showSequenceControl: true,
+			// showSequenceControl: true,
 			sequenceControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
-			// showReferenceStrip: true,
-			// referenceStripScroll: 'horizontal',
+			showReferenceStrip: false,
+			referenceStripScroll: 'horizontal',
 			// referenceStripElement: null,
 			// referenceStripHeight: null,
 			// referenceStripWidth: null,
-			// referenceStripPosition: 'BOTTOM_LEFT',
+			referenceStripPosition: 'BOTTOM_LEFT',
 			// referenceStripSizeRatio: 0.2,
 			//------------------
 			collectionMode: false,
@@ -136,6 +139,15 @@ function OsdViewer(props) {
 			worldIndex: 0 //,
 			//onImageViewChanged: onImageViewChanged
 		});
+
+		// let el = document.createElement('div');
+		// OpenSeadragon.addClass(el, 'osd-canvas-child');
+		// viewer.canvas.appendChild(el);
+		// new OpenSeadragon.MouseTracker({
+		// 	userData: 'osd-canvas-child',
+		// 	element: el,
+		// 	startDisabled: false
+		// });
 
 		let onWindowResize = function () {
 			if (viewer && imagingHelper && !viewer.autoResize) {
@@ -198,7 +210,7 @@ function OsdViewer(props) {
 		};
 	}, [addConsoleRow]);
 
-	return <div id="osdContainer" className="openseadragon" />;
+	return <div id="osdContainer" className="osdContainer" />;
 }
 
 export default OsdViewer;

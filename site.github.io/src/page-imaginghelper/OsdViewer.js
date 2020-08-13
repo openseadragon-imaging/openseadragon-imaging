@@ -28,6 +28,8 @@ const tileSources = [
 ];
 
 OsdViewer.propTypes = {
+	setBrowserProps: PropTypes.func,
+	setTrackerProps: PropTypes.func,
 	setHaveImage: PropTypes.func,
 	setHaveMouse: PropTypes.func,
 	setImageProps: PropTypes.func,
@@ -40,6 +42,8 @@ OsdViewer.propTypes = {
 
 function OsdViewer(props) {
 	const {
+		setBrowserProps,
+		setTrackerProps,
 		setHaveImage,
 		setHaveMouse,
 		setImageProps,
@@ -52,7 +56,7 @@ function OsdViewer(props) {
 
 	useEffect(() => {
 		let viewer = new OpenSeadragon.Viewer({
-			debugMode: true,
+			debugMode: false,
 			id: 'osdContainer',
 			prefixUrl: '', //'lib/openseadragon/images/',
 			navImages: osdNavImages,
@@ -64,6 +68,7 @@ function OsdViewer(props) {
 			// minZoomLevel: 0.001,
 			// maxZoomLevel: 10,
 			// zoomPerClick: 1.4,
+			// zoomPerSecond: 1.2,
 			minZoomImageRatio: 0,
 			maxZoomPixelRatio: Infinity,
 			smoothTileEdgesMinZoom: Infinity,
@@ -197,6 +202,44 @@ function OsdViewer(props) {
 					}
 				}
 			]
+		});
+
+		let browser = OpenSeadragon.Browser;
+		switch (browser.vendor) {
+			case OpenSeadragon.BROWSERS.IE:
+				browser.vendor = 'Internet Explorer';
+				break;
+			case OpenSeadragon.BROWSERS.FIREFOX:
+				browser.vendor = 'Firefox';
+				break;
+			case OpenSeadragon.BROWSERS.SAFARI:
+				browser.vendor = 'Safari';
+				break;
+			case OpenSeadragon.BROWSERS.CHROME:
+				browser.vendor = 'Chrome';
+				break;
+			case OpenSeadragon.BROWSERS.OPERA:
+				browser.vendor = 'Opera';
+				break;
+			case OpenSeadragon.BROWSERS.EDGE:
+				browser.vendor = 'Edge';
+				break;
+			case OpenSeadragon.BROWSERS.CHROMEEDGE:
+				browser.vendor = 'Chromium Edge';
+				break;
+			default:
+				browser.vendor = 'Unknown';
+				break;
+		}
+		setBrowserProps(browser);
+
+		setTrackerProps({
+			wheelEventName: OpenSeadragon.MouseTracker.wheelEventName,
+			havePointerCapture: OpenSeadragon.MouseTracker.havePointerCapture,
+			havePointerEvents: OpenSeadragon.MouseTracker.havePointerEvents,
+			unprefixedPointerEvents:
+				OpenSeadragon.MouseTracker.unprefixedPointerEvents,
+			havePointerOverOut: OpenSeadragon.MouseTracker.havePointerOverOut
 		});
 
 		let osdCanvasEl = null;
@@ -423,6 +466,8 @@ function OsdViewer(props) {
 			viewer = null;
 		};
 	}, [
+		setBrowserProps,
+		setTrackerProps,
 		setHaveImage,
 		setHaveMouse,
 		setImageProps,
@@ -433,7 +478,7 @@ function OsdViewer(props) {
 		setDataCoordinateProps
 	]);
 
-	return <div id="osdContainer" className="openseadragon" />;
+	return <div id="osdContainer" className="osdContainer" />;
 }
 
 export default OsdViewer;

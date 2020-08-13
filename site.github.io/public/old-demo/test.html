@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Test</title>
+	<link rel="help" href="https://github.com/w3c/pointerevents/issues/327">
+	<style>
+		#container-div {
+			width: 500px;
+			height: 500px;
+			background-color: black;
+			touch-action: none;
+			overflow: hidden;
+		}
+
+		#parent-div {
+			width: 400px;
+			height: 400px;
+			background-color: grey;
+			touch-action: none;
+		}
+
+		#child-div {
+			position: relative;
+			width: 200px;
+			height: 200px;
+			left: 100px;
+			top: 100px;
+			background-color: green;
+			touch-action: none;
+		}
+
+		#log {
+			float: left;
+			overflow: auto;
+			height: 600px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="container-div">
+		<div id="parent-div">
+			<div id="child-div"></div>
+		</div>
+	</div>
+	<div id="log">
+	</div>
+	<script>
+		var parentDiv = document.getElementById("parent-div");
+		var childDiv = document.getElementById("child-div");
+		var logDiv = document.getElementById("log");
+		var dragging = false;
+		var currentX;
+		var currentY;
+		var initialX;
+		var initialY;
+		var xOffset = 0;
+		var yOffset = 0;
+
+		function addLog(message) {
+			var para = document.createElement("div");
+			var textNode = document.createTextNode(message);
+			para.appendChild(textNode);
+			logDiv.appendChild(para);
+		}
+
+		childDiv.addEventListener("pointerdown", (e) => {
+			addLog("pointerdown@child");
+			if (childDiv.hasPointerCapture(e.pointerId)) {
+				addLog("childDiv has pointer capture");
+				childDiv.releasePointerCapture(e.pointerId);
+			}
+		});
+
+		parentDiv.addEventListener("pointerdown", (e) => {
+			addLog("pointerdown@parent");
+			parentDiv.setPointerCapture(e.pointerId);
+			initialX = e.clientX - xOffset;
+			initialY = e.clientY - yOffset;
+			dragging = true;
+		});
+
+		parentDiv.addEventListener("gotpointercapture", (e) => {
+			addLog("parentDiv - gotpointercapture");
+		});
+
+		parentDiv.addEventListener("lostpointercapture", (e) => {
+			addLog("parentDiv - lostpointercapture");
+		});
+
+		childDiv.addEventListener("gotpointercapture", (e) => {
+			addLog("childDiv - gotpointercapture");
+		});
+
+		childDiv.addEventListener("lostpointercapture", (e) => {
+			addLog("childDiv - lostpointercapture");
+		});
+
+		childDiv.addEventListener("pointermove", (e) => {
+			//addLog("childDiv - pointermove");
+		});
+
+		childDiv.addEventListener("pointerup", (e) => {
+			addLog("childDiv - pointerup");
+		});
+
+		parentDiv.addEventListener("pointermove", (e) => {
+			//addLog("parentDiv - pointermove");
+			if (dragging) {
+				e.preventDefault();
+				currentX = e.clientX - initialX;
+				currentY = e.clientY - initialY;
+				xOffset = currentX;
+				yOffset = currentY;
+				parentDiv.style.transform = "translate3d(" + currentX + "px, " + currentY + "px, 0)";
+			}
+		});
+
+		parentDiv.addEventListener("pointerup", (e) => {
+			addLog("parentDiv - pointerup");
+			initialX = currentX;
+			initialY = currentY;
+			dragging = false;
+		});
+	</script>
+</body>
+
+</html>

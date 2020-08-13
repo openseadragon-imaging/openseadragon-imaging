@@ -3,6 +3,19 @@ import PropTypes from 'prop-types';
 import './PropList.scss';
 
 PropList.propTypes = {
+	browserProps: PropTypes.shape({
+		vendor: PropTypes.string,
+		version: PropTypes.number,
+		alpha: PropTypes.bool,
+		opacity: PropTypes.bool
+	}),
+	trackerProps: PropTypes.shape({
+		wheelEventName: PropTypes.string,
+		havePointerCapture: PropTypes.bool,
+		havePointerEvents: PropTypes.bool,
+		unprefixedPointerEvents: PropTypes.bool,
+		havePointerOverOut: PropTypes.bool
+	}),
 	haveImage: PropTypes.bool,
 	haveMouse: PropTypes.bool,
 	imageProps: PropTypes.shape({
@@ -72,6 +85,8 @@ PropList.propTypes = {
 
 function PropList(props) {
 	const {
+		browserProps,
+		trackerProps,
 		haveImage,
 		haveMouse,
 		imageProps,
@@ -85,33 +100,54 @@ function PropList(props) {
 	return (
 		<ul className="prop-list">
 			<li key="0" className="prop-list-item">
-				<pre>haveImage: {JSON.stringify(haveImage, null, 2)}</pre>
+				<pre>
+					navigator:{' '}
+					{JSON.stringify(
+						{
+							appVersion: navigator.appVersion,
+							userAgent: navigator.userAgent
+						},
+						null,
+						2
+					)}
+				</pre>
 			</li>
 			<li key="1" className="prop-list-item">
-				<pre>haveMouse: {JSON.stringify(haveMouse, null, 2)}</pre>
+				<pre>osdBrowser: {JSON.stringify(browserProps, null, 2)}</pre>
 			</li>
 			<li key="2" className="prop-list-item">
-				<pre>imageProps: {JSON.stringify(imageProps, null, 2)}</pre>
+				<pre>
+					osdMouseTracker: {JSON.stringify(trackerProps, null, 2)}
+				</pre>
 			</li>
 			<li key="3" className="prop-list-item">
-				<pre>viewerProps: {JSON.stringify(viewerProps, null, 2)}</pre>
+				<pre>haveImage: {JSON.stringify(haveImage, null, 2)}</pre>
 			</li>
 			<li key="4" className="prop-list-item">
-				<pre>mouseProps: {JSON.stringify(mouseProps, null, 2)}</pre>
+				<pre>haveMouse: {JSON.stringify(haveMouse, null, 2)}</pre>
 			</li>
 			<li key="5" className="prop-list-item">
+				<pre>imageProps: {JSON.stringify(imageProps, null, 2)}</pre>
+			</li>
+			<li key="6" className="prop-list-item">
+				<pre>viewerProps: {JSON.stringify(viewerProps, null, 2)}</pre>
+			</li>
+			<li key="7" className="prop-list-item">
+				<pre>mouseProps: {JSON.stringify(mouseProps, null, 2)}</pre>
+			</li>
+			<li key="8" className="prop-list-item">
 				<pre>
 					osdMouseRelativeProps:{' '}
 					{JSON.stringify(osdMouseRelativeProps, null, 2)}
 				</pre>
 			</li>
-			<li key="6" className="prop-list-item">
+			<li key="9" className="prop-list-item">
 				<pre>
 					screenCoordinateProps:{' '}
 					{JSON.stringify(screenCoordinateProps, null, 2)}
 				</pre>
 			</li>
-			<li key="7" className="prop-list-item">
+			<li key="10" className="prop-list-item">
 				<pre>
 					dataCoordinateProps:{' '}
 					{JSON.stringify(dataCoordinateProps, null, 2)}
