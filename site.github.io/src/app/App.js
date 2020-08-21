@@ -16,6 +16,7 @@ import './App.scss';
 import HomePage from '../page-home/HomePage';
 import ConsoleHookPage from '../page-consolehook/ConsoleHookPage';
 import ImagingHelperPage from '../page-imaginghelper/ImagingHelperPage';
+import NavigatorPage from '../page-navigator/NavigatorPage';
 
 const appTitle = 'OpenSeadragon Imaging';
 
@@ -51,6 +52,9 @@ function NavBar(props) {
 					<LinkContainer to="/consolehook">
 						<Nav.Link>ConsoleHook</Nav.Link>
 					</LinkContainer>
+					<LinkContainer to="/navigator">
+						<Nav.Link>Navigator</Nav.Link>
+					</LinkContainer>
 				</Nav>
 			</Navbar.Collapse>
 		</Navbar>
@@ -77,6 +81,9 @@ function App(props) {
 						</Route>
 						<Route path="/consolehook">
 							<ConsoleHookPage />
+						</Route>
+						<Route path="/navigator">
+							<NavigatorPage />
 						</Route>
 						<Route path="/">
 							<Redirect to="/" />

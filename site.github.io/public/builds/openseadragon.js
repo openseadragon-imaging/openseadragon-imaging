@@ -1,6 +1,6 @@
-//! openseadragon 2.4.2
-//! Built on 2020-08-13
-//! Git commit: v2.4.2-37-8fc83c6-dirty
+//! openseadragon 2.5.0
+//! Built on 2020-08-21
+//! Git commit: v2.4.2-51-c22e624-dirty
 //! http://openseadragon.github.io
 //! License: http://openseadragon.github.io/license/
 
@@ -90,7 +90,7 @@
 
 /**
  * @namespace OpenSeadragon
- * @version openseadragon 2.4.2
+ * @version openseadragon 2.5.0
  * @classdesc The root namespace for OpenSeadragon.  All utility methods
  * and classes are defined on or below this namespace.
  *
@@ -760,10 +760,10 @@ function OpenSeadragon( options ){
      * @since 1.0.0
      */
     $.version = {
-        versionStr: '2.4.2',
+        versionStr: '2.5.0',
         major: parseInt('2', 10),
-        minor: parseInt('4', 10),
-        revision: parseInt('2', 10)
+        minor: parseInt('5', 10),
+        revision: parseInt('0', 10)
     };
 
 
@@ -924,7 +924,7 @@ function OpenSeadragon( options ){
     };
 
     /**
-     * True if the browser supports the EventTarget.removeEventListener() method
+     * True if the browser supports the EventTarget.addEventListener() method
      * @member {Boolean} supportsAddEventListener
      * @memberof OpenSeadragon
      */
@@ -2054,7 +2054,7 @@ function OpenSeadragon( options ){
         },
 
         /**
-         * COnvert passed addEventListener() options to boolean or options object,
+         * Convert passed addEventListener() options to boolean or options object,
          * depending on browser support.
          * @function
          * @param {Boolean|Object} [options] Boolean useCapture, or if [supportsEventListenerOptions]{@link OpenSeadragon.supportsEventListenerOptions}, can be an object
@@ -2093,9 +2093,6 @@ function OpenSeadragon( options ){
          * @param {Boolean} [options.passive]
          * @param {Boolean} [options.once]
          */
-        // undefined - false or {capture: false}
-        // bool - bool or (capture: bool}
-        // obje - obje.capture or obje
         addEvent: (function () {
             if ( $.supportsAddEventListener ) {
                 return function ( element, eventName, handler, options ) {
@@ -3429,7 +3426,7 @@ $.EventSource.prototype = {
         this.preProcessEventHandler   = options.preProcessEventHandler   || null;
         this.enterHandler             = options.enterHandler             || null;
         this.leaveHandler             = options.leaveHandler             || null;
-        this.exitHandler              = options.exitHandler              || null; // Deprecated v2.4.3
+        this.exitHandler              = options.exitHandler              || null; // Deprecated v2.5.0
         this.overHandler              = options.overHandler              || null;
         this.outHandler               = options.outHandler               || null;
         this.pressHandler             = options.pressHandler             || null;
@@ -3703,7 +3700,7 @@ $.EventSource.prototype = {
          * Implement or assign implementation to these handlers during or after
          * calling the constructor.
          * @function
-         * @since v2.4.3
+         * @since v2.5.0
          * @param {Object} event
          * @param {OpenSeadragon.MouseTracker} event.eventSource
          *      A reference to the tracker instance.
@@ -3734,7 +3731,7 @@ $.EventSource.prototype = {
          * Implement or assign implementation to these handlers during or after
          * calling the constructor.
          * @function
-         * @deprecated v2.4.3 Use leaveHandler instead
+         * @deprecated v2.5.0 Use leaveHandler instead
          * @param {Object} event
          * @param {OpenSeadragon.MouseTracker} event.eventSource
          *      A reference to the tracker instance.
@@ -3767,7 +3764,7 @@ $.EventSource.prototype = {
          * Implement or assign implementation to these handlers during or after
          * calling the constructor.
          * @function
-         * @since v2.4.3
+         * @since v2.5.0
          * @param {Object} event
          * @param {OpenSeadragon.MouseTracker} event.eventSource
          *      A reference to the tracker instance.
@@ -3800,7 +3797,7 @@ $.EventSource.prototype = {
          * Implement or assign implementation to these handlers during or after
          * calling the constructor.
          * @function
-         * @since v2.4.3
+         * @since v2.5.0
          * @param {Object} event
          * @param {OpenSeadragon.MouseTracker} event.eventSource
          *      A reference to the tracker instance.
@@ -4506,6 +4503,7 @@ $.EventSource.prototype = {
      *
      * @typedef {Object} EventProcessInfo
      * @memberof OpenSeadragon.MouseTracker
+     * @since v2.5.0
      *
      * @property {OpenSeadragon.MouseTracker} eventSource
      *      A reference to the tracker instance.
@@ -4534,9 +4532,6 @@ $.EventSource.prototype = {
      *      Valid on eventType "pointerdown".
      * @property {Boolean} stopPropagation
      *      Set to true prevent the event from propagating to ancestor/descendent elements on capture/bubble phase.
-     * @property {Boolean} stopImmediatePropagation
-     *      Same as stopPropagation, but also prevents any other handlers on the tracker's element for
-     *      this event from being called.
      * @property {Boolean} shouldCapture
      *      (Internal Use) Set to true if the pointer should be captured (events (re)targeted to tracker element).
      * @property {Boolean} shouldReleaseCapture
@@ -5325,7 +5320,7 @@ $.EventSource.prototype = {
      * @inner
      */
     function onLoseCapture( tracker, event ) {
-        $.console.log('losecapture ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
+        //$.console.log('losecapture ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
         event = $.getEvent( event );
 
         var gPoint = {
@@ -5774,7 +5769,8 @@ $.EventSource.prototype = {
             gPoint = {
                 id: event.changedTouches[ i ].identifier,
                 type: 'touch',
-                // isPrimary not set - let the updatePointers functions determine it
+                // Simulate isPrimary
+                isPrimary: pointsList.getLength() === 0,
                 currentPos: getMouseAbsolute( event.changedTouches[ i ] ),
                 currentTime: time
             };
@@ -5822,7 +5818,6 @@ $.EventSource.prototype = {
             gPoint = {
                 id: event.changedTouches[ i ].identifier,
                 type: 'touch',
-                // isPrimary not set - let the updatePointers functions determine it
                 currentPos: getMouseAbsolute( event.changedTouches[ i ] ),
                 currentTime: time
             };
@@ -5868,7 +5863,6 @@ $.EventSource.prototype = {
             gPoint = {
                 id: event.changedTouches[ i ].identifier,
                 type: 'touch',
-                // isPrimary not set - let the updatePointers functions determine it
                 currentPos: getMouseAbsolute( event.changedTouches[ i ] ),
                 currentTime: time
             };
@@ -5961,8 +5955,6 @@ $.EventSource.prototype = {
 
         if ( event.target === tracker.element ) {
             //$.console.log('gotpointercapture ' + (tracker.userData ? tracker.userData.toString() : ''));
-            ////$.cancelEvent( event ); not cancelable!
-            //$.stopEvent( event );
             updatePointerCaptured( tracker, {
                 id: event.pointerId,
                 type: getPointerType( event )
@@ -5992,8 +5984,6 @@ $.EventSource.prototype = {
 
         if ( event.target === tracker.element ) {
             //$.console.log('lostpointercapture ' + (tracker.userData ? tracker.userData.toString() : ''));
-            ////$.cancelEvent( event ); not cancelable!
-            //$.stopEvent( event );
             updatePointerCaptured( tracker, {
                 id: event.pointerId,
                 type: getPointerType( event )
@@ -6177,9 +6167,8 @@ $.EventSource.prototype = {
     function onPointerDown( tracker, event ) {
         var gPoint;
 
-        $.console.log('onPointerDown ' + (tracker.userData ? tracker.userData.toString() : ''));
+        //$.console.log('onPointerDown ' + (tracker.userData ? tracker.userData.toString() : ''));
         // $.console.log('onPointerDown ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + event.target.tagName);
-        // event.target.style.background = '#F0F';
 
         // Most browsers implicitly capture touch pointer events
         // Note no IE versions have element.hasPointerCapture() so no implicit
@@ -6219,17 +6208,12 @@ $.EventSource.prototype = {
             $.stopEvent( event );
         }
         if ( eventInfo.shouldCapture && !implicitlyCaptured ) {
-           //$.stopEvent( event );
            //$.console.log('pointerdown calling capturePointer() ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
            capturePointer( tracker, gPoint );
         } else if ( !eventInfo.shouldCapture && implicitlyCaptured ) {
-           //$.stopEvent( event );
            //$.console.log('pointerdown calling releasePointer() ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
            releasePointer( tracker, gPoint ); //TODO should we do this? Investigate when implementing bubble handling
         }
-        // else if ( eventInfo.shouldCapture && implicitlyCaptured ) {
-        //     //$.stopEvent( event );
-        // }
     }
 
 
@@ -6265,7 +6249,7 @@ $.EventSource.prototype = {
     function handlePointerUp( tracker, event ) {
         var gPoint;
 
-        $.console.log('onPointerUp ' + (tracker.userData ? tracker.userData.toString() : ''));
+        //$.console.log('onPointerUp ' + (tracker.userData ? tracker.userData.toString() : ''));
 
         gPoint = {
             id: event.pointerId,
@@ -6367,7 +6351,7 @@ $.EventSource.prototype = {
      * @inner
      */
     function onPointerCancel( tracker, event ) {
-        //$.console.log('pointercancel ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.isPrimary ? 'isPrimary' : ''));
+        //$.console.log('pointercancel ' + (tracker.userData ? tracker.userData.toString() : ''));
 
         var gPoint = {
             id: event.pointerId,
@@ -6406,16 +6390,6 @@ $.EventSource.prototype = {
      * @returns {Number} Number of gesture points in pointsList.
      */
     function startTrackingPointer( pointsList, gPoint ) {
-
-        // If isPrimary is not known for the pointer then set it according to our rules:
-        //    true if the first pointer in the gesture, otherwise false
-        if ( !Object.prototype.hasOwnProperty.call( gPoint, 'isPrimary' ) ) {
-            if ( pointsList.getLength() === 0 ) {
-                gPoint.isPrimary = true;
-            } else {
-                gPoint.isPrimary = false;
-            }
-        }
         gPoint.speed = 0;
         gPoint.direction = 0;
         gPoint.contactPos = gPoint.currentPos;
@@ -6451,18 +6425,6 @@ $.EventSource.prototype = {
             }
 
             listLength = pointsList.removeById( gPoint.id );
-
-            //TODO Browsers don't re-assign primary pointers so this is probably incorrect
-            // // If isPrimary is not known for the pointer and we just removed the primary pointer from the list then we need to set another pointer as primary
-            // if ( !Object.prototype.hasOwnProperty.call( gPoint, 'isPrimary' ) ) {
-            //     primaryPoint = pointsList.getPrimary();
-            //     if ( !primaryPoint ) {
-            //         primaryPoint = pointsList.getByIndex( 0 );
-            //         if ( primaryPoint ) {
-            //             primaryPoint.isPrimary = true;
-            //         }
-            //     }
-            // }
         } else {
             listLength = pointsList.getLength();
         }
@@ -6484,7 +6446,6 @@ $.EventSource.prototype = {
                 eventInfo.preventDefault = false;
                 eventInfo.preventGesture = !tracker.hasGestureHandlers;
                 eventInfo.stopPropagation = false;
-                eventInfo.stopImmediatePropagation = false;
                 break;
             case 'pointerover':
             case 'pointerout':
@@ -6493,7 +6454,6 @@ $.EventSource.prototype = {
                 eventInfo.preventDefault = false;
                 eventInfo.preventGesture = false;
                 eventInfo.stopPropagation = false;
-                eventInfo.stopImmediatePropagation = false;
                 break;
             case 'pointerdown':
                 eventInfo.isStopable = true;
@@ -6501,7 +6461,6 @@ $.EventSource.prototype = {
                 eventInfo.preventDefault = false;//tracker.hasGestureHandlers;
                 eventInfo.preventGesture = !tracker.hasGestureHandlers;
                 eventInfo.stopPropagation = false;
-                eventInfo.stopImmediatePropagation = false;
                 break;
             case 'pointerup':
                 eventInfo.isStopable = true;
@@ -6509,7 +6468,6 @@ $.EventSource.prototype = {
                 eventInfo.preventDefault = false;
                 eventInfo.preventGesture = !tracker.hasGestureHandlers;
                 eventInfo.stopPropagation = false;
-                eventInfo.stopImmediatePropagation = false;
                 break;
             case 'wheel':
                 eventInfo.isStopable = true;
@@ -6517,7 +6475,6 @@ $.EventSource.prototype = {
                 eventInfo.preventDefault = false;//tracker.hasScrollHandler;
                 eventInfo.preventGesture = !tracker.hasScrollHandler;
                 eventInfo.stopPropagation = false;
-                eventInfo.stopImmediatePropagation = false;
                 break;
             case 'gotpointercapture':
             case 'lostpointercapture':
@@ -6527,7 +6484,6 @@ $.EventSource.prototype = {
                 eventInfo.preventDefault = false;
                 eventInfo.preventGesture = false;
                 eventInfo.stopPropagation = false;
-                eventInfo.stopImmediatePropagation = false;
                 break;
             case 'pointerenter':
             case 'pointerleave':
@@ -6537,7 +6493,6 @@ $.EventSource.prototype = {
                 eventInfo.preventDefault = false;
                 eventInfo.preventGesture = false;
                 eventInfo.stopPropagation = false;
-                eventInfo.stopImmediatePropagation = false;
                 break;
         }
     }
@@ -7310,9 +7265,6 @@ $.EventSource.prototype = {
 
         if ( updateGPoint ) {
             // Already tracking the pointer...update it
-            if ( Object.prototype.hasOwnProperty.call( gPoint, 'isPrimary' ) ) {
-                updateGPoint.isPrimary = gPoint.isPrimary;
-            }
             updateGPoint.lastPos = updateGPoint.currentPos;
             updateGPoint.lastTime = updateGPoint.currentTime;
             updateGPoint.currentPos = gPoint.currentPos;
@@ -7461,10 +7413,6 @@ $.EventSource.prototype = {
         if ( updateGPoint ) {
             stopTrackingPointer( tracker, pointsList, updateGPoint );
         }
-        //else {
-        //    // should never get here?
-        //    $.console.warn('updatePointerCancel(): pointercancel on untracked gPoint');
-        //}
     }
 
 
@@ -10874,7 +10822,7 @@ function onCanvasDrag( event ) {
      * @property {Number} direction - Current computed direction, expressed as an angle counterclockwise relative to the positive X axis (-pi to pi, in radians). Only valid if speed > 0.
      * @property {Boolean} shift - True if the shift key was pressed during this event.
      * @property {Object} originalEvent - The original DOM event.
-     * @property {Boolean} preventDefaultAction - Set to true to prevent default drag behaviour. Default: false.
+     * @property {Boolean} preventDefaultAction - Set to true to prevent default drag to pan behaviour. Default: false.
      * @property {?Object} userData - Arbitrary subscriber-defined object.
      */
     this.raiseEvent( 'canvas-drag', canvasDragEventArgs);
@@ -12184,7 +12132,7 @@ function onCanvasDrag( event ) {
      * @property {Boolean} shift - True if the shift key was pressed during this event.
      * @property {Object} originalEvent - The original DOM event.
      * @property {?Object} userData - Arbitrary subscriber-defined object.
-     * @property {Boolean} preventDefaultAction - Set to true to prevent default click to zoom behaviour. Default: false.
+     * @property {Boolean} preventDefaultAction - Set to true to prevent default drag to pan behaviour. Default: false.
      */
      this.viewer.raiseEvent('navigator-drag', canvasDragEventArgs);
 
@@ -14570,7 +14518,7 @@ $.extend( $.TmsTileSource.prototype, $.TileSource.prototype, /** @lends OpenSead
      *      tilesUrl: "/test/data/zoomify/"
      * }
      *
-     * The tileSize is currently hardcoded to 256 (the usual Zoomify default). The tileUrl must the path to the image _directory_.
+     * The tileSize is set to 256 (the usual Zoomify default) when it is not defined. The tileUrl must the path to the image _directory_.
      *
      * 2) Loading image metadata from xml file: (CURRENTLY NOT SUPPORTED)
      *
@@ -14596,7 +14544,9 @@ $.extend( $.TmsTileSource.prototype, $.TileSource.prototype, /** @lends OpenSead
      * @param {String} tilesUrl
      */
     $.ZoomifyTileSource = function(options) {
-        options.tileSize = 256;
+        if(typeof options.tileSize === 'undefined'){
+            options.tileSize = 256;
+        }
 
         var currentImageSize = {
             x: options.width,

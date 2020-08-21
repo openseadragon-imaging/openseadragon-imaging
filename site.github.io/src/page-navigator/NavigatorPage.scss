@@ -1,0 +1,68 @@
+/***************************/
+/* Main Layout             */
+
+//.navigator-page {}
+
+.navigator-page .viewer-pane {
+  height: calc(100vh - 80px);
+  margin: 15px 0;
+}
+
+.navigator-page .viewer-container {
+  height: calc(100vh - 90px);
+  margin-top: 5px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.navigator-page .osdContainer {
+  height: 100%;
+  width: 100%;
+  color: #cccccc;
+  background-color: black;
+  // cursor: grab; /*default grab pointer*/
+}
+
+//------------------------------------------------------
+
+.navigator-page .navigator-pane {
+  height: calc(100vh - 80px);
+  margin: 15px 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.navigator-page .navigator-container {
+  height: calc(100vh - 90px);
+  margin-top: 5px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.navigator-page .osdNavContainer {
+  height: 100%;
+  width: 100%;
+  color: #cccccc;
+  background-color: black;
+  // cursor: grab; /*default grab pointer*/
+}
+
+//------------------------------------------------------
+
+// OpenSeadragon viewer element class
+.navigator-page .openseadragon-canvas {
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// OpenSeadragon viewer element class
+.navigator-page .openseadragon-container {
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
