@@ -1,6 +1,6 @@
-//! openseadragon 2.5.0
-//! Built on 2020-08-21
-//! Git commit: v2.4.2-51-c22e624-dirty
+//! openseadragon 2.4.2
+//! Built on 2020-08-25
+//! Git commit: v2.4.2-57-f7cd901
 //! http://openseadragon.github.io
 //! License: http://openseadragon.github.io/license/
 
@@ -90,7 +90,7 @@
 
 /**
  * @namespace OpenSeadragon
- * @version openseadragon 2.5.0
+ * @version openseadragon 2.4.2
  * @classdesc The root namespace for OpenSeadragon.  All utility methods
  * and classes are defined on or below this namespace.
  *
@@ -760,10 +760,10 @@ function OpenSeadragon( options ){
      * @since 1.0.0
      */
     $.version = {
-        versionStr: '2.5.0',
+        versionStr: '2.4.2',
         major: parseInt('2', 10),
-        minor: parseInt('5', 10),
-        revision: parseInt('0', 10)
+        minor: parseInt('4', 10),
+        revision: parseInt('2', 10)
     };
 
 
@@ -4871,12 +4871,18 @@ $.EventSource.prototype = {
 
         if ( $.MouseTracker.havePointerCapture ) {
             if ( $.MouseTracker.havePointerEvents ) {
-                if ( $.MouseTracker.unprefixedPointerEvents ) {
-                    tracker.element.setPointerCapture( gPoint.id );
-                    //$.console.log('element.setPointerCapture() called');
-                } else {
-                    tracker.element.msSetPointerCapture( gPoint.id );
-                    //$.console.log('element.msSetPointerCapture() called');
+                // Can throw InvalidPointerId
+                //   (should never happen so we'll log a warning)
+                try {
+                    if ( $.MouseTracker.unprefixedPointerEvents ) {
+                        tracker.element.setPointerCapture( gPoint.id );
+                        //$.console.log('element.setPointerCapture() called');
+                    } else {
+                        tracker.element.msSetPointerCapture( gPoint.id );
+                        //$.console.log('element.msSetPointerCapture() called');
+                    }
+                } catch ( e ) {
+                    $.console.warn('setPointerCapture() called on invalid pointer ID');
                 }
             } else {
                 tracker.element.setCapture( true );
@@ -4922,15 +4928,28 @@ $.EventSource.prototype = {
      */
     function releasePointer( tracker, gPoint ) {
         var eventParams;
+        var pointsList;
+        var cachedGPoint;
 
         if ( $.MouseTracker.havePointerCapture ) {
             if ( $.MouseTracker.havePointerEvents ) {
-                if ( $.MouseTracker.unprefixedPointerEvents ) {
-                    tracker.element.releasePointerCapture( gPoint.id );
-                    //$.console.log('element.releasePointerCapture() called');
-                } else {
-                    tracker.element.msReleasePointerCapture( gPoint.id );
-                    //$.console.log('element.msReleasePointerCapture() called');
+                pointsList = tracker.getActivePointersListByType( gPoint.type );
+                cachedGPoint = pointsList.getById( gPoint.id );
+                if ( !cachedGPoint || !cachedGPoint.captured ) {
+                    return;
+                }
+                // Can throw InvalidPointerId
+                //   (should never happen so we'll log a warning)
+                try {
+                    if ( $.MouseTracker.unprefixedPointerEvents ) {
+                        tracker.element.releasePointerCapture( gPoint.id );
+                        //$.console.log('element.releasePointerCapture() called');
+                    } else {
+                        tracker.element.msReleasePointerCapture( gPoint.id );
+                        //$.console.log('element.msReleasePointerCapture() called');
+                    }
+                } catch ( e ) {
+                    $.console.warn('releasePointerCapture() called on invalid pointer ID');
                 }
             } else {
                 tracker.element.releaseCapture();
@@ -14070,7 +14089,7 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
         }
         if ( levelWidth < tileWidth && levelHeight < tileHeight ){
             if ( this.version === 2 && levelWidth === this.width ) {
-                iiifSize = "max";
+                iiifSize = "full";
             } else if ( this.version === 3 && levelWidth === this.width && levelHeight === this.height ) {
                 iiifSize = "max";
             } else if ( this.version === 3 ) {
@@ -14092,7 +14111,7 @@ $.extend( $.IIIFTileSource.prototype, $.TileSource.prototype, /** @lends OpenSea
             iiifSizeW = Math.ceil( iiifTileW * scale );
             iiifSizeH = Math.ceil( iiifTileH * scale );
             if ( this.version === 2 && iiifSizeW === this.width ) {
-                iiifSize = "max";
+                iiifSize = "full";
             } else if ( this.version === 3 && iiifSizeW === this.width && iiifSizeH === this.height ) {
                 iiifSize = "max";
             } else if (this.version === 3) {
