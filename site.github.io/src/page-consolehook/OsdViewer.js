@@ -180,6 +180,10 @@ function OsdViewer(props) {
 			OpenSeadragon.console.error('[onClose] error');
 		};
 
+		let onCanvasContextMenu = function (event) {
+			OpenSeadragon.console.log('canvas-contextmenu');
+		};
+
 		let onNavigatorScroll = function (event) {
 			if (event.scroll > 0) {
 				imagingHelper.zoomIn();
@@ -191,6 +195,7 @@ function OsdViewer(props) {
 		window.addEventListener('resize', onWindowResize, false);
 		viewer.addHandler('open', onOpen);
 		viewer.addHandler('close', onClose);
+		viewer.addHandler('canvas-contextmenu', onCanvasContextMenu);
 		viewer.addHandler('navigator-scroll', onNavigatorScroll);
 
 		onWindowResize();

@@ -1,6 +1,6 @@
 //! openseadragon 2.4.2
 //! Built on 2020-08-25
-//! Git commit: v2.4.2-57-f7cd901
+//! Git commit: v2.4.2-58-c969f85
 //! http://openseadragon.github.io
 //! License: http://openseadragon.github.io/license/
 
@@ -3325,6 +3325,8 @@ $.EventSource.prototype = {
      *      event is fired.
      * @param {OpenSeadragon.EventHandler} [options.preProcessEventHandler=null]
      *      An optional handler for controlling DOM event propagation and processing.
+     * @param {OpenSeadragon.EventHandler} [options.contextMenuHandler=null]
+     *      An optional handler for contextmenu.
      * @param {OpenSeadragon.EventHandler} [options.enterHandler=null]
      *      An optional handler for pointer enter.
      * @param {OpenSeadragon.EventHandler} [options.leaveHandler=null]
@@ -3424,6 +3426,7 @@ $.EventSource.prototype = {
         this.stopDelay             = options.stopDelay         || 50;
 
         this.preProcessEventHandler   = options.preProcessEventHandler   || null;
+        this.contextMenuHandler       = options.contextMenuHandler       || null;
         this.enterHandler             = options.enterHandler             || null;
         this.leaveHandler             = options.leaveHandler             || null;
         this.exitHandler              = options.exitHandler              || null; // Deprecated v2.5.0
@@ -3464,6 +3467,7 @@ $.EventSource.prototype = {
             keypress:              function ( event ) { onKeyPress( _this, event ); },
             focus:                 function ( event ) { onFocus( _this, event ); },
             blur:                  function ( event ) { onBlur( _this, event ); },
+            contextmenu:           function ( event ) { onContextMenu( _this, event ); },
 
             wheel:                 function ( event ) { onWheel( _this, event ); },
             mousewheel:            function ( event ) { onMouseWheel( _this, event ); },
@@ -3539,6 +3543,7 @@ $.EventSource.prototype = {
                                 this.dragHandler || this.dragEndHandler ||
                                 this.pinchHandler );
         this.hasScrollHandler = !!this.scrollHandler;
+        this.hasContextMenuHandler = !!this.contextMenuHandler;
 
         if ( !options.startDisabled ) {
             this.setTracking( true );
@@ -3665,6 +3670,22 @@ $.EventSource.prototype = {
          * @param {OpenSeadragon.MouseTracker.EventProcessInfo} eventInfo
          */
         preProcessEventHandler: function () { },
+
+        /**
+         * Implement or assign implementation to these handlers during or after
+         * calling the constructor.
+         * @function
+         * @param {Object} event
+         * @param {OpenSeadragon.MouseTracker} event.eventSource
+         *      A reference to the tracker instance.
+         * @param {OpenSeadragon.Point} event.position
+         *      The position of the event relative to the tracked element.
+         * @param {Object} event.originalEvent
+         *      The original event object.
+         * @param {Object} event.userData
+         *      Arbitrary user-defined object.
+         */
+        contextMenuHandler: function () { },
 
         /**
          * Implement or assign implementation to these handlers during or after
@@ -4421,7 +4442,7 @@ $.EventSource.prototype = {
     /**
      * Detect browser pointer device event model(s) and build appropriate list of events to subscribe to.
      */
-    $.MouseTracker.subscribeEvents = [ "click", "dblclick", "keydown", "keyup", "keypress", "focus", "blur", $.MouseTracker.wheelEventName ];
+    $.MouseTracker.subscribeEvents = [ "click", "dblclick", "keydown", "keyup", "keypress", "focus", "blur", "contextmenu", $.MouseTracker.wheelEventName ];
 
     if( $.MouseTracker.wheelEventName === "DOMMouseScroll" ) {
         // Older Firefox
@@ -4512,7 +4533,7 @@ $.EventSource.prototype = {
      * @property {Number} eventPhase
      *      0 == NONE, 1 == CAPTURING_PHASE, 2 == AT_TARGET, 3 == BUBBLING_PHASE.
      * @property {String} eventType
-     *     "gotpointercapture", "lostpointercapture", "pointerenter", "pointerleave", "pointerover", "pointerout", "pointerdown", "pointerup", "pointermove", "pointercancel", "wheel".
+     *     "contextmenu", "gotpointercapture", "lostpointercapture", "pointerenter", "pointerleave", "pointerover", "pointerout", "pointerdown", "pointerup", "pointermove", "pointercancel", "wheel".
      * @property {String} pointerType
      *     "mouse", "touch", "pen", etc.
      * @property {Boolean} isEmulated
@@ -4939,7 +4960,7 @@ $.EventSource.prototype = {
                     return;
                 }
                 // Can throw InvalidPointerId
-                //   (should never happen so we'll log a warning)
+                //   (should never happen, but it does on Firefox 79 touch so we won't log a warning)
                 try {
                     if ( $.MouseTracker.unprefixedPointerEvents ) {
                         tracker.element.releasePointerCapture( gPoint.id );
@@ -4949,7 +4970,7 @@ $.EventSource.prototype = {
                         //$.console.log('element.msReleasePointerCapture() called');
                     }
                 } catch ( e ) {
-                    $.console.warn('releasePointerCapture() called on invalid pointer ID');
+                    //$.console.warn('releasePointerCapture() called on invalid pointer ID');
                 }
             } else {
                 tracker.element.releaseCapture();
@@ -5215,6 +5236,44 @@ $.EventSource.prototype = {
             if ( propagate === false ) {
                 $.cancelEvent( event );
             }
+        }
+    }
+
+
+    /**
+     * @private
+     * @inner
+     */
+    function onContextMenu( tracker, event ) {
+        //$.console.log('contextmenu ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
+
+        event = $.getEvent( event );
+
+        var eventInfo = {
+            originalEvent: event,
+            eventType: 'contextmenu',
+            pointerType: 'mouse',
+            isEmulated: false
+        };
+        preProcessEvent( tracker, eventInfo );
+
+        // ContextMenu
+        if ( tracker.contextMenuHandler ) {
+            tracker.contextMenuHandler(
+                {
+                    eventSource:          tracker,
+                    position:             getPointRelativeToAbsolute( getMouseAbsolute( event ), tracker.element ),
+                    originalEvent:        eventInfo.originalEvent,
+                    userData:             tracker.userData
+                }
+            );
+        }
+
+        if ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) {
+            $.cancelEvent( event );
+        }
+        if ( eventInfo.stopPropagation ) {
+            $.stopEvent( event );
         }
     }
 
@@ -6502,6 +6561,13 @@ $.EventSource.prototype = {
                 eventInfo.isCancelable = false;
                 eventInfo.preventDefault = false;
                 eventInfo.preventGesture = false;
+                eventInfo.stopPropagation = false;
+                break;
+            case 'contextmenu':
+                eventInfo.isStopable = true;
+                eventInfo.isCancelable = true;
+                eventInfo.preventDefault = tracker.hasContextMenuHandler;
+                eventInfo.preventGesture = !tracker.hasContextMenuHandler;
                 eventInfo.stopPropagation = false;
                 break;
             case 'pointerenter':
@@ -8317,6 +8383,7 @@ $.Viewer = function( options ) {
         clickDistThreshold:       this.clickDistThreshold,
         dblClickTimeThreshold:    this.dblClickTimeThreshold,
         dblClickDistThreshold:    this.dblClickDistThreshold,
+        contextMenuHandler:       $.delegate( this, onCanvasContextMenu ),
         keyDownHandler:           $.delegate( this, onCanvasKeyDown ),
         keyHandler:               $.delegate( this, onCanvasKeyPress ),
         clickHandler:             $.delegate( this, onCanvasClick ),
@@ -10565,6 +10632,26 @@ function onFocus(){
 function onBlur(){
     beginControlsAutoHide( this );
 
+}
+
+function onCanvasContextMenu( event ) {
+    /**
+     * Raised when a contextmenu event occurs in the {@link OpenSeadragon.Viewer#canvas} element.
+     *
+     * @event canvas-contextmenu
+     * @memberof OpenSeadragon.Viewer
+     * @type {object}
+     * @property {OpenSeadragon.Viewer} eventSource - A reference to the Viewer which raised this event.
+     * @property {OpenSeadragon.MouseTracker} tracker - A reference to the MouseTracker which originated this event.
+     * @property {OpenSeadragon.Point} position - The position of the event relative to the tracked element.
+     * @property {Object} originalEvent - The original DOM event.
+     * @property {?Object} userData - Arbitrary subscriber-defined object.
+     */
+    this.raiseEvent( 'canvas-contextmenu', {
+        tracker: event.eventSource,
+        position: event.position,
+        originalEvent: event.originalEvent
+    });
 }
 
 function onCanvasKeyDown( event ) {
