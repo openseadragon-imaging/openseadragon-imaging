@@ -33,7 +33,7 @@ function NavigatorPage(props) {
 			prefixUrl: '', //'lib/openseadragon/images/',
 			navImages: osdNavImages,
 			useCanvas: true,
-			autoResize: false, // If false, we have to handle resizing of the viewer
+			autoResize: true, // If false, we have to handle resizing of the viewer
 			// blendTime: 0,
 			// wrapHorizontal: true,
 			// visibilityRatio: 0.1,
@@ -88,53 +88,8 @@ function NavigatorPage(props) {
 			tileSources: tileSources
 		});
 
-		// let imagingHelper = viewer.activateImagingHelper({
-		// 	worldIndex: 0 //,
-		// 	//onImageViewChanged: onImageViewChanged
-		// });
-
-		// let onWindowResize = function () {
-		// 	if (viewer && imagingHelper && !viewer.autoResize) {
-		// 		// We're handling viewer resizing ourselves. Let the ImagingHelper do it.
-		// 		imagingHelper.notifyResize();
-		// 	}
-		// };
-
-		// let onOpen = function (event) {
-		// 	var minzoomX = 50.0 / imagingHelper.imgWidth;
-		// 	var minzoomY = 50.0 / imagingHelper.imgHeight;
-		// 	var minZoom = Math.min(minzoomX, minzoomY);
-		// 	var maxZoom = 10.0;
-		// 	imagingHelper.setMinZoom(minZoom);
-		// 	imagingHelper.setMaxZoom(maxZoom);
-		// 	imagingHelper.setZoomStepPercent(35);
-		// };
-
-		// let onClose = function (event) {};
-
-		// let onNavigatorScroll = function (event) {
-		// 	if (event.scroll > 0) {
-		// 		imagingHelper.zoomIn();
-		// 	} else {
-		// 		imagingHelper.zoomOut();
-		// 	}
-		// };
-
-		// window.addEventListener('resize', onWindowResize, false);
-		// viewer.addHandler('open', onOpen);
-		// viewer.addHandler('close', onClose);
-		// viewer.addHandler('navigator-scroll', onNavigatorScroll);
-
-		// onWindowResize();
-
 		// Cleanup (componentWillUnmount)
 		return () => {
-			// viewer.removeHandler('open', onOpen);
-			// viewer.removeHandler('close', onClose);
-			// viewer.removeHandler('navigator-scroll', onNavigatorScroll);
-			// window.removeEventListener('resize', onWindowResize, false);
-			// imagingHelper.destroy();
-			// imagingHelper = null;
 			viewer.destroy();
 			viewer = null;
 		};
