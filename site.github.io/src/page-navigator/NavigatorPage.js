@@ -34,56 +34,14 @@ function NavigatorPage(props) {
 			navImages: osdNavImages,
 			useCanvas: true,
 			autoResize: true, // If false, we have to handle resizing of the viewer
-			// blendTime: 0,
-			// wrapHorizontal: true,
-			// visibilityRatio: 0.1,
-			// minZoomLevel: 0.001,
-			// maxZoomLevel: 10,
-			// zoomPerClick: 1.4,
-			// zoomPerSecond: 1.2,
-			minZoomImageRatio: 0,
-			maxZoomPixelRatio: Infinity,
-			smoothTileEdgesMinZoom: Infinity,
 			//------------------
-			// gestureSettingsMouse: {
-			// 	flickEnabled: true
-			// },
-			// gestureSettingsTouch: {
-			// 	pinchRotate: true
-			// },
-			//------------------
-			//showNavigationControl: true,
 			navigationControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
-			// showRotationControl: true,
-			// showFlipControl: true,
 			//------------------
 			showNavigator: true,
-			//navigatorPosition: 'BOTTOM_RIGHT',
-			//navigatorSizeRatio: 0.3,
 			navigatorId: 'osdNavContainer',
-			//navigatorAutoResize: false,
-			//navigatorAutoFade: false,
 			//------------------
 			sequenceMode: true,
-			// initialPage: 3,
-			// preserveViewport: true,
-			// preserveOverlays: false,
-			// showSequenceControl: true,
 			sequenceControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
-			showReferenceStrip: false,
-			referenceStripScroll: 'horizontal',
-			// referenceStripElement: null,
-			// referenceStripHeight: null,
-			// referenceStripWidth: null,
-			referenceStripPosition: 'BOTTOM_LEFT',
-			// referenceStripSizeRatio: 0.2,
-			//------------------
-			collectionMode: false,
-			// collectionLayout: 'horizontal',
-			collectionRows: 2,
-			collectionColumns: 2,
-			// collectionTileSize: 800,
-			// collectionTileMargin: 80,
 			//------------------
 			tileSources: tileSources
 		});
