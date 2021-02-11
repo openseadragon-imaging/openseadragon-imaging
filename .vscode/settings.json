@@ -2,7 +2,6 @@
 {
   "eslint.workingDirectories": ["./site.github.io"],
   //"tslint.enable": false,
-  "eslint.enable": true,
   "eslint.trace.server": "off",
   "eslint.debug": true,
   "eslint.lintTask.enable": false,

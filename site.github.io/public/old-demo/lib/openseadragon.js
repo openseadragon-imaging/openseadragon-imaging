@@ -1,6 +1,6 @@
 //! openseadragon 2.4.2
-//! Built on 2020-08-25
-//! Git commit: v2.4.2-58-c969f85
+//! Built on 2021-02-10
+//! Git commit: v2.4.2-71-ce098f8-dirty
 //! http://openseadragon.github.io
 //! License: http://openseadragon.github.io/license/
 
@@ -387,7 +387,11 @@
   *     The "zoom distance" per mouse scroll or touch pinch. <em><strong>Note:</strong> Setting this to 1.0 effectively disables the mouse-wheel zoom feature (also see gestureSettings[Mouse|Touch|Pen].scrollToZoom}).</em>
   *
   * @property {Number} [zoomPerSecond=1.0]
-  *     The number of seconds to animate a single zoom event over.
+  *     Sets the zoom amount per second when zoomIn/zoomOut buttons are pressed and held.
+  *     The value is a factor of the current zoom, so 1.0 (the default) disables zooming when the zoomIn/zoomOut buttons
+  *     are held. Higher values will increase the rate of zoom when the zoomIn/zoomOut buttons are held. Note that values
+  *     < 1.0 will reverse the operation of the zoomIn/zoomOut buttons (zoomIn button will decrease the zoom, zoomOut will
+  *     increase the zoom).
   *
   * @property {Boolean} [showNavigator=false]
   *     Set to true to make the navigator minimap appear.
@@ -3284,6 +3288,7 @@ $.EventSource.prototype = {
  */
 
 (function ( $ ) {
+    $.console.log('** MouseTracker Overhaul 2020 (#1872) Test Build');
 
     // All MouseTracker instances
     var MOUSETRACKERS  = [];
@@ -3545,6 +3550,10 @@ $.EventSource.prototype = {
         this.hasScrollHandler = !!this.scrollHandler;
         this.hasContextMenuHandler = !!this.contextMenuHandler;
 
+        if (this.exitHandler) {
+            $.console.error("MouseTracker.exitHandler is deprecated. Use MouseTracker.leaveHandler instead.");
+        }
+
         if ( !options.startDisabled ) {
             this.setTracking( true );
         }
@@ -3599,27 +3608,6 @@ $.EventSource.prototype = {
             //chain
             return this;
         },
-
-        // //TODO Revisit this if there's still an issue. The PointerEvent model should have no problems
-        // //   like the issue this code attempts to fix.
-        // /**
-        //  * Returns the {@link OpenSeadragon.MouseTracker.GesturePointList|GesturePointList} for all but the given pointer device type.
-        //  * @function
-        //  * @param {String} type - The pointer device type: "mouse", "touch", "pen", etc.
-        //  * @returns {Array.<OpenSeadragon.MouseTracker.GesturePointList>}
-        //  */
-        // getActivePointersListsExceptType: function ( type ) {
-        //     var delegate = THIS[ this.hash ];
-        //     var listArray = [];
-
-        //     for (var i = 0; i < delegate.activePointersLists.length; ++i) {
-        //         if (delegate.activePointersLists[i].type !== type) {
-        //             listArray.push(delegate.activePointersLists[i]);
-        //         }
-        //     }
-
-        //     return listArray;
-        // },
 
         /**
          * Returns the {@link OpenSeadragon.MouseTracker.GesturePointList|GesturePointList} for the given pointer device type,
@@ -4315,24 +4303,6 @@ $.EventSource.prototype = {
             return false;
         }
     }
-
-    //TODO Revisit this if there's still an issue. The PointerEvent model should have no problems
-    //   like the issue this code attempts to fix.
-    // /**
-    //  * Resets all active mousetrakers. (Added to patch issue #697 "Mouse up outside map will cause "canvas-drag" event to stick")
-    //  *
-    //  * @private
-    //  * @member resetAllMouseTrackers
-    //  * @memberof OpenSeadragon.MouseTracker
-    //  */
-    // $.MouseTracker.resetAllMouseTrackers = function(){
-    //     for(var i = 0; i < MOUSETRACKERS.length; i++){
-    //         if (MOUSETRACKERS[i].isTracking()){
-    //             MOUSETRACKERS[i].setTracking(false);
-    //             MOUSETRACKERS[i].setTracking(true);
-    //         }
-    //     }
-    // };
 
     /**
      * Provides continuous computation of velocity (speed and direction) of active pointers.
@@ -5780,36 +5750,6 @@ $.EventSource.prototype = {
     }
 
 
-    //TODO Revisit this if there's still an issue. The PointerEvent model should have no problems
-    //   like the issue this code attempts to fix.
-    // /**
-    //  * @private
-    //  * @inner
-    //  */
-    // function abortContacts( tracker, event, pointsList ) {
-    //     var i,
-    //         gPointCount = pointsList.getLength(),
-    //         abortGPoints = [];
-
-    //     // Check contact count for hoverable pointer types before aborting
-    //     if (pointsList.type === 'touch' || pointsList.contacts > 0) {
-    //         for ( i = 0; i < gPointCount; i++ ) {
-    //             abortGPoints.push( pointsList.getByIndex( i ) );
-    //         }
-
-    //         if ( abortGPoints.length > 0 ) {
-    //             // simulate touchend/mouseup
-    //             updatePointerUp( tracker, eventInfo, , 0 ); // 0 means primary button press/release or touch contact
-    //             // release pointer capture
-    //             pointsList.captureCount = 1;
-    //             //releasePointer( tracker, pointsList.type );
-    //             // simulate touchleave/mouseout
-    //             updatePointerLeave( tracker, eventInfo,  );
-    //         }
-    //     }
-    // }
-
-
     /**
      * @private
      * @inner
@@ -5825,12 +5765,6 @@ $.EventSource.prototype = {
 
         //$.console.log('touchstart ' + (tracker.userData ? tracker.userData.toString() : ''));
 
-        //TODO Revisit this if there's still an issue. The PointerEvent model should have no problems
-        //   like the issue this code attempts to fix.
-        // if ( pointsList.getLength() > event.touches.length - touchCount ) {
-        //     $.console.warn('Tracked touch contact count doesn\'t match event.touches.length. Removing all tracked touch pointers.');
-        //     abortContacts( tracker, event, pointsList );
-        // }
         if ( pointsList.getLength() > event.touches.length - touchCount ) {
             $.console.warn('Tracked touch contact count doesn\'t match event.touches.length');
         }
@@ -6566,8 +6500,8 @@ $.EventSource.prototype = {
             case 'contextmenu':
                 eventInfo.isStopable = true;
                 eventInfo.isCancelable = true;
-                eventInfo.preventDefault = tracker.hasContextMenuHandler;
-                eventInfo.preventGesture = !tracker.hasContextMenuHandler;
+                eventInfo.preventDefault = false;//tracker.hasContextMenuHandler;
+                eventInfo.preventGesture = true;//!tracker.hasContextMenuHandler;
                 eventInfo.stopPropagation = false;
                 break;
             case 'pointerenter':
@@ -6743,7 +6677,7 @@ $.EventSource.prototype = {
         }
 
         // Leave (doesn't bubble and not cancelable)
-        //   Note: exitHandler is deprecated, replaced by leaveHandler
+        //   Note: exitHandler is deprecated (v2.5.0), replaced by leaveHandler
         if ( tracker.leaveHandler || tracker.exitHandler ) {
             dispatchEventObj = {
                 eventSource:          tracker,
@@ -6928,16 +6862,6 @@ $.EventSource.prototype = {
                 }
             }
         }
-
-        //TODO Revisit this if there's still an issue. The PointerEvent model should have no problems
-        //   like the issue this code attempts to fix.
-        // // Some pointers may steal control from another pointer without firing the appropriate release events
-        // // e.g. Touching a screen while click-dragging with certain mice.
-        // var otherPointsLists = tracker.getActivePointersListsExceptType(gPoint.type);
-        // for (i = 0; i < otherPointsLists.length; i++) {
-        //     //If another pointer has contact, simulate the release
-        //     abortContacts(tracker, event, otherPointsLists[i]); // No-op if no active pointer
-        // }
 
         // Only capture and track primary button, pen, and touch contacts
         if ( buttonChanged !== 0 ) {
@@ -7131,26 +7055,8 @@ $.EventSource.prototype = {
                 );
             }
 
-            //TODO Revisit this if there's still an issue. The PointerEvent model should have no problems
-            //   like the issue this code attempts to fix.
-            // // A primary mouse button may have been released while the non-primary button was down
-            // var otherPointsList = tracker.getActivePointersListByType("mouse");
-            // // Stop tracking the mouse; see https://github.com/openseadragon/openseadragon/pull/1223
-            // abortContacts(tracker, event, otherPointsList); // No-op if no active pointer
-
             return;
         }
-
-        //TODO Revisit this if there's still an issue. The PointerEvent model should have no problems
-        //   like the issue this code attempts to fix.
-        // GitHub PR: https://github.com/openseadragon/openseadragon/pull/1754
-        // // OS-specific gestures (e.g. swipe up with four fingers in iPadOS 13)
-        // if (typeof gPoint.currentPos === "undefined") {
-        //     $.console.log('typeof gPoint.currentPos === "undefined" ' + (tracker.userData ? tracker.userData.toString() : ''));
-        //     abortContacts(tracker, event, pointsList);
-
-        //     return false;
-        // }
 
         updateGPoint = pointsList.getById( gPoint.id );
 
@@ -11051,13 +10957,6 @@ function onCanvasEnter( event ) {
 }
 
 function onCanvasLeave( event ) {
-
-    //TODO Revisit this if there's still an issue. The PointerEvent model should have no problems
-    //   like the issue this code attempts to fix.
-    // if (window.location !== window.parent.location){
-    //     $.MouseTracker.resetAllMouseTrackers();
-    // }
-
     /**
      * Raised when a pointer leaves the {@link OpenSeadragon.Viewer#canvas} element.
      *
@@ -14654,6 +14553,11 @@ $.extend( $.TmsTileSource.prototype, $.TileSource.prototype, /** @lends OpenSead
             options.tileSize = 256;
         }
 
+        if(typeof options.fileFormat === 'undefined'){
+            options.fileFormat = 'jpg';
+            this.fileFormat = options.fileFormat;
+        }
+
         var currentImageSize = {
             x: options.width,
             y: options.height
@@ -14741,7 +14645,7 @@ $.extend( $.TmsTileSource.prototype, $.TileSource.prototype, /** @lends OpenSead
             var result = 0;
             var num = this._calculateAbsoluteTileNumber(level, x, y);
             result = Math.floor(num / 256);
-            return this.tilesUrl + 'TileGroup' + result + '/' + level + '-' + x + '-' + y + '.jpg';
+            return this.tilesUrl + 'TileGroup' + result + '/' + level + '-' + x + '-' + y + '.' + this.fileFormat;
 
         }
     });

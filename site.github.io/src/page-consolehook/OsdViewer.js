@@ -42,6 +42,7 @@ function OsdViewer(props) {
 			navImages: osdNavImages,
 			useCanvas: true,
 			autoResize: false, // If false, we have to handle resizing of the viewer
+			imageSmoothingEnabled: true,
 			// blendTime: 0,
 			// wrapHorizontal: true,
 			// visibilityRatio: 0.1,
@@ -134,6 +135,19 @@ function OsdViewer(props) {
 				return true;
 			}
 		});
+
+		// let onImageViewChanged = function () {
+		// 	let tiledImage = viewer.world.getItemAt(0);
+		// 	let imgRect = tiledImage.getBounds(true);
+		// 	let elementRect = viewer.viewport.viewportToViewerElementRectangle(
+		// 		imgRect
+		// 	);
+		// 	el.style.left = elementRect.x.toString() + 'px';
+		// 	el.style.top = elementRect.y.toString() + 'px';
+		// 	el.style.width = elementRect.width.toString() + 'px';
+		// 	el.style.height = elementRect.height.toString() + 'px';
+		// 	// return tiledImage.viewerElementToImageCoordinates(point);
+		// };
 
 		let imagingHelper = viewer.activateImagingHelper({
 			worldIndex: 0 //,

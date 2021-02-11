@@ -1,3 +1,33 @@
+## Symlinks for Dependency Project Dev
+
+```
+cd \repos\openseadragon
+npm link
+cd ..\openseadragon-imaging\site.github.io
+npm link openseadragon
+
+To restore:
+
+cd \repos\openseadragon-imaging\site.github.io
+npm uninstall --no-save openseadragon && npm install
+cd \repos\openseadragon
+npm uninstall
+```
+
+```
+cd \repos\openseadragon-imaginghelper
+npm link
+cd ..\openseadragon-imaging\site.github.io
+npm link @openseadragon-imaging/openseadragon-imaginghelper
+
+To restore:
+
+cd \repos\openseadragon-imaging\site.github.io
+npm uninstall --no-save @openseadragon-imaging/openseadragon-imaginghelper && npm install
+cd \repos\openseadragon-imaginghelper
+npm uninstall
+```
+
 # openseadragon-imaging.github.io Site
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
