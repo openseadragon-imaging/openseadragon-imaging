@@ -44,60 +44,60 @@ import next_pressed from 'openseadragon/images/next_pressed.png';
 import next_rest from 'openseadragon/images/next_rest.png';
 
 const navImages = {
-	zoomIn: {
-		REST: zoomin_rest,
-		GROUP: zoomin_grouphover,
-		HOVER: zoomin_hover,
-		DOWN: zoomin_pressed
-	},
-	zoomOut: {
-		REST: zoomout_rest,
-		GROUP: zoomout_grouphover,
-		HOVER: zoomout_hover,
-		DOWN: zoomout_pressed
-	},
-	home: {
-		REST: home_rest,
-		GROUP: home_grouphover,
-		HOVER: home_hover,
-		DOWN: home_pressed
-	},
-	fullpage: {
-		REST: fullpage_rest,
-		GROUP: fullpage_grouphover,
-		HOVER: fullpage_hover,
-		DOWN: fullpage_pressed
-	},
-	rotateleft: {
-		REST: rotateleft_rest,
-		GROUP: rotateleft_grouphover,
-		HOVER: rotateleft_hover,
-		DOWN: rotateleft_pressed
-	},
-	rotateright: {
-		REST: rotateright_rest,
-		GROUP: rotateright_grouphover,
-		HOVER: rotateright_hover,
-		DOWN: rotateright_pressed
-	},
-	flip: {
-		REST: flip_rest,
-		GROUP: flip_grouphover,
-		HOVER: flip_hover,
-		DOWN: flip_pressed
-	},
-	previous: {
-		REST: previous_rest,
-		GROUP: previous_grouphover,
-		HOVER: previous_hover,
-		DOWN: previous_pressed
-	},
-	next: {
-		REST: next_rest,
-		GROUP: next_grouphover,
-		HOVER: next_hover,
-		DOWN: next_pressed
-	}
+  zoomIn: {
+    REST: zoomin_rest,
+    GROUP: zoomin_grouphover,
+    HOVER: zoomin_hover,
+    DOWN: zoomin_pressed
+  },
+  zoomOut: {
+    REST: zoomout_rest,
+    GROUP: zoomout_grouphover,
+    HOVER: zoomout_hover,
+    DOWN: zoomout_pressed
+  },
+  home: {
+    REST: home_rest,
+    GROUP: home_grouphover,
+    HOVER: home_hover,
+    DOWN: home_pressed
+  },
+  fullpage: {
+    REST: fullpage_rest,
+    GROUP: fullpage_grouphover,
+    HOVER: fullpage_hover,
+    DOWN: fullpage_pressed
+  },
+  rotateleft: {
+    REST: rotateleft_rest,
+    GROUP: rotateleft_grouphover,
+    HOVER: rotateleft_hover,
+    DOWN: rotateleft_pressed
+  },
+  rotateright: {
+    REST: rotateright_rest,
+    GROUP: rotateright_grouphover,
+    HOVER: rotateright_hover,
+    DOWN: rotateright_pressed
+  },
+  flip: {
+    REST: flip_rest,
+    GROUP: flip_grouphover,
+    HOVER: flip_hover,
+    DOWN: flip_pressed
+  },
+  previous: {
+    REST: previous_rest,
+    GROUP: previous_grouphover,
+    HOVER: previous_hover,
+    DOWN: previous_pressed
+  },
+  next: {
+    REST: next_rest,
+    GROUP: next_grouphover,
+    HOVER: next_hover,
+    DOWN: next_pressed
+  }
 };
 
 export default navImages;
