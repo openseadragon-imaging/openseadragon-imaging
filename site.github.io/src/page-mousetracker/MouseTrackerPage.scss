@@ -1,0 +1,64 @@
+/***************************/
+/* Main Layout             */
+
+//.mousetracker-page {}
+
+.mousetracker-page .viewer-pane {
+  height: calc(100vh - 80px);
+  margin: 15px 0;
+}
+
+.mousetracker-page .viewer-container {
+  height: calc(100vh - 90px);
+  margin-top: 5px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.mousetracker-page .seadragon-viewer {
+  height: 100%;
+  width: 100%;
+  color: #cccccc;
+  background-color: black;
+  // cursor: grab; /*default grab pointer*/
+}
+
+#overlay1 {
+  font-size: 30px;
+  cursor: pointer;
+  //background: rgba(0, 0, 0, 0.3);
+  background: #888;
+  padding: 20px;
+  pointer-events: all;
+}
+
+#overlay1,
+#overlay1 a {
+  color: #fff;
+  text-shadow: 0 0 4px #000;
+}
+
+#overlay1.selected,
+#overlay1.selected a {
+  color: #f88;
+}
+
+//------------------------------------------------------
+
+// OpenSeadragon viewer element class
+.mousetracker-page .openseadragon-canvas {
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// OpenSeadragon viewer element class
+.mousetracker-page .openseadragon-container {
+  -webkit-touch-callout: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

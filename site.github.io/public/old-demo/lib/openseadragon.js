@@ -1,6 +1,6 @@
 //! openseadragon 2.4.2
-//! Built on 2021-02-10
-//! Git commit: v2.4.2-71-ce098f8-dirty
+//! Built on 2021-03-02
+//! Git commit: v2.4.2-72-6a1a627-dirty
 //! http://openseadragon.github.io
 //! License: http://openseadragon.github.io/license/
 
@@ -4503,7 +4503,7 @@ $.EventSource.prototype = {
      * @property {Number} eventPhase
      *      0 == NONE, 1 == CAPTURING_PHASE, 2 == AT_TARGET, 3 == BUBBLING_PHASE.
      * @property {String} eventType
-     *     "contextmenu", "gotpointercapture", "lostpointercapture", "pointerenter", "pointerleave", "pointerover", "pointerout", "pointerdown", "pointerup", "pointermove", "pointercancel", "wheel".
+     *     "contextmenu", "gotpointercapture", "lostpointercapture", "pointerenter", "pointerleave", "pointerover", "pointerout", "pointerdown", "pointerup", "pointermove", "pointercancel", "wheel", "click", "dblclick".
      * @property {String} pointerType
      *     "mouse", "touch", "pen", etc.
      * @property {Boolean} isEmulated
@@ -5058,8 +5058,23 @@ $.EventSource.prototype = {
      * @inner
      */
     function onClick( tracker, event ) {
-        if ( tracker.clickHandler ) {
+        event = $.getEvent( event );
+
+        //$.console.log('onClick ' + (tracker.userData ? tracker.userData.toString() : ''));
+
+        var eventInfo = {
+            originalEvent: event,
+            eventType: 'click',
+            pointerType: 'mouse',
+            isEmulated: false
+        };
+        preProcessEvent( tracker, eventInfo );
+
+        if ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) {
             $.cancelEvent( event );
+        }
+        if ( eventInfo.stopPropagation ) {
+            $.stopEvent( event );
         }
     }
 
@@ -5069,8 +5084,23 @@ $.EventSource.prototype = {
      * @inner
      */
     function onDblClick( tracker, event ) {
-        if ( tracker.dblClickHandler ) {
+        event = $.getEvent( event );
+
+        //$.console.log('onDblClick ' + (tracker.userData ? tracker.userData.toString() : ''));
+
+        var eventInfo = {
+            originalEvent: event,
+            eventType: 'dblclick',
+            pointerType: 'mouse',
+            isEmulated: false
+        };
+        preProcessEvent( tracker, eventInfo );
+
+        if ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) {
             $.cancelEvent( event );
+        }
+        if ( eventInfo.stopPropagation ) {
+            $.stopEvent( event );
         }
     }
 
@@ -5228,7 +5258,7 @@ $.EventSource.prototype = {
         preProcessEvent( tracker, eventInfo );
 
         // ContextMenu
-        if ( tracker.contextMenuHandler ) {
+        if ( tracker.contextMenuHandler && !eventInfo.preventGesture && !eventInfo.defaultPrevented ) {
             tracker.contextMenuHandler(
                 {
                     eventSource:          tracker,
@@ -6494,6 +6524,20 @@ $.EventSource.prototype = {
                 eventInfo.isStopable = true;
                 eventInfo.isCancelable = false;
                 eventInfo.preventDefault = false;
+                eventInfo.preventGesture = false;
+                eventInfo.stopPropagation = false;
+                break;
+            case 'click':
+                eventInfo.isStopable = true;
+                eventInfo.isCancelable = true;
+                eventInfo.preventDefault = !!tracker.clickHandler;
+                eventInfo.preventGesture = false;
+                eventInfo.stopPropagation = false;
+                break;
+            case 'dblclick':
+                eventInfo.isStopable = true;
+                eventInfo.isCancelable = true;
+                eventInfo.preventDefault = !!tracker.dblClickHandler;
                 eventInfo.preventGesture = false;
                 eventInfo.stopPropagation = false;
                 break;
