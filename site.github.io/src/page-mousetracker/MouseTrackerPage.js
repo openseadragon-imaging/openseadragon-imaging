@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -26,6 +26,8 @@ import './MouseTrackerPage.scss';
 
 function MouseTrackerPage(props) {
   let overlay1Ref = useRef(null);
+
+  const [overlay1Selected, setOverlay1Selected] = useState(false);
 
   useEffect(() => {
     // let viewer = new OpenSeadragon.Viewer({
@@ -129,18 +131,24 @@ function MouseTrackerPage(props) {
         switch (eventInfo.eventType) {
           case 'pointerdown':
           case 'pointerup':
-            eventInfo.stopPropagation = true; // prevent pointerdown/pointerup events from bubbling
+            // prevent pointerdown/pointerup events from bubbling
+            eventInfo.stopPropagation = true;
             if (target.nodeName === 'A') {
-              eventInfo.preventDefault = false; // allow user agent to handle clicks
-              eventInfo.preventGesture = true; // prevents clickHandler
+              // allow user agent to handle clicks
+              eventInfo.preventDefault = false;
+              // prevents clickHandler
+              eventInfo.preventGesture = true;
             }
             break;
           case 'click':
-            eventInfo.stopPropagation = true; // prevent click event from bubbling
+            // prevent click event from bubbling
+            eventInfo.stopPropagation = true;
             if (target.nodeName === 'A') {
-              eventInfo.preventDefault = false; // allow user agent to handle clicks
+              // allow user agent to handle clicks
+              eventInfo.preventDefault = false;
             } else {
-              eventInfo.preventDefault = true; // we'll handle clicks
+              // we'll handle clicks
+              eventInfo.preventDefault = true;
             }
             break;
           default:
@@ -148,10 +156,9 @@ function MouseTrackerPage(props) {
         }
       },
       clickHandler: function (e) {
-        var target = e.originalEvent.target;
-        if (target.nodeName !== 'A') {
-          //$('#overlay1').toggleClass('selected');
-        }
+        setOverlay1Selected((wasSelected) => {
+          return !wasSelected;
+        });
       }
     });
 
@@ -169,7 +176,11 @@ function MouseTrackerPage(props) {
           <Row>
             <Col className="viewer-container">
               <div id="seadragon-viewer" className="seadragon-viewer" />
-              <div id="overlay1" ref={overlay1Ref}>
+              <div
+                className={overlay1Selected ? 'selected' : ''}
+                id="overlay1"
+                ref={overlay1Ref}
+              >
                 <p>Click to Toggle Color</p>
                 <p>
                   <a
