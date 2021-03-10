@@ -16,7 +16,7 @@ import './App.scss';
 import HomePage from '../page-home/HomePage';
 import ConsoleHookPage from '../page-consolehook/ConsoleHookPage';
 import ImagingHelperPage from '../page-imaginghelper/ImagingHelperPage';
-//import NavigatorPage from '../page-navigator/NavigatorPage';
+import NavigatorPage from '../page-navigator/NavigatorPage';
 import MouseTrackerPage from '../page-mousetracker/MouseTrackerPage';
 
 const appTitle = 'OpenSeadragon Imaging';
@@ -47,6 +47,9 @@ function NavBar(props) {
           <LinkContainer to="/consolehook">
             <Nav.Link>ConsoleHook</Nav.Link>
           </LinkContainer>
+          <LinkContainer to="/navigator">
+            <Nav.Link>Navigator</Nav.Link>
+          </LinkContainer>
           <LinkContainer to="/mousetracker">
             <Nav.Link>MouseTracker</Nav.Link>
           </LinkContainer>
@@ -76,6 +79,9 @@ function App(props) {
             </Route>
             <Route path="/consolehook">
               <ConsoleHookPage />
+            </Route>
+            <Route path="/navigator">
+              <NavigatorPage />
             </Route>
             <Route path="/mousetracker">
               <MouseTrackerPage />
