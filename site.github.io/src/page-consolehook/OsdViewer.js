@@ -213,6 +213,7 @@ function OsdViewer(props) {
 
     let onCanvasContextMenu = function (event) {
       OpenSeadragon.console.log('canvas-contextmenu');
+      event.preventDefault = true;
     };
 
     let onNavigatorScroll = function (event) {

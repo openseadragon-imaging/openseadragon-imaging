@@ -1,6 +1,6 @@
 //! openseadragon 2.4.2
 //! Built on 2021-03-10
-//! Git commit: v2.4.2-89-ab3f49a
+//! Git commit: v2.4.2-98-802c3c2
 //! http://openseadragon.github.io
 //! License: http://openseadragon.github.io/license/
 
@@ -2304,40 +2304,8 @@ function OpenSeadragon( options ){
 
                 request.onreadystatechange = function(){};
 
-                if (window.XDomainRequest) { // IE9 or IE8 might as well try to use XDomainRequest
-                    var xdr = new window.XDomainRequest();
-                    if (xdr) {
-                        xdr.onload = function (e) {
-                            if ( $.isFunction( onSuccess ) ) {
-                                onSuccess({ // Faking an xhr object
-                                    responseText: xdr.responseText,
-                                    status: 200, // XDomainRequest doesn't support status codes, so we just fake one! :/
-                                    statusText: 'OK'
-                                });
-                            }
-                        };
-                        xdr.onerror = function (e) {
-                            if ($.isFunction(onError)) {
-                                onError({ // Faking an xhr object
-                                    responseText: xdr.responseText,
-                                    status: 444, // 444 No Response
-                                    statusText: 'An error happened. Due to an XDomainRequest deficiency we can not extract any information about this error. Upgrade your browser.'
-                                });
-                            }
-                        };
-                        try {
-                            xdr.open('GET', url);
-                            xdr.send();
-                        } catch (e2) {
-                            if ( $.isFunction( onError ) ) {
-                                onError( request, e );
-                            }
-                        }
-                    }
-                } else {
-                    if ( $.isFunction( onError ) ) {
-                        onError( request, e );
-                    }
+                if ( $.isFunction( onError ) ) {
+                    onError( request, e );
                 }
             }
 
@@ -2476,16 +2444,7 @@ function OpenSeadragon( options ){
          * @returns {Object}
          */
         parseJSON: function(string) {
-            if (window.JSON && window.JSON.parse) {
-                $.parseJSON = window.JSON.parse;
-            } else {
-                // Should only be used by IE8 in non standards mode
-                $.parseJSON = function(string) {
-                    /*jshint evil:true*/
-                    //eslint-disable-next-line no-eval
-                    return eval('(' + string + ')');
-                };
-            }
+            $.parseJSON = window.JSON.parse;
             return $.parseJSON(string);
         },
 
@@ -3398,7 +3357,6 @@ $.EventSource.prototype = {
                                 this.dragHandler || this.dragEndHandler ||
                                 this.pinchHandler );
         this.hasScrollHandler = !!this.scrollHandler;
-        this.hasContextMenuHandler = !!this.contextMenuHandler;
 
         if (this.exitHandler) {
             $.console.error("MouseTracker.exitHandler is deprecated. Use MouseTracker.leaveHandler instead.");
@@ -3520,6 +3478,8 @@ $.EventSource.prototype = {
          *      The position of the event relative to the tracked element.
          * @param {Object} event.originalEvent
          *      The original event object.
+         * @param {Boolean} event.preventDefault
+         *      Set to true to prevent the default user-agent's handling of the contextmenu event.
          * @param {Object} event.userData
          *      Arbitrary user-defined object.
          */
@@ -4328,7 +4288,7 @@ $.EventSource.prototype = {
      * @property {Number} eventPhase
      *      0 == NONE, 1 == CAPTURING_PHASE, 2 == AT_TARGET, 3 == BUBBLING_PHASE.
      * @property {String} eventType
-     *     "contextmenu", "gotpointercapture", "lostpointercapture", "pointerenter", "pointerleave", "pointerover", "pointerout", "pointerdown", "pointerup", "pointermove", "pointercancel", "wheel", "click", "dblclick".
+     *     "keydown", "keyup", "keypress", "focus", "blur", "contextmenu", "gotpointercapture", "lostpointercapture", "pointerenter", "pointerleave", "pointerover", "pointerout", "pointerdown", "pointerup", "pointermove", "pointercancel", "wheel", "click", "dblclick".
      * @property {String} pointerType
      *     "mouse", "touch", "pen", etc.
      * @property {Boolean} isEmulated
@@ -4929,9 +4889,16 @@ $.EventSource.prototype = {
      */
     function onKeyDown( tracker, event ) {
         //$.console.log( "keydown %s %s %s %s %s", event.keyCode, event.charCode, event.ctrlKey, event.shiftKey, event.altKey );
-        var propagate;
-        if ( tracker.keyDownHandler ) {
-            propagate = tracker.keyDownHandler(
+        var eventInfo = {
+            originalEvent: event,
+            eventType: 'keydown',
+            pointerType: '',
+            isEmulated: false
+        };
+        preProcessEvent( tracker, eventInfo );
+
+        if ( tracker.keyDownHandler && !eventInfo.preventGesture && !eventInfo.defaultPrevented ) {
+            tracker.keyDownHandler(
                 {
                     eventSource:          tracker,
                     keyCode:              event.keyCode ? event.keyCode : event.charCode,
@@ -4944,9 +4911,13 @@ $.EventSource.prototype = {
                     userData:             tracker.userData
                 }
             );
-            if ( !propagate ) {
-                $.cancelEvent( event );
-            }
+        }
+
+        if ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) {
+            $.cancelEvent( event );
+        }
+        if ( eventInfo.stopPropagation ) {
+            $.stopEvent( event );
         }
     }
 
@@ -4957,9 +4928,17 @@ $.EventSource.prototype = {
      */
     function onKeyUp( tracker, event ) {
         //$.console.log( "keyup %s %s %s %s %s", event.keyCode, event.charCode, event.ctrlKey, event.shiftKey, event.altKey );
-        var propagate;
-        if ( tracker.keyUpHandler ) {
-            propagate = tracker.keyUpHandler(
+
+        var eventInfo = {
+            originalEvent: event,
+            eventType: 'keyup',
+            pointerType: '',
+            isEmulated: false
+        };
+        preProcessEvent( tracker, eventInfo );
+
+        if ( tracker.keyUpHandler && !eventInfo.preventGesture && !eventInfo.defaultPrevented ) {
+            tracker.keyUpHandler(
                 {
                     eventSource:          tracker,
                     keyCode:              event.keyCode ? event.keyCode : event.charCode,
@@ -4972,9 +4951,13 @@ $.EventSource.prototype = {
                     userData:             tracker.userData
                 }
             );
-            if ( !propagate ) {
-                $.cancelEvent( event );
-            }
+        }
+
+        if ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) {
+            $.cancelEvent( event );
+        }
+        if ( eventInfo.stopPropagation ) {
+            $.stopEvent( event );
         }
     }
 
@@ -4985,9 +4968,17 @@ $.EventSource.prototype = {
      */
     function onKeyPress( tracker, event ) {
         //$.console.log( "keypress %s %s %s %s %s", event.keyCode, event.charCode, event.ctrlKey, event.shiftKey, event.altKey );
-        var propagate;
-        if ( tracker.keyHandler ) {
-            propagate = tracker.keyHandler(
+
+        var eventInfo = {
+            originalEvent: event,
+            eventType: 'keypress',
+            pointerType: '',
+            isEmulated: false
+        };
+        preProcessEvent( tracker, eventInfo );
+
+        if ( tracker.keyHandler && !eventInfo.preventGesture && !eventInfo.defaultPrevented ) {
+            tracker.keyHandler(
                 {
                     eventSource:          tracker,
                     keyCode:              event.keyCode ? event.keyCode : event.charCode,
@@ -5000,9 +4991,13 @@ $.EventSource.prototype = {
                     userData:             tracker.userData
                 }
             );
-            if ( !propagate ) {
-                $.cancelEvent( event );
-            }
+        }
+
+        if ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) {
+            $.cancelEvent( event );
+        }
+        if ( eventInfo.stopPropagation ) {
+            $.stopEvent( event );
         }
     }
 
@@ -5013,9 +5008,20 @@ $.EventSource.prototype = {
      */
     function onFocus( tracker, event ) {
         //console.log( "focus %s", event );
-        var propagate;
-        if ( tracker.focusHandler ) {
-            propagate = tracker.focusHandler(
+
+        // focus doesn't bubble and is not cancelable, but we call
+        //   preProcessEvent() so it's dispatched to preProcessEventHandler
+        //   if necessary
+        var eventInfo = {
+            originalEvent: event,
+            eventType: 'focus',
+            pointerType: '',
+            isEmulated: false
+        };
+        preProcessEvent( tracker, eventInfo );
+
+        if ( tracker.focusHandler && !eventInfo.preventGesture ) {
+            tracker.focusHandler(
                 {
                     eventSource:          tracker,
                     originalEvent:        event,
@@ -5023,9 +5029,6 @@ $.EventSource.prototype = {
                     userData:             tracker.userData
                 }
             );
-            if ( propagate === false ) {
-                $.cancelEvent( event );
-            }
         }
     }
 
@@ -5036,9 +5039,20 @@ $.EventSource.prototype = {
      */
     function onBlur( tracker, event ) {
         //console.log( "blur %s", event );
-        var propagate;
-        if ( tracker.blurHandler ) {
-            propagate = tracker.blurHandler(
+
+        // blur doesn't bubble and is not cancelable, but we call
+        //   preProcessEvent() so it's dispatched to preProcessEventHandler
+        //   if necessary
+        var eventInfo = {
+            originalEvent: event,
+            eventType: 'blur',
+            pointerType: '',
+            isEmulated: false
+        };
+        preProcessEvent( tracker, eventInfo );
+
+        if ( tracker.blurHandler && !eventInfo.preventGesture ) {
+            tracker.blurHandler(
                 {
                     eventSource:          tracker,
                     originalEvent:        event,
@@ -5046,9 +5060,6 @@ $.EventSource.prototype = {
                     userData:             tracker.userData
                 }
             );
-            if ( propagate === false ) {
-                $.cancelEvent( event );
-            }
         }
     }
 
@@ -5060,6 +5071,8 @@ $.EventSource.prototype = {
     function onContextMenu( tracker, event ) {
         //$.console.log('contextmenu ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
 
+        var eventArgs = null;
+
         var eventInfo = {
             originalEvent: event,
             eventType: 'contextmenu',
@@ -5070,17 +5083,18 @@ $.EventSource.prototype = {
 
         // ContextMenu
         if ( tracker.contextMenuHandler && !eventInfo.preventGesture && !eventInfo.defaultPrevented ) {
-            tracker.contextMenuHandler(
-                {
-                    eventSource:          tracker,
-                    position:             getPointRelativeToAbsolute( getMouseAbsolute( event ), tracker.element ),
-                    originalEvent:        eventInfo.originalEvent,
-                    userData:             tracker.userData
-                }
-            );
+            eventArgs = {
+                eventSource:          tracker,
+                position:             getPointRelativeToAbsolute( getMouseAbsolute( event ), tracker.element ),
+                originalEvent:        eventInfo.originalEvent,
+                preventDefault:       eventInfo.preventDefault || eventInfo.defaultPrevented,
+                userData:             tracker.userData
+            };
+
+            tracker.contextMenuHandler( eventArgs );
         }
 
-        if ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) {
+        if ( ( eventArgs && eventArgs.preventDefault ) || ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) ) {
             $.cancelEvent( event );
         }
         if ( eventInfo.stopPropagation ) {
@@ -5919,6 +5933,9 @@ $.EventSource.prototype = {
                 break;
             case 'pointerover':
             case 'pointerout':
+            case 'contextmenu':
+            case 'keydown':
+            case 'keyup':
                 eventInfo.isStopable = true;
                 eventInfo.isCancelable = true;
                 eventInfo.preventDefault = false;
@@ -5928,7 +5945,7 @@ $.EventSource.prototype = {
             case 'pointerdown':
                 eventInfo.isStopable = true;
                 eventInfo.isCancelable = true;
-                eventInfo.preventDefault = false;//tracker.hasGestureHandlers;
+                eventInfo.preventDefault = false; // updatePointerDown() may set true (tracker.hasGestureHandlers)
                 eventInfo.preventGesture = !tracker.hasGestureHandlers;
                 eventInfo.stopPropagation = false;
                 break;
@@ -5942,7 +5959,7 @@ $.EventSource.prototype = {
             case 'wheel':
                 eventInfo.isStopable = true;
                 eventInfo.isCancelable = true;
-                eventInfo.preventDefault = false;//tracker.hasScrollHandler;
+                eventInfo.preventDefault = false; // handleWheelEvent() may set true (tracker.hasScrollHandler)
                 eventInfo.preventGesture = !tracker.hasScrollHandler;
                 eventInfo.stopPropagation = false;
                 break;
@@ -5969,13 +5986,15 @@ $.EventSource.prototype = {
                 eventInfo.preventGesture = false;
                 eventInfo.stopPropagation = false;
                 break;
-            case 'contextmenu':
+            case 'keypress':
                 eventInfo.isStopable = true;
                 eventInfo.isCancelable = true;
-                eventInfo.preventDefault = false;//tracker.hasContextMenuHandler;
-                eventInfo.preventGesture = true;//!tracker.hasContextMenuHandler;
+                eventInfo.preventDefault = !!tracker.keyHandler;
+                eventInfo.preventGesture = false;
                 eventInfo.stopPropagation = false;
                 break;
+            case 'focus':
+            case 'blur':
             case 'pointerenter':
             case 'pointerleave':
             default:
@@ -9977,6 +9996,13 @@ function onBlur(){
 }
 
 function onCanvasContextMenu( event ) {
+    var eventArgs = {
+        tracker: event.eventSource,
+        position: event.position,
+        originalEvent: event.originalEvent,
+        preventDefault: event.preventDefault
+    };
+
     /**
      * Raised when a contextmenu event occurs in the {@link OpenSeadragon.Viewer#canvas} element.
      *
@@ -9987,13 +10013,12 @@ function onCanvasContextMenu( event ) {
      * @property {OpenSeadragon.MouseTracker} tracker - A reference to the MouseTracker which originated this event.
      * @property {OpenSeadragon.Point} position - The position of the event relative to the tracked element.
      * @property {Object} originalEvent - The original DOM event.
+     * @property {Boolean} preventDefault - Set to true to prevent the default user-agent's handling of the contextmenu event.
      * @property {?Object} userData - Arbitrary subscriber-defined object.
      */
-    this.raiseEvent( 'canvas-contextmenu', {
-        tracker: event.eventSource,
-        position: event.position,
-        originalEvent: event.originalEvent
-    });
+    this.raiseEvent( 'canvas-contextmenu', eventArgs );
+
+    event.preventDefault = eventArgs.preventDefault;
 }
 
 function onCanvasKeyDown( event ) {
