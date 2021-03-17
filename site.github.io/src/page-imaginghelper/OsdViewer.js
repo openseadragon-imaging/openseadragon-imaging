@@ -73,7 +73,7 @@ function OsdViewer(props) {
 
   useEffect(() => {
     let viewer = new OpenSeadragon.Viewer({
-      debugMode: false,
+      debugMode: true,
       id: 'osdContainer',
       prefixUrl: '', //'lib/openseadragon/images/',
       navImages: osdNavImages,
@@ -396,6 +396,8 @@ function OsdViewer(props) {
       imagingHelper.setMinZoom(minZoom);
       imagingHelper.setMaxZoom(maxZoom);
       imagingHelper.setZoomStepPercent(35);
+
+      //imagingHelper.setZoomFactor(1.0);
 
       haveImage = true;
       setHaveImage(true);

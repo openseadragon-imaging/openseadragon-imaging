@@ -13,11 +13,20 @@ The tool continues scaling down by half and outputting new levels until the imag
 Tile overlap (if any) is added in addition to the normal tile size. Note that tile overlaps are on both sides of the join, so a one pixel overlap (for example) means tiles 0_0 and 1_0 have two columns of pixels in common.
 
 <div style="display:flex;flex-direction:column;width:400px;height:300px;border-color:#888;border-width:2px;border-style:solid;">
-1
+Viewer.outerTracker (Viewer.container element)
 <div style="flex:1 1 auto;display:flex;flex-direction:column;border-color:#888;border-width:2px;border-style:solid;margin:0 1em 1em 1em;">
-2
+Viewer.innerTracker (Viewer.canvas element)
 <div style="flex:1 1 auto;display:flex;flex-direction:column;border-color:#888;border-width:2px;border-style:solid;margin:0 1em 1em 1em;">
-3
+Overlay element
 </div>
 </div>
 </div>
+
+## CodePen
+
+<p class="codepen" data-height="265" data-theme-id="light" data-default-tab="js,result" data-user="msalsbery" data-slug-hash="dyOeXqO" style="height: 265px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;" data-pen-title="OpenSeadragon MouseTracker">
+  <span>See the Pen <a href="https://codepen.io/msalsbery/pen/dyOeXqO">
+  OpenSeadragon MouseTracker</a> by Mark Salsbery (<a href="https://codepen.io/msalsbery">@msalsbery</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
+<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>

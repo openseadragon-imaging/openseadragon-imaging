@@ -79,7 +79,7 @@ function OsdViewer(props) {
       // },
       //------------------
       //showNavigationControl: true,
-      navigationControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
+      navigationControlAnchor: OpenSeadragon.ControlAnchor.TOP_LEFT,
       // showRotationControl: true,
       // showFlipControl: true,
       //------------------
@@ -95,7 +95,7 @@ function OsdViewer(props) {
       // preserveViewport: true,
       // preserveOverlays: false,
       // showSequenceControl: true,
-      sequenceControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
+      sequenceControlAnchor: OpenSeadragon.ControlAnchor.TOP_LEFT,
       showReferenceStrip: false,
       referenceStripScroll: 'horizontal',
       // referenceStripElement: null,
@@ -112,6 +112,10 @@ function OsdViewer(props) {
       // collectionTileMargin: 80,
       //------------------
       tileSources: tileSources
+      //------------------
+      // gestureSettingsMouse: {
+      //   clickToZoom: true
+      // }
     });
 
     let consoleHook = viewer.addConsoleHook({
@@ -171,15 +175,6 @@ function OsdViewer(props) {
       //onImageViewChanged: onImageViewChanged
     });
 
-    // let el = document.createElement('div');
-    // OpenSeadragon.addClass(el, 'osd-canvas-child');
-    // viewer.canvas.appendChild(el);
-    // new OpenSeadragon.MouseTracker({
-    // 	userData: 'osd-canvas-child',
-    // 	element: el,
-    // 	startDisabled: false
-    // });
-
     let onWindowResize = function () {
       if (viewer && imagingHelper && !viewer.autoResize) {
         // We're handling viewer resizing ourselves. Let the ImagingHelper do it.
@@ -203,6 +198,8 @@ function OsdViewer(props) {
       OpenSeadragon.console.error('[onOpen] error');
     };
 
+    let onOpenFailed = function (event) {};
+
     let onClose = function (event) {
       OpenSeadragon.console.log('[onClose] log');
       OpenSeadragon.console.debug('[onClose] debug');
@@ -211,32 +208,101 @@ function OsdViewer(props) {
       OpenSeadragon.console.error('[onClose] error');
     };
 
-    let onCanvasContextMenu = function (event) {
-      OpenSeadragon.console.log('canvas-contextmenu');
-      event.preventDefault = true;
-    };
+    // let onCanvasContextMenu = function (event) {
+    //   OpenSeadragon.console.log('canvas-contextmenu');
+    //   event.preventDefault = true;
+    // };
 
-    let onNavigatorScroll = function (event) {
-      if (event.scroll > 0) {
-        imagingHelper.zoomIn();
-      } else {
-        imagingHelper.zoomOut();
-      }
-    };
+    // let onNavigatorScroll = function (event) {
+    //   if (event.scroll > 0) {
+    //     imagingHelper.zoomIn();
+    //   } else {
+    //     imagingHelper.zoomOut();
+    //   }
+    // };
 
     window.addEventListener('resize', onWindowResize, false);
     viewer.addHandler('open', onOpen);
+    viewer.addHandler('open-failed', onOpenFailed);
     viewer.addHandler('close', onClose);
-    viewer.addHandler('canvas-contextmenu', onCanvasContextMenu);
-    viewer.addHandler('navigator-scroll', onNavigatorScroll);
+    // viewer.addHandler('canvas-contextmenu', onCanvasContextMenu);
+    // viewer.addHandler('navigator-scroll', onNavigatorScroll);
+    // viewer.addHandler('canvas-pinch', (event) => {
+    //   event.preventDefaultPanAction = false;
+    //   event.preventDefaultZoomAction = false;
+    //   event.preventDefaultRotateAction = false;
+    // });
+    // viewer.addHandler('canvas-scroll', (event) => {
+    //   event.preventDefaultAction = false;
+    // });
 
-    onWindowResize();
+    // viewer.addHandler('canvas-click', (event) => {
+    //   let gestureSettings = viewer.gestureSettingsByDeviceType('mouse');
+    //   gestureSettings.scrollToZoom = false;
+    // });
+
+    // viewer.addHandler('canvas-click', (event) => {
+    //   if (event.quick) {
+    //     let overlayElement = OpenSeadragon.makeNeutralElement('div');
+
+    //     overlayElement.className = 'my-overlay-class';
+    //     (function (style) {
+    //       style.fontSize = '20px';
+    //       style.color = '#000';
+    //       style.background = 'rgba(0,255,255,0.5)';
+    //       style.padding = '20px';
+    //       style.pointerEvents = 'auto';
+    //       style.cursor = 'grab';
+    //     })(overlayElement.style);
+
+    //     let clickPoint = viewer.viewport.pointFromPixel(event.position);
+
+    //     // new OpenSeadragon.MouseTracker({
+    //     //   element: overlayElement,
+    //     //   preProcessEventHandler: function (eventInfo) {
+    //     //     switch (eventInfo.eventType) {
+    //     //       case 'pointerdown':
+    //     //       case 'pointerup':
+    //     //         // prevent drag, click, pinch, etc. gestures on the viewer
+    //     //         // when events bubble, preventDefault true indicates to viewer
+    //     //         //    that we handled the events
+    //     //         eventInfo.preventDefault = true;
+    //     //         break;
+    //     //       case 'contextmenu':
+    //     //         // prevent context menu from popping up
+    //     //         eventInfo.preventDefault = true;
+    //     //         break;
+    //     //       default:
+    //     //         break;
+    //     //     }
+    //     //   },
+    //     //   dragHandler: function (e) {
+    //     //     // drag the overlay
+    //     //     var overlay = viewer.getOverlayById('overlay3');
+    //     //     var delta = viewer.viewport.deltaPointsFromPixels(e.delta);
+    //     //     overlay.update({ location: overlay.location.plus(delta) });
+    //     //     overlay.drawHTML(viewer.overlaysContainer, viewer.viewport );
+    //     //   }
+    //     // });
+
+    //     viewer.addOverlay({
+    //       element: overlayElement,
+    //       location: new OpenSeadragon.Rect(clickPoint.x, clickPoint.y, 0.1, 0.1)
+    //     });
+
+    //     // Prevent default click-to-zoom behavior
+    //     event.preventDefaultAction = true;
+    //   }
+    // });
+
+    // onWindowResize();
 
     // Cleanup (componentWillUnmount)
     return () => {
       viewer.removeHandler('open', onOpen);
+      viewer.removeHandler('open-failed', onOpenFailed);
       viewer.removeHandler('close', onClose);
-      viewer.removeHandler('navigator-scroll', onNavigatorScroll);
+      // viewer.removeHandler('navigator-scroll', onNavigatorScroll);
       window.removeEventListener('resize', onWindowResize, false);
       imagingHelper.destroy();
       imagingHelper = null;

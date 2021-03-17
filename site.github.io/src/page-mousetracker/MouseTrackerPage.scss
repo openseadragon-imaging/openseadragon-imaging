@@ -24,12 +24,11 @@
 }
 
 #overlay1 {
-  font-size: 30px;
+  font-size: 20px;
   cursor: pointer;
-  //background: rgba(0, 0, 0, 0.3);
-  background: #888;
+  background: rgba(0, 0, 0, 0.3);
   padding: 20px;
-  pointer-events: all;
+  pointer-events: auto;
 }
 
 #overlay1,
@@ -41,6 +40,24 @@
 #overlay1.selected,
 #overlay1.selected a {
   color: #f88;
+}
+
+#overlay2 {
+  font-size: 20px;
+  cursor: not-allowed;
+  color: #000;
+  background: rgba(255, 255, 0, 0.5);
+  padding: 20px;
+  pointer-events: auto;
+}
+
+#overlay3 {
+  font-size: 20px;
+  cursor: grab;
+  color: #000;
+  background: rgba(0, 255, 255, 0.5);
+  padding: 20px;
+  pointer-events: auto;
 }
 
 //------------------------------------------------------

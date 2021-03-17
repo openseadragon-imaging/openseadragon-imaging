@@ -26,6 +26,8 @@ import './MouseTrackerPage.scss';
 
 function MouseTrackerPage(props) {
   let overlay1Ref = useRef(null);
+  let overlay2Ref = useRef(null);
+  let overlay3Ref = useRef(null);
 
   const [overlay1Selected, setOverlay1Selected] = useState(false);
 
@@ -75,8 +77,18 @@ function MouseTrackerPage(props) {
       overlays: [
         {
           id: 'overlay1',
-          x: 0.2,
-          y: 0.2
+          x: 0.05,
+          y: 0.05
+        },
+        {
+          id: 'overlay2',
+          x: 0.35,
+          y: 0.05
+        },
+        {
+          id: 'overlay3',
+          x: 0.58,
+          y: 0.05
         }
       ]
     });
@@ -123,20 +135,21 @@ function MouseTrackerPage(props) {
      *      Arbitrary user-defined object.
      */
 
-    new OpenSeadragon.MouseTracker({
+    let mouseTracker1 = new OpenSeadragon.MouseTracker({
       userData: 'overlay1.Tracker',
       element: overlay1Ref.current, //'overlay1',
       preProcessEventHandler: function (eventInfo) {
-        var target = eventInfo.originalEvent.target;
+        let target = eventInfo.originalEvent.target;
         switch (eventInfo.eventType) {
           case 'pointerdown':
           case 'pointerup':
             // prevent pointerdown/pointerup events from bubbling
+            // viewer won't see these events
             eventInfo.stopPropagation = true;
             if (target.nodeName === 'A') {
               // allow user agent to handle clicks
               eventInfo.preventDefault = false;
-              // prevents clickHandler
+              // prevents clickHandler call
               eventInfo.preventGesture = true;
             }
             break;
@@ -151,6 +164,11 @@ function MouseTrackerPage(props) {
               eventInfo.preventDefault = true;
             }
             break;
+          case 'contextmenu':
+            // allow context menu to pop up
+            eventInfo.stopPropagation = true;
+            eventInfo.preventDefault = false;
+            break;
           default:
             break;
         }
@@ -162,8 +180,62 @@ function MouseTrackerPage(props) {
       }
     });
 
+    let mouseTracker2 = new OpenSeadragon.MouseTracker({
+      userData: 'overlay2.Tracker',
+      element: overlay2Ref.current, //'overlay2',
+      preProcessEventHandler: function (eventInfo) {
+        switch (eventInfo.eventType) {
+          case 'pointerdown':
+          case 'pointerup':
+            // prevent drag, click, pinch, etc. gestures on our overlay
+            // will bubble to viewer since we didn't set stopPropagation to true
+            // viewer will process since we didn't set preventDefault to true
+            eventInfo.preventGesture = true;
+            break;
+          case 'contextmenu':
+            // prevent context menu from popping up
+            eventInfo.preventDefault = true;
+            break;
+          default:
+            break;
+        }
+      }
+    });
+
+    let mouseTracker3 = new OpenSeadragon.MouseTracker({
+      userData: 'overlay3.Tracker',
+      element: overlay3Ref.current, //'overlay3',
+      preProcessEventHandler: function (eventInfo) {
+        switch (eventInfo.eventType) {
+          case 'pointerdown':
+          case 'pointerup':
+            // prevent drag, click, pinch, etc. gestures on the viewer
+            // when events bubble, preventDefault true indicates to viewer
+            //    that we handled the events
+            eventInfo.preventDefault = true;
+            break;
+          case 'contextmenu':
+            // prevent context menu from popping up
+            eventInfo.preventDefault = true;
+            break;
+          default:
+            break;
+        }
+      },
+      dragHandler: function (e) {
+        // drag the overlay
+        let overlay = viewer.getOverlayById('overlay3');
+        let delta = viewer.viewport.deltaPointsFromPixels(e.delta);
+        overlay.update({ location: overlay.location.plus(delta) });
+        overlay.drawHTML(viewer.overlaysContainer, viewer.viewport);
+      }
+    });
+
     // Cleanup (componentWillUnmount)
     return () => {
+      mouseTracker3.destroy();
+      mouseTracker2.destroy();
+      mouseTracker1.destroy();
       viewer.destroy();
       viewer = null;
     };
@@ -184,13 +256,19 @@ function MouseTrackerPage(props) {
                 <p>Click to Toggle Color</p>
                 <p>
                   <a
-                    href="http://iangilman.com"
+                    href="http://openseadragon.github.io"
                     target="_blank"
                     rel="noreferrer"
                   >
                     I&apos;m a link!
                   </a>
                 </p>
+              </div>
+              <div id="overlay2" ref={overlay2Ref}>
+                <p>Can&apos;t Drag Me</p>
+              </div>
+              <div id="overlay3" ref={overlay3Ref}>
+                <p>Drag Me!</p>
               </div>
             </Col>
           </Row>
