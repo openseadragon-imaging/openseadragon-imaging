@@ -3,8 +3,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import OpenSeadragon from 'openseadragon';
-import '@openseadragon-imaging/openseadragon-imaginghelper';
-import './NavigatorPage.scss';
+//import '@openseadragon-imaging/openseadragon-imaginghelper';
+import './ReferenceStripPage.scss';
 
 import osdNavImages from '../common/OsdNavImages';
 
@@ -42,7 +42,7 @@ const tileSources = [
   tileSourcesPrefix + '6a32487.dzi'
 ];
 
-function NavigatorPage(props) {
+function ReferenceStripPage(props) {
   useEffect(() => {
     let viewer = new OpenSeadragon.Viewer({
       debugMode: false,
@@ -53,27 +53,24 @@ function NavigatorPage(props) {
       autoResize: true, // If false, we have to handle resizing of the viewer
       preserveImageSizeOnResize: true,
       //------------------
-      navigationControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
+      navigationControlAnchor: OpenSeadragon.ControlAnchor.TOP_LEFT,
       //------------------
-      showNavigator: true,
-      navigatorId: 'osdNavContainer',
+      showReferenceStrip: true,
+      referenceStripElement: null,
+      referenceStripScroll: 'horizontal',
+      // referenceStripHeight: null,
+      // referenceStripWidth: null,
+      referenceStripPosition: 'BOTTOM_LEFT',
+      // referenceStripSizeRatio: 0.2,
       //------------------
       sequenceMode: true,
-      sequenceControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
+      sequenceControlAnchor: OpenSeadragon.ControlAnchor.TOP_LEFT,
       //------------------
       tileSources: tileSources
     });
 
-    viewer.addHandler('navigator-scroll', (event) => {
-      // if (event.scroll > 0) {
-      //   imagingHelper.zoomIn();
-      // } else {
-      //   imagingHelper.zoomOut();
-      // }
-      var viewport = viewer.viewport;
-      viewport.zoomBy(event.scroll > 0 ? 1.1 : 0.9);
-      viewport.applyConstraints();
-    });
+    // viewer.addHandler('navigator-scroll', (event) => {
+    // });
 
     // Cleanup (componentWillUnmount)
     return () => {
@@ -83,7 +80,7 @@ function NavigatorPage(props) {
   }, []);
 
   return (
-    <Row className="navigator-page">
+    <Row className="referencestrip-page">
       <Col md={9} xs={12}>
         <Container fluid className="viewer-pane">
           <Row>
@@ -94,10 +91,10 @@ function NavigatorPage(props) {
         </Container>
       </Col>
       <Col md={3} xs={12}>
-        <Container fluid className="navigator-pane">
+        <Container fluid className="referencestrip-pane">
           <Row>
-            <Col className="navigator-container">
-              <div id="osdNavContainer" className="osdNavContainer" />
+            <Col className="referencestrip-container">
+              <div id="osdRefStripContainer" className="osdRefStripContainer" />
             </Col>
           </Row>
         </Container>
@@ -106,4 +103,4 @@ function NavigatorPage(props) {
   );
 }
 
-export default NavigatorPage;
+export default ReferenceStripPage;

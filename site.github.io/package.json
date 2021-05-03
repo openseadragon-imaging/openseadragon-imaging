@@ -24,8 +24,8 @@
     "npm": ">= 6.0.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.34",
-    "@fortawesome/free-solid-svg-icons": "^5.15.2",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@openseadragon-imaging/openseadragon-consolehook": "^2.2.1",
     "@openseadragon-imaging/openseadragon-imaginghelper": "^2.2.2",
@@ -33,24 +33,24 @@
     "bootstrap": "4.6.0",
     "bootswatch": "4.6.0",
     "openseadragon": "^2.4.2",
-    "react": "^17.0.1",
-    "react-bootstrap": "^1.4.3",
-    "react-dom": "^17.0.1",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.5.2",
+    "react-dom": "^17.0.2",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.2"
+    "react-scripts": "^4.0.3"
   },
   "devDependencies": {
-    "eslint": "^7.19.0",
-    "eslint-config-prettier": "^7.2.0",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "node-sass": "^4.14.1",
     "prettier": "^2.2.1",
     "source-map-explorer": "^2.5.2",
-    "typescript": "^4.1.5"
+    "typescript": "^4.2.3"
   },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/*.js",

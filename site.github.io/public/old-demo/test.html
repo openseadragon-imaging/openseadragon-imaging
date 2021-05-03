@@ -29,6 +29,7 @@
 			top: 100px;
 			background-color: green;
 			touch-action: none;
+      /* pointer-events: none; */
 		}
 
 		#log {
@@ -69,14 +70,22 @@
 		childDiv.addEventListener("pointerdown", (e) => {
 			addLog("pointerdown@child");
 			if (childDiv.hasPointerCapture(e.pointerId)) {
-				addLog("childDiv has pointer capture");
+				addLog("-- (childDiv has pointer capture)");
 				childDiv.releasePointerCapture(e.pointerId);
 			}
 		});
 
 		parentDiv.addEventListener("pointerdown", (e) => {
 			addLog("pointerdown@parent");
-			parentDiv.setPointerCapture(e.pointerId);
+			if (childDiv.hasPointerCapture(e.pointerId)) {
+				addLog("-- (childDiv has pointer capture)");
+				childDiv.releasePointerCapture(e.pointerId);
+			}
+			if (parentDiv.hasPointerCapture(e.pointerId)) {
+				addLog("-- (parentDiv has pointer capture}");
+			} else {
+        parentDiv.setPointerCapture(e.pointerId);
+      }
 			initialX = e.clientX - xOffset;
 			initialY = e.clientY - yOffset;
 			dragging = true;

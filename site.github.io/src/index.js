@@ -5,9 +5,9 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
-	faTrashAlt,
-	faHandPaper,
-	faHandPointer
+  faTrashAlt,
+  faHandPaper,
+  faHandPointer
 } from '@fortawesome/free-solid-svg-icons';
 import App from './app/App';
 import * as serviceWorker from './serviceWorker';

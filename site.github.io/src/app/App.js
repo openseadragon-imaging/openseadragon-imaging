@@ -18,6 +18,7 @@ import ConsoleHookPage from '../page-consolehook/ConsoleHookPage';
 import ImagingHelperPage from '../page-imaginghelper/ImagingHelperPage';
 import NavigatorPage from '../page-navigator/NavigatorPage';
 import MouseTrackerPage from '../page-mousetracker/MouseTrackerPage';
+import ReferenceStripPage from '../page-referencestrip/ReferenceStripPage';
 
 const appTitle = 'OpenSeadragon Imaging';
 
@@ -47,11 +48,14 @@ function NavBar(props) {
           <LinkContainer to="/consolehook">
             <Nav.Link>ConsoleHook</Nav.Link>
           </LinkContainer>
+          <LinkContainer to="/mousetracker">
+            <Nav.Link>MouseTracker</Nav.Link>
+          </LinkContainer>
           <LinkContainer to="/navigator">
             <Nav.Link>Navigator</Nav.Link>
           </LinkContainer>
-          <LinkContainer to="/mousetracker">
-            <Nav.Link>MouseTracker</Nav.Link>
+          <LinkContainer to="/referencestrip">
+            <Nav.Link>ReferenceStrip</Nav.Link>
           </LinkContainer>
         </Nav>
       </Navbar.Collapse>
@@ -80,11 +84,14 @@ function App(props) {
             <Route path="/consolehook">
               <ConsoleHookPage />
             </Route>
+            <Route path="/mousetracker">
+              <MouseTrackerPage />
+            </Route>
             <Route path="/navigator">
               <NavigatorPage />
             </Route>
-            <Route path="/mousetracker">
-              <MouseTrackerPage />
+            <Route path="/referencestrip">
+              <ReferenceStripPage />
             </Route>
             <Route path="/">
               <Redirect to="/" />

@@ -1,6 +1,6 @@
 //! openseadragon 2.5.0
-//! Built on 2021-03-17
-//! Git commit: v2.4.2-127-f73420a-dirty
+//! Built on 2021-05-03
+//! Git commit: v2.4.2-171-7fbff2c-dirty
 //! http://openseadragon.github.io
 //! License: http://openseadragon.github.io/license/
 
@@ -992,7 +992,7 @@ function OpenSeadragon( options ){
      * @member {Number} pixelDensityRatio
      * @memberof OpenSeadragon
      */
-    $.pixelDensityRatio = (function () {
+    $.getCurrentPixelDensityRatio = function() {
         if ( $.supportsCanvas ) {
             var context = document.createElement('canvas').getContext('2d');
             var devicePixelRatio = window.devicePixelRatio || 1;
@@ -1005,7 +1005,13 @@ function OpenSeadragon( options ){
         } else {
             return 1;
         }
-    }());
+    };
+
+    /**
+     * @member {Number} pixelDensityRatio
+     * @memberof OpenSeadragon
+     */
+    $.pixelDensityRatio = $.getCurrentPixelDensityRatio();
 
 }( OpenSeadragon ));
 
@@ -1911,14 +1917,15 @@ function OpenSeadragon( options ){
 
 
         /**
-         * Sets the specified element's pointer-events style attribute to 'none'.
+         * Sets the specified element's pointer-events style attribute to the passed value.
          * @function
          * @param {Element|String} element
+         * @param {String} value
          */
-        setElementPointerEventsNone: function( element ) {
+        setElementPointerEvents: function( element, value ) {
             element = $.getElement( element );
             if ( typeof element.style.pointerEvents !== 'undefined' ) {
-                element.style.pointerEvents = 'none';
+                element.style.pointerEvents = value;
             }
         },
 
@@ -3394,6 +3401,10 @@ $.EventSource.prototype = {
                                 this.pinchHandler );
         this.hasScrollHandler = !!this.scrollHandler;
 
+        if ( $.MouseTracker.havePointerEvents ) {
+            $.setElementPointerEvents( this.element, 'auto' );
+        }
+
         if (this.exitHandler) {
             $.console.error("MouseTracker.exitHandler is deprecated. Use MouseTracker.leaveHandler instead.");
         }
@@ -4652,13 +4663,14 @@ $.EventSource.prototype = {
 
         if ( $.MouseTracker.havePointerCapture ) {
             if ( $.MouseTracker.havePointerEvents ) {
-                // Can throw InvalidPointerId
+                // Can throw NotFoundError (InvalidPointerId Firefox < 82)
                 //   (should never happen so we'll log a warning)
                 try {
                     tracker.element.setPointerCapture( gPoint.id );
                     //$.console.log('element.setPointerCapture() called');
                 } catch ( e ) {
                     $.console.warn('setPointerCapture() called on invalid pointer ID');
+                    return;
                 }
             } else {
                 tracker.element.setCapture( true );
@@ -4714,7 +4726,7 @@ $.EventSource.prototype = {
                 if ( !cachedGPoint || !cachedGPoint.captured ) {
                     return;
                 }
-                // Can throw InvalidPointerId
+                // Can throw NotFoundError (InvalidPointerId Firefox < 82)
                 //   (should never happen, but it does on Firefox 79 touch so we won't log a warning)
                 try {
                     tracker.element.releasePointerCapture( gPoint.id );
@@ -4844,7 +4856,7 @@ $.EventSource.prototype = {
      * @inner
      */
     function onClick( tracker, event ) {
-        //$.console.log('onClick ' + (tracker.userData ? tracker.userData.toString() : ''));
+        //$.console.log('click ' + (tracker.userData ? tracker.userData.toString() : ''));
 
         var eventInfo = {
             originalEvent: event,
@@ -4868,7 +4880,7 @@ $.EventSource.prototype = {
      * @inner
      */
     function onDblClick( tracker, event ) {
-        //$.console.log('onDblClick ' + (tracker.userData ? tracker.userData.toString() : ''));
+        //$.console.log('dblclick ' + (tracker.userData ? tracker.userData.toString() : ''));
 
         var eventInfo = {
             originalEvent: event,
@@ -5017,7 +5029,7 @@ $.EventSource.prototype = {
      * @inner
      */
     function onFocus( tracker, event ) {
-        //console.log( "focus %s", event );
+        //$.console.log('focus  ' + (tracker.userData ? tracker.userData.toString() : ''));
 
         // focus doesn't bubble and is not cancelable, but we call
         //   preProcessEvent() so it's dispatched to preProcessEventHandler
@@ -5047,7 +5059,7 @@ $.EventSource.prototype = {
      * @inner
      */
     function onBlur( tracker, event ) {
-        //console.log( "blur %s", event );
+        //$.console.log('blur  ' + (tracker.userData ? tracker.userData.toString() : ''));
 
         // blur doesn't bubble and is not cancelable, but we call
         //   preProcessEvent() so it's dispatched to preProcessEventHandler
@@ -5229,7 +5241,9 @@ $.EventSource.prototype = {
         };
         preProcessEvent( tracker, eventInfo );
 
-        updatePointerCaptured( tracker, gPoint, false );
+        if ( event.target === tracker.element ) {
+            updatePointerCaptured( tracker, gPoint, false );
+        }
 
         if ( eventInfo.stopPropagation ) {
             $.stopEvent( event );
@@ -5250,7 +5264,7 @@ $.EventSource.prototype = {
 
         time = $.now();
 
-        //$.console.log('touchstart ' + (tracker.userData ? tracker.userData.toString() : ''));
+        //$.console.log('touchstart ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
 
         if ( pointsList.getLength() > event.touches.length - touchCount ) {
             $.console.warn('Tracked touch contact count doesn\'t match event.touches.length');
@@ -5277,9 +5291,9 @@ $.EventSource.prototype = {
             // simulate touchenter on our tracked element
             updatePointerEnter( tracker, eventInfo, gPoint );
 
-            updatePointerCaptured( tracker, gPoint, true );
-
             updatePointerDown( tracker, eventInfo, gPoint, 0 );
+
+            updatePointerCaptured( tracker, gPoint, true );
         }
 
         if ( eventInfo.preventDefault && !eventInfo.defaultPrevented ) {
@@ -5303,7 +5317,7 @@ $.EventSource.prototype = {
 
         time = $.now();
 
-        //$.console.log('touchend ' + (tracker.userData ? tracker.userData.toString() : ''));
+        //$.console.log('touchend ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
 
         var eventInfo = {
             originalEvent: event,
@@ -5643,22 +5657,6 @@ $.EventSource.prototype = {
      * @inner
      */
     function onPointerDown( tracker, event ) {
-        //$.console.log('onPointerDown ' + (tracker.userData ? tracker.userData.toString() : ''));
-        // $.console.log('onPointerDown ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + event.target.tagName);
-
-        // Most browsers implicitly capture touch pointer events
-        // Note no IE versions have element.hasPointerCapture() so no implicit
-        //    pointer capture possible
-        var implicitlyCaptured = ($.MouseTracker.havePointerEvents &&
-                                 tracker.element.hasPointerCapture &&
-                                 $.Browser.vendor !== $.BROWSERS.IE) ?
-                        tracker.element.hasPointerCapture(event.pointerId) : false;
-        // if (implicitlyCaptured) {
-        //     $.console.log('pointerdown implicitlyCaptured ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
-        // } else {
-        //     $.console.log('pointerdown not implicitlyCaptured ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
-        // }
-
         var gPoint = {
             id: getPointerId( event ),
             type: getPointerType( event ),
@@ -5666,6 +5664,19 @@ $.EventSource.prototype = {
             currentPos: getMouseAbsolute( event ),
             currentTime: $.now()
         };
+
+        // Most browsers implicitly capture touch pointer events
+        // Note no IE versions have element.hasPointerCapture() so no implicit
+        //    pointer capture possible
+        // var implicitlyCaptured = ($.MouseTracker.havePointerEvents &&
+        //                         event.target.hasPointerCapture &&
+        //                         $.Browser.vendor !== $.BROWSERS.IE) ?
+        //                         event.target.hasPointerCapture(event.pointerId) : false;
+        var implicitlyCaptured = $.MouseTracker.havePointerEvents &&
+                                gPoint.type === 'touch' &&
+                                $.Browser.vendor !== $.BROWSERS.IE;
+
+        //$.console.log('pointerdown ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
 
         var eventInfo = {
             originalEvent: event,
@@ -5683,12 +5694,12 @@ $.EventSource.prototype = {
         if ( eventInfo.stopPropagation ) {
             $.stopEvent( event );
         }
-        if ( eventInfo.shouldCapture && !implicitlyCaptured ) {
-           //$.console.log('pointerdown calling capturePointer() ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
-           capturePointer( tracker, gPoint );
-        } else if ( !eventInfo.shouldCapture && implicitlyCaptured ) {
-           //$.console.log('pointerdown calling releasePointer() ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
-           releasePointer( tracker, gPoint ); //TODO should we do this? Investigate when implementing bubble handling
+        if ( eventInfo.shouldCapture ) {
+            if ( implicitlyCaptured ) {
+                updatePointerCaptured( tracker, gPoint, true );
+            } else {
+                capturePointer( tracker, gPoint );
+            }
         }
     }
 
@@ -5734,7 +5745,7 @@ $.EventSource.prototype = {
     function handlePointerUp( tracker, event ) {
         var gPoint;
 
-        //$.console.log('onPointerUp ' + (tracker.userData ? tracker.userData.toString() : ''));
+        //$.console.log('pointerup ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
 
         gPoint = {
             id: getPointerId( event ),
@@ -5764,9 +5775,12 @@ $.EventSource.prototype = {
         // Per spec, pointerup events are supposed to release capture. Not all browser
         //   versions have adhered to the spec, and there's no harm in releasing
         //   explicitly
-        if ( eventInfo.shouldReleaseCapture && event.target === tracker.element ) {
-           //$.stopEvent( event );
-           releasePointer( tracker, gPoint );
+        if ( eventInfo.shouldReleaseCapture ) {
+            if ( event.target === tracker.element ) {
+                releasePointer( tracker, gPoint );
+            } else {
+                updatePointerCaptured( tracker, gPoint, false );
+            }
         }
     }
 
@@ -5844,7 +5858,7 @@ $.EventSource.prototype = {
      * @inner
      */
     function onPointerCancel( tracker, event ) {
-        //$.console.log('pointercancel ' + (tracker.userData ? tracker.userData.toString() : ''));
+        //$.console.log('pointercancel ' + (tracker.userData ? tracker.userData.toString() : '') + ' ' + (event.target === tracker.element ? 'tracker.element' : ''));
 
         var gPoint = {
             id: event.pointerId,
@@ -5883,6 +5897,7 @@ $.EventSource.prototype = {
      * @returns {Number} Number of gesture points in pointsList.
      */
     function startTrackingPointer( pointsList, gPoint ) {
+        //$.console.log('startTrackingPointer *** ' + pointsList.type + ' ' + gPoint.id.toString());
         gPoint.speed = 0;
         gPoint.direction = 0;
         gPoint.contactPos = gPoint.currentPos;
@@ -5907,13 +5922,22 @@ $.EventSource.prototype = {
      * @returns {Number} Number of gesture points in pointsList.
      */
     function stopTrackingPointer( tracker, pointsList, gPoint ) {
+        //$.console.log('stopTrackingPointer *** ' + pointsList.type + ' ' + gPoint.id.toString());
         var listLength;
 
         var trackedGPoint = pointsList.getById( gPoint.id );
 
         if ( trackedGPoint ) {
             if ( trackedGPoint.captured ) {
+                $.console.warn('stopTrackingPointer() called on captured pointer');
                 releasePointer( tracker, trackedGPoint );
+            }
+
+            // If child element relinquishes capture to a parent we may get here
+            //   from a pointerleave event while a pointerup event will never be received.
+            //   In that case, we'll clean up the contact count
+            if ( (pointsList.type === 'mouse' || pointsList.type === 'pen') &&
+                                                        pointsList.contacts > 0 ) {
                 pointsList.removeContact();
             }
 
@@ -6384,13 +6408,13 @@ $.EventSource.prototype = {
             startTrackingPointer( pointsList, gPoint );
         }
 
+        pointsList.addContact();
+        //$.console.log('contacts++ ', pointsList.contacts);
+
         if ( !eventInfo.preventGesture && !eventInfo.defaultPrevented ) {
             eventInfo.shouldCapture = true;
             eventInfo.shouldReleaseCapture = false;
             eventInfo.preventDefault = true;
-
-            pointsList.addContact();
-            //$.console.log('contacts++ ', pointsList.contacts);
 
             if ( tracker.dragHandler || tracker.dragEndHandler || tracker.pinchHandler ) {
                 $.MouseTracker.gesturePointVelocityTracker.addPoint( tracker, gPoint );
@@ -6532,15 +6556,15 @@ $.EventSource.prototype = {
             updateGPoint = gPoint;
         }
 
+        pointsList.removeContact();
+        //$.console.log('contacts-- ', pointsList.contacts);
+
         if ( !eventInfo.preventGesture && !eventInfo.defaultPrevented ) {
             if ( wasCaptured ) {
                 // Pointer was activated in our element but could have been removed in any element since events are captured to our element
 
                 eventInfo.shouldReleaseCapture = true;
                 eventInfo.preventDefault = true;
-
-                pointsList.removeContact();
-                //$.console.log('contacts-- ', pointsList.contacts);
 
                 if ( tracker.dragHandler || tracker.dragEndHandler || tracker.pinchHandler ) {
                     $.MouseTracker.gesturePointVelocityTracker.removePoint( tracker, updateGPoint );
@@ -6701,11 +6725,8 @@ $.EventSource.prototype = {
             updateGPoint.currentPos = gPoint.currentPos;
             updateGPoint.currentTime = gPoint.currentTime;
         } else {
-            // Initialize for tracking and add to the tracking list (no pointerover or pointerdown event occurred before this)
-            gPoint.captured = false; // Handled by updatePointerCaptured()
-            gPoint.insideElementPressed = false;
-            gPoint.insideElement = true;
-            startTrackingPointer( pointsList, gPoint );
+            // Should never get here, but due to user agent bugs (e.g. legacy touch) it sometimes happens
+            return;
         }
 
         eventInfo.shouldCapture = false;
@@ -7657,6 +7678,7 @@ $.Viewer = function( options ) {
     this._updateRequestId = null;
     this._loadQueue = [];
     this.currentOverlays = [];
+    this._updatePixelDensityRatioBind = null;
 
     this._lastScrollTime = $.now(); // variable used to help normalize the scroll event speed of different devices
 
@@ -7844,7 +7866,7 @@ $.Viewer = function( options ) {
 
     // Overlay container
     this.overlaysContainer    = $.makeNeutralElement( "div" );
-    $.setElementPointerEventsNone( this.overlaysContainer );
+    $.setElementPointerEvents( this.overlaysContainer, 'none' );
     $.setElementTouchActionNone( this.overlaysContainer );
     this.canvas.appendChild( this.overlaysContainer );
 
@@ -7862,6 +7884,8 @@ $.Viewer = function( options ) {
             this.buttonGroup.element.removeChild(this.rotateRight.element);
         }
     }
+
+    this._addUpdatePixelDensityRatioEvent();
 
     //Instantiate a navigator if configured
     if ( this.showNavigator){
@@ -8184,6 +8208,8 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
             //this viewer has already been destroyed: returning immediately
             return;
         }
+
+        this._removeUpdatePixelDensityRatioEvent();
 
         this.close();
 
@@ -8738,6 +8764,7 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
      * @param {Boolean} [options.preload=false]  Default switch for loading hidden images (true loads, false blocks)
      * @param {Number} [options.degrees=0] Initial rotation of the tiled image around
      * its top left corner in degrees.
+     * @param {Boolean} [options.flipped=false] Whether to horizontally flip the image.
      * @param {String} [options.compositeOperation] How the image is composited onto other images.
      * @param {String} [options.crossOriginPolicy] The crossOriginPolicy for this specific image,
      * overriding viewer.crossOriginPolicy.
@@ -8900,6 +8927,7 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
                     opacity: queueItem.options.opacity,
                     preload: queueItem.options.preload,
                     degrees: queueItem.options.degrees,
+                    flipped: queueItem.options.flipped,
                     compositeOperation: queueItem.options.compositeOperation,
                     springStiffness: _this.springStiffness,
                     animationTime: _this.animationTime,
@@ -9703,6 +9731,38 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
         } else {
             $.console.warn('Attempting to display a reference strip while "sequenceMode" is off.');
         }
+    },
+
+    /**
+     * Adds _updatePixelDensityRatio to the window resize event.
+     * @private
+     */
+    _addUpdatePixelDensityRatioEvent: function() {
+        this._updatePixelDensityRatioBind = this._updatePixelDensityRatio.bind(this);
+        $.addEvent( window, 'resize', this._updatePixelDensityRatioBind );
+    },
+
+    /**
+     * Removes _updatePixelDensityRatio from the window resize event.
+     * @private
+     */
+    _removeUpdatePixelDensityRatioEvent: function() {
+        $.removeEvent( window, 'resize', this._updatePixelDensityRatioBind );
+    },
+
+    /**
+     * Update pixel density ratio, clears all tiles and triggers updates for
+     * all items if the ratio has changed.
+     * @private
+     */
+     _updatePixelDensityRatio: function() {
+        var previusPixelDensityRatio = $.pixelDensityRatio;
+        var currentPixelDensityRatio = $.getCurrentPixelDensityRatio();
+        if (previusPixelDensityRatio !== currentPixelDensityRatio) {
+            $.pixelDensityRatio = currentPixelDensityRatio;
+            this.world.resetItems();
+            this.forceRedraw();
+        }
     }
 });
 
@@ -9771,7 +9831,8 @@ function getTileSourceImplementation( viewer, tileSource, imgOptions, successCal
                 crossOriginPolicy: imgOptions.crossOriginPolicy !== undefined ?
                     imgOptions.crossOriginPolicy : viewer.crossOriginPolicy,
                 ajaxWithCredentials: viewer.ajaxWithCredentials,
-                ajaxHeaders: viewer.ajaxHeaders,
+                ajaxHeaders: imgOptions.ajaxHeaders ?
+                    imgOptions.ajaxHeaders : viewer.ajaxHeaders,
                 useCanvas: viewer.useCanvas,
                 success: function( event ) {
                     successCallback( event.tileSource );
@@ -11246,7 +11307,7 @@ $.Navigator = function( options ){
         style.zIndex        = 999999999;
         style.cursor        = 'default';
     }( this.displayRegion.style, this.borderWidth ));
-    $.setElementPointerEventsNone( this.displayRegion );
+    $.setElementPointerEvents( this.displayRegion, 'none' );
     $.setElementTouchActionNone( this.displayRegion );
 
     this.displayRegionContainer = $.makeNeutralElement("div");
@@ -11254,7 +11315,7 @@ $.Navigator = function( options ){
     this.displayRegionContainer.className = "displayregioncontainer";
     this.displayRegionContainer.style.width = "100%";
     this.displayRegionContainer.style.height = "100%";
-    $.setElementPointerEventsNone( this.displayRegionContainer );
+    $.setElementPointerEvents( this.displayRegionContainer, 'none' );
     $.setElementTouchActionNone( this.displayRegionContainer );
 
     viewer.addControl(
@@ -11325,8 +11386,8 @@ $.Navigator = function( options ){
     //   pointer capture works on touch devices
     //TODO an alternative is to attach the new MouseTracker to this.canvas...not
     //   sure why it isn't already (see MouseTracker constructor call above)
-    $.setElementPointerEventsNone( this.canvas );
-    $.setElementPointerEventsNone( this.container );
+    $.setElementPointerEvents( this.canvas, 'none' );
+    $.setElementPointerEvents( this.container, 'none' );
 
     this.addHandler("reset-size", function() {
         if (_this.viewport) {
@@ -11531,6 +11592,7 @@ $.extend( $.Navigator.prototype, $.EventSource.prototype, $.Viewer.prototype, /*
         myItem.setWidth(bounds.width, immediately);
         myItem.setRotation(theirItem.getRotation(), immediately);
         myItem.setClip(theirItem.getClip());
+        myItem.setFlip(theirItem.getFlip());
     },
 
     // private
@@ -12404,8 +12466,8 @@ $.TileSource.prototype = {
      */
     getPixelRatio: function( level ) {
         var imageSizeScaled = this.dimensions.times( this.getLevelScale( level ) ),
-            rx = 1.0 / imageSizeScaled.x,
-            ry = 1.0 / imageSizeScaled.y;
+            rx = 1.0 / imageSizeScaled.x * $.pixelDensityRatio,
+            ry = 1.0 / imageSizeScaled.y * $.pixelDensityRatio;
 
         return new $.Point(rx, ry);
     },
@@ -14901,10 +14963,10 @@ $.Button = function( options ) {
 
         // Allow pointer events to pass through the img elements so implicit
         //   pointer capture works on touch devices
-        $.setElementPointerEventsNone( this.imgRest );
-        $.setElementPointerEventsNone( this.imgGroup );
-        $.setElementPointerEventsNone( this.imgHover );
-        $.setElementPointerEventsNone( this.imgDown );
+        $.setElementPointerEvents( this.imgRest, 'none' );
+        $.setElementPointerEvents( this.imgGroup, 'none' );
+        $.setElementPointerEvents( this.imgHover, 'none' );
+        $.setElementPointerEvents( this.imgDown, 'none' );
 
         this.element.style.position = "relative";
         $.setElementTouchActionNone( this.element );
@@ -16212,7 +16274,7 @@ $.ReferenceStrip = function ( options ) {
         element.style.styleFloat    = 'left'; //IE
         element.style.padding       = '2px';
         $.setElementTouchActionNone( element );
-        $.setElementPointerEventsNone( element );
+        $.setElementPointerEvents( element, 'none' );
 
         this.element.appendChild( element );
 
@@ -16474,8 +16536,8 @@ function loadPanels( strip, viewerSize, scroll ) {
             } );
             // Allow pointer events to pass through miniViewer's canvas/container
             //   elements so implicit pointer capture works on touch devices
-            $.setElementPointerEventsNone( miniViewer.canvas );
-            $.setElementPointerEventsNone( miniViewer.container );
+            $.setElementPointerEvents( miniViewer.canvas, 'none' );
+            $.setElementPointerEvents( miniViewer.container, 'none' );
             // We'll use event delegation from the reference strip element instead of
             //   handling events on every miniViewer
             miniViewer.innerTracker.setTracking( false );
@@ -17406,6 +17468,12 @@ $.Tile = function(level, x, y, bounds, exists, url, context2D, loadWithAjax, aja
      */
     this.size       = null;
     /**
+     * Whether to flip the tile when rendering.
+     * @member {Boolean} flipped
+     * @memberof OpenSeadragon.Tile#
+     */
+    this.flipped    = false;
+    /**
      * The start time of this tile's blending.
      * @member {Number} blendStart
      * @memberof OpenSeadragon.Tile#
@@ -17525,6 +17593,10 @@ $.Tile.prototype = {
         this.style.height  = this.size.y + "px";
         this.style.width   = this.size.x + "px";
 
+        if (this.flipped) {
+            this.style.transform = "scaleX(-1)";
+        }
+
         $.setElementOpacity( this.element, this.opacity );
     },
 
@@ -17605,13 +17677,17 @@ $.Tile.prototype = {
             sourceHeight = rendered.canvas.height;
         }
 
+        context.translate(position.x + size.x / 2, 0);
+        if (this.flipped) {
+            context.scale(-1, 1);
+        }
         context.drawImage(
             rendered.canvas,
             0,
             0,
             sourceWidth,
             sourceHeight,
-            position.x,
+            -size.x / 2,
             position.y,
             size.x,
             size.y
@@ -17975,10 +18051,7 @@ $.Tile.prototype = {
                         style[transformProp] = "";
                     }
                 }
-
-                if (style.display !== 'none') {
-                    style.display = 'block';
-                }
+                style.display = 'block';
             }
         },
 
@@ -18294,7 +18367,7 @@ $.Drawer = function( options ) {
     $.setElementOpacity( this.canvas, this.opacity, true );
     // Allow pointer events to pass through the canvas element so implicit
     //   pointer capture works on touch devices
-    $.setElementPointerEventsNone( this.canvas );
+    $.setElementPointerEvents( this.canvas, 'none' );
     $.setElementTouchActionNone( this.canvas );
 
     // explicit left-align
@@ -20897,6 +20970,26 @@ $.extend($.TiledImage.prototype, $.EventSource.prototype, /** @lends OpenSeadrag
     },
 
     /**
+     * @function
+     * @param {Number} level
+     * @param {Number} x
+     * @param {Number} y
+     * @returns {OpenSeadragon.Rect} Where this tile fits (in normalized coordinates).
+     */
+    getTileBounds: function( level, x, y ) {
+        var numTiles = this.source.getNumTiles(level);
+        var xMod    = ( numTiles.x + ( x % numTiles.x ) ) % numTiles.x;
+        var yMod    = ( numTiles.y + ( y % numTiles.y ) ) % numTiles.y;
+        var bounds = this.source.getTileBounds(level, xMod, yMod);
+        if (this.getFlip()) {
+            bounds.x = 1 - bounds.x - bounds.width;
+        }
+        bounds.x += (x - xMod) / numTiles.x;
+        bounds.y += (this._worldHeightCurrent / this._worldWidthCurrent) * ((y - yMod) / numTiles.y);
+        return bounds;
+    },
+
+    /**
      * @returns {OpenSeadragon.Point} This TiledImage's content size, in original pixels.
      */
     getContentSize: function() {
@@ -21337,6 +21430,23 @@ $.extend($.TiledImage.prototype, $.EventSource.prototype, /** @lends OpenSeadrag
     },
 
     /**
+     * @returns {Boolean} Whether the TiledImage should be flipped before rendering.
+     */
+    getFlip: function() {
+        return !!this.flipped;
+    },
+
+    /**
+     * @param {Boolean} flip Whether the TiledImage should be flipped before rendering.
+     * @fires OpenSeadragon.TiledImage.event:bounds-change
+     */
+    setFlip: function(flip) {
+        this.flipped = !!flip;
+        this._needsDraw = true;
+        this._raiseBoundsChange();
+    },
+
+    /**
      * @returns {Number} The TiledImage's current opacity.
      */
     getOpacity: function() {
@@ -21759,24 +21869,41 @@ function updateLevel(tiledImage, haveDrawn, drawLevel, level, levelOpacity,
 
     var viewportCenter = tiledImage.viewport.pixelFromPoint(
         tiledImage.viewport.getCenter());
+
+    if (tiledImage.getFlip()) {
+        // The right-most tile can be narrower than the others. When flipped,
+        // this tile is now on the left. Because it is narrower than the normal
+        // left-most tile, the subsequent tiles may not be wide enough to completely
+        // fill the viewport. Fix this by rendering an extra column of tiles. If we
+        // are not wrapping, make sure we never render more than the number of tiles
+        // in the image.
+        bottomRightTile.x += 1;
+        if (!tiledImage.wrapHorizontal) {
+            bottomRightTile.x  = Math.min(bottomRightTile.x, numberOfTiles.x - 1);
+        }
+    }
+
     for (var x = topLeftTile.x; x <= bottomRightTile.x; x++) {
         for (var y = topLeftTile.y; y <= bottomRightTile.y; y++) {
 
-            // Optimisation disabled with wrapping because getTileBounds does not
-            // work correctly with x and y outside of the number of tiles
-            if (!tiledImage.wrapHorizontal && !tiledImage.wrapVertical) {
-                var tileBounds = tiledImage.source.getTileBounds(level, x, y);
-                if (drawArea.intersection(tileBounds) === null) {
-                    // This tile is outside of the viewport, no need to draw it
-                    continue;
-                }
+            var flippedX;
+            if (tiledImage.getFlip()) {
+                var xMod = ( numberOfTiles.x + ( x % numberOfTiles.x ) ) % numberOfTiles.x;
+                flippedX = x + numberOfTiles.x - xMod - xMod - 1;
+            } else {
+                flippedX = x;
+            }
+
+            if (drawArea.intersection(tiledImage.getTileBounds(level, flippedX, y)) === null) {
+                // This tile is outside of the viewport, no need to draw it
+                continue;
             }
 
             best = updateTile(
                 tiledImage,
                 drawLevel,
                 haveDrawn,
-                x, y,
+                flippedX, y,
                 level,
                 levelOpacity,
                 levelVisibility,
@@ -21951,10 +22078,10 @@ function getTile(
         tilesMatrix[ level ][ x ] = {};
     }
 
-    if ( !tilesMatrix[ level ][ x ][ y ] ) {
+    if ( !tilesMatrix[ level ][ x ][ y ] || !tilesMatrix[ level ][ x ][ y ].flipped !== !tiledImage.flipped ) {
         xMod    = ( numTiles.x + ( x % numTiles.x ) ) % numTiles.x;
         yMod    = ( numTiles.y + ( y % numTiles.y ) ) % numTiles.y;
-        bounds  = tileSource.getTileBounds( level, xMod, yMod );
+        bounds  = tiledImage.getTileBounds( level, x, y );
         sourceBounds = tileSource.getTileBounds( level, xMod, yMod, true );
         exists  = tileSource.tileExists( level, xMod, yMod );
         url     = tileSource.getTileUrl( level, xMod, yMod );
@@ -21973,9 +22100,6 @@ function getTile(
         context2D = tileSource.getContext2D ?
             tileSource.getContext2D(level, xMod, yMod) : undefined;
 
-        bounds.x += ( x - xMod ) / numTiles.x;
-        bounds.y += (worldHeight / worldWidth) * (( y - yMod ) / numTiles.y);
-
         tile = new $.Tile(
             level,
             x,
@@ -21989,13 +22113,21 @@ function getTile(
             sourceBounds
         );
 
-        if (xMod === numTiles.x - 1) {
-            tile.isRightMost = true;
+        if (tiledImage.getFlip()) {
+            if (xMod === 0) {
+                tile.isRightMost = true;
+            }
+        } else {
+            if (xMod === numTiles.x - 1) {
+                tile.isRightMost = true;
+            }
         }
 
         if (yMod === numTiles.y - 1) {
             tile.isBottomMost = true;
         }
+
+        tile.flipped = tiledImage.flipped;
 
         tilesMatrix[ level ][ x ][ y ] = tile;
     }

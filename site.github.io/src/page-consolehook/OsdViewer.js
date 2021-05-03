@@ -213,25 +213,30 @@ function OsdViewer(props) {
     //   event.preventDefault = true;
     // };
 
-    // let onNavigatorScroll = function (event) {
-    //   if (event.scroll > 0) {
-    //     imagingHelper.zoomIn();
-    //   } else {
-    //     imagingHelper.zoomOut();
-    //   }
-    // };
-
     window.addEventListener('resize', onWindowResize, false);
     viewer.addHandler('open', onOpen);
     viewer.addHandler('open-failed', onOpenFailed);
     viewer.addHandler('close', onClose);
+
     // viewer.addHandler('canvas-contextmenu', onCanvasContextMenu);
-    // viewer.addHandler('navigator-scroll', onNavigatorScroll);
+
+    // viewer.addHandler('navigator-scroll', (event) => {
+    //   // if (event.scroll > 0) {
+    //   //   imagingHelper.zoomIn();
+    //   // } else {
+    //   //   imagingHelper.zoomOut();
+    //   // }
+    //   var viewport = viewer.viewport;
+    //   viewport.zoomBy(event.scroll === 1 ? 1.1 : 0.9);
+    //   viewport.applyConstraints();
+    // });
+
     // viewer.addHandler('canvas-pinch', (event) => {
     //   event.preventDefaultPanAction = false;
     //   event.preventDefaultZoomAction = false;
     //   event.preventDefaultRotateAction = false;
     // });
+
     // viewer.addHandler('canvas-scroll', (event) => {
     //   event.preventDefaultAction = false;
     // });
@@ -241,59 +246,59 @@ function OsdViewer(props) {
     //   gestureSettings.scrollToZoom = false;
     // });
 
-    // viewer.addHandler('canvas-click', (event) => {
-    //   if (event.quick) {
-    //     let overlayElement = OpenSeadragon.makeNeutralElement('div');
+    viewer.addHandler('canvas-click', (event) => {
+      if (event.quick) {
+        let overlayElement = OpenSeadragon.makeNeutralElement('div');
 
-    //     overlayElement.className = 'my-overlay-class';
-    //     (function (style) {
-    //       style.fontSize = '20px';
-    //       style.color = '#000';
-    //       style.background = 'rgba(0,255,255,0.5)';
-    //       style.padding = '20px';
-    //       style.pointerEvents = 'auto';
-    //       style.cursor = 'grab';
-    //     })(overlayElement.style);
+        overlayElement.className = 'my-overlay-class';
+        (function (style) {
+          style.fontSize = '20px';
+          style.color = '#000';
+          style.background = 'rgba(0,255,255,0.5)';
+          style.padding = '20px';
+          style.pointerEvents = 'auto';
+          style.cursor = 'grab';
+        })(overlayElement.style);
 
-    //     let clickPoint = viewer.viewport.pointFromPixel(event.position);
+        let clickPoint = viewer.viewport.pointFromPixel(event.position);
 
-    //     // new OpenSeadragon.MouseTracker({
-    //     //   element: overlayElement,
-    //     //   preProcessEventHandler: function (eventInfo) {
-    //     //     switch (eventInfo.eventType) {
-    //     //       case 'pointerdown':
-    //     //       case 'pointerup':
-    //     //         // prevent drag, click, pinch, etc. gestures on the viewer
-    //     //         // when events bubble, preventDefault true indicates to viewer
-    //     //         //    that we handled the events
-    //     //         eventInfo.preventDefault = true;
-    //     //         break;
-    //     //       case 'contextmenu':
-    //     //         // prevent context menu from popping up
-    //     //         eventInfo.preventDefault = true;
-    //     //         break;
-    //     //       default:
-    //     //         break;
-    //     //     }
-    //     //   },
-    //     //   dragHandler: function (e) {
-    //     //     // drag the overlay
-    //     //     var overlay = viewer.getOverlayById('overlay3');
-    //     //     var delta = viewer.viewport.deltaPointsFromPixels(e.delta);
-    //     //     overlay.update({ location: overlay.location.plus(delta) });
-    //     //     overlay.drawHTML(viewer.overlaysContainer, viewer.viewport );
-    //     //   }
-    //     // });
+        // new OpenSeadragon.MouseTracker({
+        //   element: overlayElement,
+        //   preProcessEventHandler: function (eventInfo) {
+        //     switch (eventInfo.eventType) {
+        //       case 'pointerdown':
+        //       case 'pointerup':
+        //         // prevent drag, click, pinch, etc. gestures on the viewer
+        //         // when events bubble, preventDefault true indicates to viewer
+        //         //    that we handled the events
+        //         eventInfo.preventDefault = true;
+        //         break;
+        //       case 'contextmenu':
+        //         // prevent context menu from popping up
+        //         eventInfo.preventDefault = true;
+        //         break;
+        //       default:
+        //         break;
+        //     }
+        //   },
+        //   dragHandler: function (e) {
+        //     // drag the overlay
+        //     var overlay = viewer.getOverlayById('overlay3');
+        //     var delta = viewer.viewport.deltaPointsFromPixels(e.delta);
+        //     overlay.update({ location: overlay.location.plus(delta) });
+        //     overlay.drawHTML(viewer.overlaysContainer, viewer.viewport );
+        //   }
+        // });
 
-    //     viewer.addOverlay({
-    //       element: overlayElement,
-    //       location: new OpenSeadragon.Rect(clickPoint.x, clickPoint.y, 0.1, 0.1)
-    //     });
+        viewer.addOverlay({
+          element: overlayElement,
+          location: new OpenSeadragon.Rect(clickPoint.x, clickPoint.y, 0.1, 0.1)
+        });
 
-    //     // Prevent default click-to-zoom behavior
-    //     event.preventDefaultAction = true;
-    //   }
-    // });
+        // Prevent default click-to-zoom behavior
+        event.preventDefaultAction = true;
+      }
+    });
 
     // onWindowResize();
 

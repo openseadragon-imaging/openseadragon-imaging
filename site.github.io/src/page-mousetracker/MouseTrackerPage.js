@@ -1,11 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+//import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+import Button from 'react-bootstrap/Button';
+//import ToggleButton from 'react-bootstrap/ToggleButton';
 import OpenSeadragon from 'openseadragon';
+import '@openseadragon-imaging/openseadragon-consolehook';
 import './MouseTrackerPage.scss';
+import ConsoleList from './ConsoleList';
 
-//import osdNavImages from '../common/OsdNavImages';
+import osdNavImages from '../common/OsdNavImages';
 
 // const tileSourcesPrefix = '/dzimages/';
 // const tileSources = [
@@ -30,6 +38,8 @@ function MouseTrackerPage(props) {
   let overlay3Ref = useRef(null);
 
   const [overlay1Selected, setOverlay1Selected] = useState(false);
+
+  const [consoleRows, setconsoleRows] = useState([]);
 
   useEffect(() => {
     // let viewer = new OpenSeadragon.Viewer({
@@ -71,26 +81,77 @@ function MouseTrackerPage(props) {
 
     let viewer = OpenSeadragon({
       id: 'seadragon-viewer',
-      prefixUrl: '//openseadragon.github.io/openseadragon/images/',
-      //navImages: osdNavImages,
+      prefixUrl: '', //'//openseadragon.github.io/openseadragon/images/',
+      navImages: osdNavImages,
       tileSources: duomo,
       overlays: [
         {
           id: 'overlay1',
           x: 0.05,
           y: 0.05
+          // px: 100,
+          // py: 100
         },
         {
           id: 'overlay2',
           x: 0.35,
           y: 0.05
+          // px: 100,
+          // py: 600
         },
         {
           id: 'overlay3',
           x: 0.58,
           y: 0.05
+          // px: 100,
+          // py: 1100
         }
       ]
+    });
+
+    let addConsoleRow = function (rowObj) {
+      setconsoleRows((prevConsoleRows) => {
+        return prevConsoleRows.concat(rowObj);
+      });
+    };
+
+    let consoleHook = viewer.addConsoleHook({
+      //new OpenSeadragonConsoleHook({
+      log: function (msg) {
+        addConsoleRow({
+          msg: msg || '<NOMSG>',
+          itemClass: 'console-item-log'
+        });
+        return true;
+      },
+      debug: function (msg) {
+        addConsoleRow({
+          msg: msg || '<NOMSG>',
+          itemClass: 'console-item-debug'
+        });
+        return true;
+      },
+      info: function (msg) {
+        addConsoleRow({
+          msg: msg || '<NOMSG>',
+          itemClass: 'console-item-info'
+        });
+        return true;
+      },
+      warn: function (msg) {
+        addConsoleRow({
+          msg: msg || '<NOMSG>',
+          itemClass: 'console-item-warn'
+        });
+        return true;
+      },
+      error: function (msg) {
+        addConsoleRow({
+          msg: msg || '<NOMSG>',
+          itemClass: 'console-item-error'
+        });
+        return true;
+      }
     });
 
     /**
@@ -143,6 +204,7 @@ function MouseTrackerPage(props) {
         switch (eventInfo.eventType) {
           case 'pointerdown':
           case 'pointerup':
+          case 'move':
             // prevent pointerdown/pointerup events from bubbling
             // viewer won't see these events
             eventInfo.stopPropagation = true;
@@ -174,6 +236,7 @@ function MouseTrackerPage(props) {
         }
       },
       clickHandler: function (e) {
+        //OpenSeadragon.console.log('*** clickHandler ***');
         setOverlay1Selected((wasSelected) => {
           return !wasSelected;
         });
@@ -236,14 +299,65 @@ function MouseTrackerPage(props) {
       mouseTracker3.destroy();
       mouseTracker2.destroy();
       mouseTracker1.destroy();
+      consoleHook.destroy();
+      consoleHook = null;
       viewer.destroy();
       viewer = null;
     };
   }, []);
 
+  const consoleListContainerRef = useRef(null);
+
+  const handleClearConsoleRows = useCallback(() => {
+    if (consoleRows.length > 0) {
+      setconsoleRows([]);
+    }
+  }, [consoleRows]);
+
+  useEffect(() => {
+    // Scroll added item into view
+    if (consoleRows.length > 0 && consoleListContainerRef.current) {
+      consoleListContainerRef.current.scrollTop =
+        consoleListContainerRef.current.scrollHeight;
+    }
+  }, [consoleRows]);
+
   return (
+    // <Row className="mousetracker-page">
+    //   <Col md={12} xs={12}>
+    //     <Container fluid className="viewer-pane">
+    //       <Row>
+    //         <Col className="viewer-container">
+    //           <div id="seadragon-viewer" className="seadragon-viewer" />
+    //           <div
+    //             className={overlay1Selected ? 'selected' : ''}
+    //             id="overlay1"
+    //             ref={overlay1Ref}
+    //           >
+    //             <p>Click to Toggle Color</p>
+    //             <p>
+    //               <a
+    //                 href="http://openseadragon.github.io"
+    //                 target="_blank"
+    //                 rel="noreferrer"
+    //               >
+    //                 I&apos;m a link!
+    //               </a>
+    //             </p>
+    //           </div>
+    //           <div id="overlay2" ref={overlay2Ref}>
+    //             <p>Can&apos;t Drag Me</p>
+    //           </div>
+    //           <div id="overlay3" ref={overlay3Ref}>
+    //             <p>Drag Me!</p>
+    //           </div>
+    //         </Col>
+    //       </Row>
+    //     </Container>
+    //   </Col>
+    // </Row>
     <Row className="mousetracker-page">
-      <Col md={12} xs={12}>
+      <Col md={9} xs={12}>
         <Container fluid className="viewer-pane">
           <Row>
             <Col className="viewer-container">
@@ -270,6 +384,41 @@ function MouseTrackerPage(props) {
               <div id="overlay3" ref={overlay3Ref}>
                 <p>Drag Me!</p>
               </div>
+            </Col>
+          </Row>
+        </Container>
+      </Col>
+      <Col md={3} xs={12}>
+        <Container fluid className="console-pane">
+          <Row>
+            <Col className="console-tools-container">
+              <ButtonToolbar
+                className="console-toolbar"
+                aria-label="Toolbar for console output"
+              >
+                <ButtonGroup
+                  className="mr-2"
+                  aria-label="Console output button group"
+                >
+                  <Button
+                    type="button"
+                    variant="outline-dark"
+                    size="sm"
+                    title="Clear Console Output"
+                    onClick={handleClearConsoleRows}
+                  >
+                    <FontAwesomeIcon icon={['fas', 'trash-alt']} size="sm" />
+                  </Button>
+                </ButtonGroup>
+              </ButtonToolbar>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              className="console-list-container"
+              ref={consoleListContainerRef}
+            >
+              <ConsoleList consoleRows={consoleRows} />
             </Col>
           </Row>
         </Container>
