@@ -1,6 +1,6 @@
-//! openseadragon 2.5.0
-//! Built on 2021-05-03
-//! Git commit: v2.4.2-171-7fbff2c-dirty
+//! openseadragon 2.5.1
+//! Built on 2021-05-04
+//! Git commit: v2.4.2-172-72fc528-dirty
 //! http://openseadragon.github.io
 //! License: http://openseadragon.github.io/license/
 
@@ -90,7 +90,7 @@
 
 /**
  * @namespace OpenSeadragon
- * @version openseadragon 2.5.0
+ * @version openseadragon 2.5.1
  * @classdesc The root namespace for OpenSeadragon.  All utility methods
  * and classes are defined on or below this namespace.
  *
@@ -771,10 +771,10 @@ function OpenSeadragon( options ){
      * @since 1.0.0
      */
     $.version = {
-        versionStr: '2.5.0',
+        versionStr: '2.5.1',
         major: parseInt('2', 10),
         minor: parseInt('5', 10),
-        revision: parseInt('0', 10)
+        revision: parseInt('1', 10)
     };
 
 
@@ -6401,11 +6401,13 @@ $.EventSource.prototype = {
 
             gPoint = updateGPoint;
         } else {
-            // Initialize for tracking and add to the tracking list (no pointerover or pointermove event occurred before this)
+            // Initialize for tracking and add to the tracking list (no pointerenter event occurred before this)
+            $.console.warn('pointerdown event on untracked pointer');
             gPoint.captured = false; // Handled by updatePointerCaptured()
             gPoint.insideElementPressed = true;
             gPoint.insideElement = true;
             startTrackingPointer( pointsList, gPoint );
+            return;
         }
 
         pointsList.addContact();
@@ -6530,6 +6532,9 @@ $.EventSource.prototype = {
         updateGPoint = pointsList.getById( gPoint.id );
 
         if ( updateGPoint ) {
+            pointsList.removeContact();
+            //$.console.log('contacts-- ', pointsList.contacts);
+
             // Update the pointer, stop tracking it if not still in this element
             if ( updateGPoint.captured ) {
                 //updateGPoint.captured = false; // Handled by updatePointerCaptured()
@@ -6555,9 +6560,6 @@ $.EventSource.prototype = {
 
             updateGPoint = gPoint;
         }
-
-        pointsList.removeContact();
-        //$.console.log('contacts-- ', pointsList.contacts);
 
         if ( !eventInfo.preventGesture && !eventInfo.defaultPrevented ) {
             if ( wasCaptured ) {
