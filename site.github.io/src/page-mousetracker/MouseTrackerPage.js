@@ -154,6 +154,41 @@ function MouseTrackerPage(props) {
       }
     });
 
+    // viewer.addHandler('open', (event) => {
+    //   // let containerSize = viewer.viewport.getContainerSize();
+    //   // let centerX = containerSize.x / 2;
+    //   // let centerY = containerSize.y / 2;
+
+    //   let animateDurationMs = 1000;
+    //   let start = null;
+
+    //   let startZoom = 0.1;
+    //   let endZoom = 1.0;
+
+    //   let startAngle = 0;
+    //   let endAngle = 360 * 4;
+
+    //   function update(timeStamp) {
+    //     if (!start) {
+    //       start = timeStamp;
+    //     }
+
+    //     let progress = Math.min((timeStamp - start) / animateDurationMs, 1);
+
+    //     let zoom = startZoom + (endZoom - startZoom) * progress;
+    //     viewer.viewport.zoomTo(zoom, null, true);
+
+    //     let angle = startAngle + (endAngle - startAngle) * progress;
+    //     viewer.viewport.setRotation(angle);
+
+    //     if (progress < 1) {
+    //       requestAnimationFrame(update);
+    //     }
+    //   }
+
+    //   requestAnimationFrame(update);
+    // });
+
     /**
      * Used for the processing/disposition of DOM events (propagation, default handling, capture, etc.)
      *
