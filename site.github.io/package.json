@@ -31,7 +31,7 @@
     "@openseadragon-imaging/openseadragon-consolehook": "^2.2.1",
     "@openseadragon-imaging/openseadragon-imaginghelper": "^2.2.2",
     "@openseadragon-imaging/openseadragon-viewerinputhook": "^2.2.1",
-    "bootstrap": "4.6.0",
+    "bootstrap": "5.0.0",
     "bootswatch": "4.6.0",
     "jquery": "^3.6.0",
     "openseadragon": "^2.4.2",
