@@ -56,7 +56,7 @@ function ReferenceStripPage(props) {
       navigationControlAnchor: OpenSeadragon.ControlAnchor.TOP_LEFT,
       //------------------
       showReferenceStrip: true,
-      referenceStripElement: null,
+      //referenceStripId: 'osdRefStripContainer',
       referenceStripScroll: 'horizontal',
       // referenceStripHeight: null,
       // referenceStripWidth: null,

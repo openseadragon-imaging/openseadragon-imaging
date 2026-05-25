@@ -12,36 +12,50 @@ import osdNavImages from '../common/OsdNavImages';
 
 const tileSourcesPrefix = '/dzimages/';
 const tileSources = [
-  tileSourcesPrefix + 'testpattern.dzi',
-  tileSourcesPrefix + 'tall.dzi',
-  tileSourcesPrefix + 'wide.dzi',
-  new OpenSeadragon.LegacyTileSource([
-    {
-      url: tileSourcesPrefix + 'dog_radiograph_2.jpg',
-      width: 1909,
-      height: 1331
-    }
-  ]),
-  tileSourcesPrefix + 'cannon.xml',
-  tileSourcesPrefix + 'highsmith.dzi',
   {
-    height: 512 * 256,
-    width: 512 * 256,
-    tileSize: 256,
-    minLevel: 8,
-    getTileUrl: function (level, x, y) {
-      return (
-        'http://s3.amazonaws.com/com.modestmaps.bluemarble/' +
-        (level - 8) +
-        '-r' +
-        y +
-        '-c' +
-        x +
-        '.jpg'
-      );
-    }
+    tileSource: tileSourcesPrefix + 'testpattern.dzi',
+    x: -0.75,
+    y: -0.5,
+    width: 1.0,
+    //height: 1.0,
+    opacity: 1.0
   },
-  tileSourcesPrefix + '6a32487.dzi'
+  {
+    tileSource: tileSourcesPrefix + 'tall.dzi',
+    x: 0.75,
+    y: -1.0,
+    width: 0.5,
+    //height: 0.5,
+    opacity: 0.5
+  } //,
+  // tileSourcesPrefix + 'wide.dzi',
+  // new OpenSeadragon.LegacyTileSource([
+  //   {
+  //     url: tileSourcesPrefix + 'dog_radiograph_2.jpg',
+  //     width: 1909,
+  //     height: 1331
+  //   }
+  // ]),
+  // tileSourcesPrefix + 'cannon.xml',
+  // tileSourcesPrefix + 'highsmith.dzi',
+  // {
+  //   height: 512 * 256,
+  //   width: 512 * 256,
+  //   tileSize: 256,
+  //   minLevel: 8,
+  //   getTileUrl: function (level, x, y) {
+  //     return (
+  //       'http://s3.amazonaws.com/com.modestmaps.bluemarble/' +
+  //       (level - 8) +
+  //       '-r' +
+  //       y +
+  //       '-c' +
+  //       x +
+  //       '.jpg'
+  //     );
+  //   }
+  // },
+  // tileSourcesPrefix + '6a32487.dzi'
 ];
 
 OsdViewer.propTypes = {
@@ -73,7 +87,7 @@ function OsdViewer(props) {
 
   useEffect(() => {
     let viewer = new OpenSeadragon.Viewer({
-      debugMode: true,
+      debugMode: false, //true,
       id: 'osdContainer',
       prefixUrl: '', //'lib/openseadragon/images/',
       navImages: osdNavImages,
@@ -99,19 +113,19 @@ function OsdViewer(props) {
       //------------------
       showNavigationControl: true,
       navigationControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
-      // showRotationControl: true,
-      // showFlipControl: true,
+      showRotationControl: false,
+      showFlipControl: false,
       //------------------
       showNavigator: false,
       // navigatorSizeRatio: 0.25,
       navigatorId: 'navigatorDiv1',
       navigatorAutoResize: false,
       //------------------
-      sequenceMode: true,
+      sequenceMode: false,
       // initialPage: 3,
       // preserveViewport: true,
       // preserveOverlays: false,
-      showSequenceControl: true,
+      showSequenceControl: false,
       sequenceControlAnchor: OpenSeadragon.ControlAnchor.BOTTOM_LEFT,
       // showReferenceStrip: true,
       // referenceStripScroll: 'horizontal',

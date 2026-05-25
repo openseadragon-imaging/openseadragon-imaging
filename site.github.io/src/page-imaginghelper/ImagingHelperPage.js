@@ -110,7 +110,7 @@ function ImagingHelperPage(props) {
           </Row>
         </Container>
       </Col>
-      <Col md={{ order: 2, span: 9 }} xs={{ order: 1, span: 12 }}>
+      <Col md={{ order: 2, span: 6 }} xs={{ order: 1, span: 12 }}>
         <Container fluid className="viewer-pane">
           <Row>
             <Col className="viewer-container">
@@ -125,6 +125,26 @@ function ImagingHelperPage(props) {
                 setViewerProps={setViewerProps}
                 setScreenCoordinateProps={setScreenCoordinateProps}
                 setDataCoordinateProps={setDataCoordinateProps}
+              />
+            </Col>
+          </Row>
+        </Container>
+      </Col>
+      <Col md={{ order: 3, span: 3 }} xs={{ order: 3, span: 12 }}>
+        <Container fluid className="prop-pane">
+          <Row>
+            <Col className="prop-list-container">
+              <PropList
+                browserProps={browserProps}
+                trackerProps={trackerProps}
+                haveImage={haveImage}
+                haveMouse={haveMouse}
+                imageProps={imageProps}
+                osdMouseRelativeProps={osdMouseRelativeProps}
+                mouseProps={mouseProps}
+                viewerProps={viewerProps}
+                screenCoordinateProps={screenCoordinateProps}
+                dataCoordinateProps={dataCoordinateProps}
               />
             </Col>
           </Row>

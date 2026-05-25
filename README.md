@@ -1,7 +1,5 @@
 # openseadragon-imaging
 
-[![Gitter](https://badges.gitter.im/openseadragon-imaging/community.svg)](https://gitter.im/openseadragon-imaging/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
 Home of the [OpenSeadragon Imaging](https://openseadragon-imaging.github.io/#/) suite:
 
 ## Repositories
@@ -14,6 +12,3 @@ Home of the [OpenSeadragon Imaging](https://openseadragon-imaging.github.io/#/) 
 1. [openseadragon-annohost-canvas](https://github.com/openseadragon-imaging/openseadragon-annohost-canvas)
 
 [Demo/Test Site](https://openseadragon-imaging.github.io/#/imaginghelper)
-
-Note: Shared link to gitter community
-https://gitter.im/openseadragon-imaging/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link

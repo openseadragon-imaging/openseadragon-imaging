@@ -90,8 +90,8 @@
   color: #000;
   background: rgba(255, 255, 0, 0.5);
   padding: 20px;
-  pointer-events: auto;
-  touch-action: none;
+  //pointer-events: auto;
+  //touch-action: none;
 }
 #overlay2 p {
   pointer-events: none;
@@ -104,8 +104,8 @@
   color: #000;
   background: rgba(0, 255, 255, 0.5);
   padding: 20px;
-  pointer-events: auto;
-  touch-action: none;
+  //pointer-events: auto;
+  //touch-action: none;
 }
 #overlay3 p {
   pointer-events: none;
