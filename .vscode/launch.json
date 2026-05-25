@@ -4,43 +4,60 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-	{
-		"name": "Launch Site - Microsoft Edge",
-		"type": "edge",
-		"request": "launch",
-		"url": "http://localhost:3000",
-		"webRoot": "${workspaceFolder}/site.github.io/src"
-	},
-	{
-		"name": "Launch Site - Chrome",
-		"type": "chrome",
-		"request": "launch",
-		"url": "http://localhost:3000",
-		"webRoot": "${workspaceFolder}/site.github.io/src"
-	},
-	{
-		"name": "Launch Site - Firefox",
-		"type": "firefox",
-		"request": "launch",
-		"reAttach": true,
-		"url": "http://localhost:3000",
-		"webRoot": "${workspaceFolder}/site.github.io/src",
-		"pathMappings": [
-			// {
-			// 	"url": "file:///D:/repos/openseadragon/build/openseadragon/openseadragon.js",
-			// 	"path": "d:\\repos\\openseadragon\\build\\openseadragon\\openseadragon.js"
-			// },
-			{
-				"url": "http://localhost:3000",
-				"path": "${webRoot}/"
-			}
-		]//,
-		// "log": {
-		// 	"fileName": "${workspaceFolder}/site.github.io/firefox-debug-log.txt",
-		// 	"fileLevel": {
-		// 		"default": "Debug"
-		// 	}
-		// }
-	}
-]
+    {
+      "name": "Debug Vite React App",
+      "version": "dev",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/site.github.io",
+      "sourceMaps": true
+      // "trace": true,
+      // "perScriptSourcemaps": "auto",
+      // "outFiles": [
+      //   "**/site.github.io/node_modules/.vite/**",
+      //   "**/site.github.io/node_modules/@openseadragon-imaging/**",
+      //   "**/site.github.io/node_modules/openseadragon/**"
+      // ],
+      // "runtimeArgs": ["--preserve-symlinks"]
+    },
+    {
+      "name": "Launch Site - Microsoft Edge",
+      "type": "edge",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/site.github.io"
+    },
+    {
+      "name": "Launch Site - Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/site.github.io"
+    },
+    {
+      "name": "Launch Site - Firefox",
+      "type": "firefox",
+      "request": "launch",
+      "reAttach": true,
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/site.github.io",
+      "pathMappings": [
+        // {
+        // 	"url": "file:///D:/repos/openseadragon/build/openseadragon/openseadragon.js",
+        // 	"path": "d:\\repos\\openseadragon\\build\\openseadragon\\openseadragon.js"
+        // },
+        {
+          "url": "http://localhost:5173",
+          "path": "${webRoot}/"
+        }
+      ] //,
+      // "log": {
+      // 	"fileName": "${workspaceFolder}/site.github.io/firefox-debug-log.txt",
+      // 	"fileLevel": {
+      // 		"default": "Debug"
+      // 	}
+      // }
+    }
+  ]
 }
