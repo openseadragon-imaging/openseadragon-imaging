@@ -1,4 +1,5 @@
 # Can be used to override project root settings
 
 # EditorConfig: http://editorconfig.org
+# EditorConfig Properties: https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
 root = false

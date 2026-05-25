@@ -1,6 +1,19 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+  "debug.javascript.terminalOptions": {
+    "resolveSourceMapLocations": [
+      "${workspaceFolder}/site.github.io/**",
+      "!**/node_modules/**",
+      "!**/site.github.io/node_modules/**",
+      "**/site.github.io/node_modules/.vite-temp/**"
+    ]
+  },
+
+  "js/ts.tsdk.path": "site.github.io/node_modules/typescript/lib",
+  "typescript.tsdk": "site.github.io/node_modules/typescript/lib",
+
   "eslint.workingDirectories": ["./site.github.io"],
+  "eslint.enable": true,
   //"tslint.enable": false,
   "eslint.trace.server": "off",
   "eslint.debug": true,
@@ -10,6 +23,13 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": false,
   "editor.formatOnPaste": false,
+  "editor.linkedEditing": true,
+
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+
+  //"prettier.requireConfig": true,
 
   "[javascript]": {
     //"editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -28,6 +48,14 @@
   },
 
   "[html]": {
+    //"editor.defaultFormatter": "esbenp.prettier-vscode",
+    //"editor.formatOnSave": true,
+    //"editor.formatOnPaste": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  "[xml]": {
     //"editor.defaultFormatter": "esbenp.prettier-vscode",
     //"editor.formatOnSave": true,
     //"editor.formatOnPaste": true,
@@ -66,7 +94,7 @@
   "editor.tabSize": 2,
 
   // Insert spaces when pressing Tab.
-  "editor.insertSpaces": false,
+  "editor.insertSpaces": true,
 
   // When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents.
   "editor.detectIndentation": false,
@@ -79,7 +107,7 @@
   //  - 'on' (viewport wrapping),
   //  - 'wordWrapColumn' (wrap at `editor.wordWrapColumn`) or
   //  - 'bounded' (wrap at minimum of viewport and `editor.wordWrapColumn`).
-  "editor.wordWrap": "on",
+  "editor.wordWrap": "off",
 
   // Controls the indentation of wrapped lines. Can be one of 'none', 'same' or 'indent'.
   "editor.wrappingIndent": "none",
@@ -91,6 +119,7 @@
   "files.eol": "\n",
 
   // When enabled, insert a final new line at the end of the file when saving it.
-"files.insertFinalNewline": true,
-"git.ignoreLimitWarning": true
+	"files.insertFinalNewline": true,
+
+	"git.ignoreLimitWarning": true
 }

@@ -1,0 +1,4 @@
+# Can be used to override project root settings
+
+# EditorConfig: http://editorconfig.org
+root = false

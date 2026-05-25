@@ -1,100 +1,64 @@
+# openseadragon-tester
+
+- [TanStack Router Docs](https://tanstack.com/router)
+
+## Adding components
+
+To add components to your app, run the following command:
+
+```sh
+npx shadcn@latest add button
+```
+
+This will place the ui components in the `src/components` directory.
+
+## Using components
+
+To use the components in your app, import them as follows:
+
+```tsx
+import { Button } from '@/components/ui/button';
+```
+
 ## Symlinks for Dependency Project Dev
 
+```sh
+npm ls -g --depth=0 --link=true
+npm ls --depth=0 --link=true
 ```
+
+To link:
+
+```sh
 cd \repos\openseadragon
 npm link
-cd ..\openseadragon-imaging\site.github.io
+cd \repos\openseadragon-tester
 npm link openseadragon
+```
 
 To restore:
 
-cd \repos\openseadragon-imaging\site.github.io
-npm uninstall --no-save openseadragon && npm install
-cd \repos\openseadragon
-npm uninstall
+```sh
+cd \repos\openseadragon-tester
+npm unlink --no-save openseadragon
+npm unlink -g openseadragon
+npm install openseadragon
 ```
 
-```
+To link:
+
+```sh
 cd \repos\openseadragon-imaginghelper
 npm link
-cd ..\openseadragon-imaging\site.github.io
+cd ..\openseadragon-tester
 npm link @openseadragon-imaging/openseadragon-imaginghelper
+```
 
 To restore:
 
-cd \repos\openseadragon-imaging\site.github.io
-npm uninstall --no-save @openseadragon-imaging/openseadragon-imaginghelper && npm install
-cd \repos\openseadragon-imaginghelper
-npm uninstall
+```sh
+cd \repos\openseadragon-tester
+npm unlink --no-save @openseadragon-imaging/openseadragon-imaginghelper
+npm unlink -g @openseadragon-imaging/openseadragon-imaginghelper
+npm install @openseadragon-imaging/openseadragon-imaginghelper
 ```
-
-# openseadragon-imaging.github.io Site
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
