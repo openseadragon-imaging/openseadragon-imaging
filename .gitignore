@@ -1,6 +1,32 @@
-node_modules/**
-site.github.io/node_modules/**
-site.github.io/build/**
-site.github.io/firefox-debug-log.txt
+# Logs
+logs
+*.log
+npm-debug.log*
+
+node_modules
+
+site.github.io.OLD/node_modules
+site.github.io.OLD/build
+site.github.io.OLD/firefox-debug-log.txt
+site.github.io.OLD/.eslintcache
+site.github.io.OLD/*.local
+
+site.github.io/node_modules
+site.github.io/dist
+site.github.io/dist-ssr
 site.github.io/.eslintcache
+site.github.io/*.local
+site.github.io/stats.html
+
 *.pem
+
+# Editor directories and files
+#.vscode/*
+#!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

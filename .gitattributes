@@ -9,16 +9,17 @@ Web.config	text eol=crlf
 *.bat		text eol=crlf
 
 # Files that will always have LF line endings
-*.sh		text eol=lf
-*.js		text eol=lf
-*.jsx		text eol=lf
-*.ts		text eol=lf
-*.css		text eol=lf
-*.scss		text eol=lf
-*.less		text eol=lf
-*.html		text eol=lf
-*.xml		text eol=lf
-*.json		text eol=lf
+*.sh	  text eol=lf
+*.js	  text eol=lf
+*.jsx	  text eol=lf
+*.ts	  text eol=lf
+*.tsx	  text eol=lf
+*.css	  text eol=lf
+*.scss	text eol=lf
+*.less	text eol=lf
+*.html	text eol=lf
+*.json	text eol=lf
+*.md 	  text eol=lf
 *.dzi		text eol=lf
 
 # Binary files that won't be touched

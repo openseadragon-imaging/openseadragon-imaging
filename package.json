@@ -1,6 +1,6 @@
 {
   "name": "openseadragon-imaging",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Imaging Tools for OpenSeadragon",
   "license": "MIT",
   "private": false,
@@ -9,11 +9,15 @@
     "email": "msalsbery@hotmail.com",
     "url": "https://github.com/msalsbery"
   },
-  "contributors": [],
+  "contributors": [
+    {
+      "name": "Ian Gilman"
+    }
+  ],
   "homepage": "https://github.com/openseadragon-imaging/openseadragon-imaging#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openseadragon-imaging/openseadragon-imaging.git"
+    "url": "git+https://github.com/openseadragon-imaging/openseadragon-imaging.git"
   },
   "bugs": "https://github.com/openseadragon-imaging/openseadragon-imaging/issues",
   "keywords": [
